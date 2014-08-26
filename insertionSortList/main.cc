@@ -36,20 +36,19 @@ public:
 		ListNode* com = &header;
 		ListNode* tmp;
 		while(pos->next != NULL){
-			cout<<"insert "<<pos->next->val<<endl;
+			com = &header;
 			while(com->next != pos->next){
 				if(com->next->val > pos->next->val){
 					tmp = pos->next;
 					pos->next = pos->next->next;
 					tmp->next = com->next;
 					com->next = tmp;
-					pos = tmp;
 					break;
 				}
 				com = com->next;
 			}
+			if(com->next != pos->next) continue;
 			pos = pos->next;
-			com = &header;
 		}
 		return head->next;
     }
@@ -60,7 +59,7 @@ int main(int argc, char** argv)
 {
 	Solution sl;
 	ListNode* data = (ListNode*)malloc(sizeof(ListNode)*DATASIZE);
-	int val[DATASIZE] = {2,-3,3,1,4,5,10,3};
+	int val[DATASIZE] = {-6,-3,3,1,4,5,10,3};
 	ListNode* head, *pos; 
 	pos = &data[0];
 	head = pos;
