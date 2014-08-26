@@ -1,0 +1,5 @@
+
+map's complex is O(nlgn)
+so the total complex is O(n^2lgn)
+
+seems using unordered_map will be better
