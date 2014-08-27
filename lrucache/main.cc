@@ -11,9 +11,8 @@ class LRUCache {
 private:
 	typedef std::pair<int,int> Value_CountID;    // value, count_id
 	std::map<int, Value_CountID> data;	 // key, vale cound_id
-	typedef std::pair<int,long int> Count_Time;    // count, time
-	typedef std::pair<Count_Time,int> CountTime_Value;    // value, count_id
-	std::vector<CountTime_Value> count;     // count , key
+	typedef std::pair<long int,int> Time_Key;    // count, time
+	std::vector<Time_Key> count;     // count , key
 	int capacity;
 	int size;
 	long time_max;
@@ -25,12 +24,7 @@ private:
 		int up = min_countID(part , e , n - n/2 );
 		int down = min_countID(s, part - 1, n/2);
 		int min;
-		if(count[up].first.first == count[down].first.first){
-			min = count[up].first.second <= count[down].first.second? up:down;
-		}
-		else{
-			min = count[up].first.first < count[down].first.first? up:down;
-		}
+		min = count[up].first < count[down].first? up:down;
 		return min;
 	}
 
@@ -49,9 +43,8 @@ public:
 
 	int get(int key){
 		if(data.count(key) == 1){
-			count[data[key].second].first.first++;
 			time_max++;
-			count[data[key].second].first.second = time_max;
+			count[data[key].second].first = time_max;
 			return data[key].first;
 		}else{
 			return -1;
@@ -59,11 +52,10 @@ public:
 	}
 
 	void print(){
-		for(std::vector<CountTime_Value>::iterator iter = count.begin();
+		for(std::vector<Time_Key>::iterator iter = count.begin();
 			iter != count.end(); iter++	
 			){
-			cout<<"count: "<<iter->first.first;
-			cout<<"	time: "<<iter->first.second;
+			cout<<"	time: "<<iter->first;
 			cout<<"	key: "<<iter->second<<endl;
 		}
 	}
@@ -74,23 +66,20 @@ public:
 		if(data.count(key) == 1){
 		// exist in the map
 			data[key].first = value;
-			count[data[key].second].first.first++;
-			count[data[key].second].first.second = time_max;
+			count[data[key].second].first = time_max;
 		}
 		else{
 			if(size < capacity){
 				data[key].first = value;
 				data[key].second = size;
-				Count_Time count_time(1,time_max);
-				CountTime_Value count_item(count_time,key);
-				count.push_back(count_item);
+				Time_Key count_time(time_max,key);
+				count.push_back(count_time);
 				size++;
 			}
 			else{
 				int replace = getLRU();  // return the key
 				int count_id = data[replace].second;
-				count[count_id].first.first = 1;
-				count[count_id].first.second = time_max;
+				count[count_id].first = time_max;
 				count[count_id].second = key;
 				data.erase(replace);
 				data[key].first = value;
