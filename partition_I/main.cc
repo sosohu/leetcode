@@ -35,11 +35,13 @@ public:
 	void define_op(vector<vector<string> >& data, string& str, vector<vector<string> >& rhs){
 		int len = rhs.size();
 		vector<string> tmp;
+		/*
 		if(len == 0){
 			tmp.push_back(str);
 			data.push_back(tmp);
 			return;
 		}
+		*/
 		for(int i = 0; i < len; i++){
 			tmp = rhs[i];
 			tmp.push_back(str);
@@ -47,43 +49,47 @@ public:
 		}
 	}
 
-	vector<vector<string> > partition(string s) {
-		int len = s.length();
-		bool is_palind[len][len];
-		vector<vector<string> > data[len][len];
-		//map<string, vector<vector<string> > > data;
-		{
-			vector<string> tmp;
-			string str = "0";
-			tmp.push_back(str);
-			for(int i = 0; i < len; i++){
-				str[0] = s[i];
-				tmp[0] = str;
-				data[i][i].push_back(tmp);
-				is_palind[i][i] = true;
+	inline void Init(map<string, vector<vector<string> > >& data, 
+					 map<string, bool>& palind,string& s, int n){
+		for(int i = 0; i < n; i++){
+			string str(s,i,1);
+			if(data.count(str) == 0){
+				vector<string> tmp;
+				tmp.push_back(str);
+				data[str].push_back(tmp);
+				palind[str] = true;
 			}
 		}
-		string str;
+	}
+
+	vector<vector<string> > partition(string s) {
+		int len = s.length();
+		map<string, vector<vector<string> > > data;
+		map<string, bool> is_palind;
+		Init(data, is_palind, s, len);
+		string val,str,rhs;
 		vector<string> tmp;
 		for(int step = 2; step <= len; step++){
 			for(int i = 0; i < len - step + 1; i++){
+				val = s.substr(i, step);
+				if(data.count(val) == 1)
+					continue;
 				for(int j = i + step -1; j > i; j--){
 					str = s.substr(j, i +  step - j );
-					if(is_palind[j][i + step -1])
-						define_op(data[i][i + step -1], str, data[i][j - 1]);	
+					rhs = s.substr(i, j - i);
+					if(is_palind.count(str) == 1){
+						define_op(data[val], str, data[rhs]);	
+					}
 				}
-				str = s.substr(i, step);
-				if(is_palindrome(str)){
-					is_palind[i][i + step - 1] = true;
+				if(is_palind.count(val) == 1 || is_palindrome(val)){
 					tmp.clear();
-					tmp.push_back(str);
-					data[i][i + step -1].push_back(tmp);
-				}else{
-					is_palind[i][i + step - 1] = false;
+					tmp.push_back(val);
+					data[val].push_back(tmp);
+					is_palind[val] = true;
 				}
 			}
 		}
-		return data[0][len-1];
+		return data[s];
     }
 
 };
@@ -91,7 +97,7 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("aaaaadad");		
+	string s("aaa");		
     vector<vector<string> > ret = sl.partition(s);
 	
 	print(ret);
