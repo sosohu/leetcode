@@ -1,91 +1,108 @@
 #include <iostream>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 #include <queue>
 #include <vector>
 
 using namespace std;
 
-
 class Solution {
 
-public:
+      public:
 
-void Trace(vector<int>& trace, vector<string>& data, int pos, vector<vector<string> >& path){
-		vector<string> tmp, vec;
-		while(pos != 0){
-			tmp.push_back(data[pos]);
-			pos = trace[pos];
+	vector<vector<string> > Trace(string start, string str,
+		   unordered_map<string, vector<string> >& father) {
+		vector<string> vec;
+		vector<vector<string> > path;
+
+		if(start.compare(str) == 0){
+			vec.push_back(str);
+			path.push_back(vec);
+			return path;
 		}
-		tmp.push_back(data[0]);
-		for(int i = tmp.size() - 1; i >= 0; i--)
-			vec.push_back(tmp[i]);
-		path.push_back(vec);
+
+		string tmp;
+		vector<vector<string> > vec_vec;
+		for(int i = 0; i < father[str].size(); i++){
+			tmp = father[str][i];
+			vec_vec = Trace(start, tmp, father);
+			for(int j = 0; j < vec_vec.size(); j++){
+				vec_vec[j].push_back(str);
+				path.push_back(vec_vec[j]);
+			}
+		}
+		return path;
 	}
 
-	vector<vector<string> > findLadders(string start, string end, unordered_set<string> &dict) {
-		int len = start.length();
-		unordered_set<string> find;
-		//unordered_set<string> bad;
-		vector<string> data;
-		vector<vector<string> > path;
-		vector<int> trace;
+	void MTrace(string start, string str, vector<vector<string> >& path,
+		   unordered_map<string, vector<string> >& father) {
+		vector<vector<string> > vec_vec;
+		vec_vec = Trace(start, str, father);
+		for(int i = 0; i < vec_vec.size(); i++)
+			path.push_back(vec_vec[i]);
+	}
 
-		data.push_back(start);
-		trace.push_back(0);
+	 vector < vector < string > >findLadders(string start, string end,
+						  unordered_set < string >
+						  &dict) {
+		int len = start.length();
+		unordered_set < string > find;
+		vector < vector < string > > path;
+		unordered_map < string, vector < string > >father;
+		queue < string > data;
+
 		find.insert(start);
+		data.push(start);
 		string str, tmp;
-		int length = 0;
-		int size;
-		int pos = 0;
-		bool this_level = false;
-		while(size = data.size() - pos){
-			unordered_set<string> local_find;
-			for(int i = 0; i < size; i++){
-				str = data[pos+i];
-				if(str.compare(end) == 0){
-					Trace(trace, data , pos+i, path);
-					this_level = true;
-					continue;
+		while (!data.empty()) {
+
+			int size = data.size();
+			unordered_set < string > cur;
+			for (int k = 0; k < size; k++) {
+
+				str = data.front();
+				data.pop();
+
+				if (str.compare(end) == 0) {
+					MTrace(start, str, path, father);
+					return path;
 				}
-				if(this_level)
-					continue;
-				for(int j = 0; j < len; j++){
-				 	tmp = str;
-					for(int k = 97; k < 123; k++){
-						tmp[j] = k;
-						if(dict.count(tmp) == 1 && find.count(tmp) == 0 ){
-							data.push_back(tmp);
-							trace.push_back(pos+i);
-							if(local_find.count(tmp) == 0)
-								local_find.insert(tmp);
+				for (int i = 0; i < len; i++) {
+					tmp = str;
+					for (int j = 97; j < 123; j++) {
+						tmp[i] = j;
+						if (dict.count(tmp) == 1 && find.count(tmp) == 0) {
+							data.push(tmp);
+							cur.insert(tmp);
+							father[tmp].push_back(str);
 						}
 					}
 				}
 			}
-			if(this_level)
-				break;
-			pos = pos + size;
-			find.insert(local_find.begin(), local_find.end());
+			find.insert(cur.begin(), cur.end());
 		}
+
 		return path;
 	}
 
 };
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	Solution sl;
-	unordered_set<string> dict;
-	string data[] = {"miss","dusk","kiss","musk","tusk","diss","disk","sang","ties","muss"};
-	for(int i = 0; i < 10; i++)
+	unordered_set < string > dict;
+	string data[] =
+	    { "miss", "dusk", "kiss", "musk", "tusk", "diss", "disk", "sang",
+	"ties", "muss" };
+	for (int i = 0; i < 10; i++)
 		dict.insert(data[i]);
-    vector<vector<string> > ret = sl.findLadders("kiss", "tusk", dict);
-	
-	for(int i = 0; i < ret.size(); i++){
-		for(int j = 0; j < ret[i].size(); j++)
-			cout<<ret[i][j]<<" ";
-		cout<<endl;
+	vector < vector < string > >ret = sl.findLadders("kiss", "tusk", dict);
+
+	for (int i = 0; i < ret.size(); i++) {
+		for (int j = 0; j < ret[i].size(); j++)
+			cout << ret[i][j] << " ";
+		cout << endl;
 	}
 
 	return 0;
