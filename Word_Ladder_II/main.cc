@@ -2,7 +2,6 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
-#include <queue>
 #include <vector>
 
 using namespace std;
@@ -35,14 +34,6 @@ class Solution {
 		return path;
 	}
 
-	void MTrace(string start, string str, vector<vector<string> >& path,
-		   unordered_map<string, vector<string> >& father) {
-		vector<vector<string> > vec_vec;
-		vec_vec = Trace(start, str, father);
-		for(int i = 0; i < vec_vec.size(); i++)
-			path.push_back(vec_vec[i]);
-	}
-
 	 vector < vector < string > >findLadders(string start, string end,
 						  unordered_set < string >
 						  &dict) {
@@ -50,39 +41,51 @@ class Solution {
 		unordered_set < string > find;
 		vector < vector < string > > path;
 		unordered_map < string, vector < string > >father;
-		queue < string > data;
+		vector < string > data;
 
+		bool this_level = false;
 		find.insert(start);
-		data.push(start);
+		data.push_back(start);
 		string str, tmp;
+		int length = 0;
 		while (!data.empty()) {
 
+			length++;
+			if(length > 25*len)
+				break;
 			int size = data.size();
 			unordered_set < string > cur;
+			vector<string> local_data;
 			for (int k = 0; k < size; k++) {
 
-				str = data.front();
-				data.pop();
+				str = data[k];
 
-				if (str.compare(end) == 0) {
-					MTrace(start, str, path, father);
-					return path;
-				}
 				for (int i = 0; i < len; i++) {
 					tmp = str;
 					for (int j = 97; j < 123; j++) {
 						tmp[i] = j;
-						if (dict.count(tmp) == 1 && find.count(tmp) == 0) {
-							data.push(tmp);
-							cur.insert(tmp);
+						if (tmp.compare(end) == 0){
+							this_level = true;
 							father[tmp].push_back(str);
+						}else{
+							if (dict.count(tmp) == 1 && find.count(tmp) == 0) {
+								local_data.push_back(tmp);
+								father[tmp].push_back(str);
+								if(cur.count(tmp) == 0)
+									cur.insert(tmp);
+							}
 						}
 					}
 				}
 			}
+			if(this_level){
+				path = Trace(start, end, father);
+				return path;
+			}
 			find.insert(cur.begin(), cur.end());
+			data = local_data;
 		}
-
+		
 		return path;
 	}
 
@@ -93,11 +96,10 @@ int main(int argc, char **argv)
 	Solution sl;
 	unordered_set < string > dict;
 	string data[] =
-	    { "miss", "dusk", "kiss", "musk", "tusk", "diss", "disk", "sang",
-	"ties", "muss" };
-	for (int i = 0; i < 10; i++)
+	    { "hot","dot","dog","lot","log" };
+	for (int i = 0; i < 5; i++)
 		dict.insert(data[i]);
-	vector < vector < string > >ret = sl.findLadders("kiss", "tusk", dict);
+	vector < vector < string > >ret = sl.findLadders("hit", "cog", dict);
 
 	for (int i = 0; i < ret.size(); i++) {
 		for (int j = 0; j < ret[i].size(); j++)
