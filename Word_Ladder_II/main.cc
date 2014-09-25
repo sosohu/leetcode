@@ -10,6 +10,32 @@ class Solution {
 
       public:
 
+	void Trace(string start, string str, vector<vector<string> >& path,
+		   unordered_map<string, vector<string> >& father) {
+		vector<string> vec;
+		vec.push_back(str);
+		path.push_back(vec);	
+		string tmp;
+		int len;
+		while(1){
+			int size = path.size();
+			for(int i = 0; i < size; i++){
+				vec = path[i];
+				tmp = vec.back();
+				if(tmp.compare(start) == 0)
+					return;
+				vec.push_back(father[tmp][0]);
+				path[i] = vec;
+				len = vec.size();
+				for(int j = 1; j < father[tmp].size(); j++){
+					vec[len - 1] = father[tmp][j];
+					path.push_back(vec);
+				}
+			}
+		}
+	}
+
+	/*
 	vector<vector<string> > Trace(string start, string str,
 		   unordered_map<string, vector<string> >& father) {
 		vector<string> vec;
@@ -33,6 +59,7 @@ class Solution {
 		}
 		return path;
 	}
+	*/
 
 	 vector < vector < string > >findLadders(string start, string end,
 						  unordered_set < string >
@@ -47,12 +74,8 @@ class Solution {
 		find.insert(start);
 		data.push_back(start);
 		string str, tmp;
-		int length = 0;
 		while (!data.empty()) {
 
-			length++;
-			if(length > 25*len)
-				break;
 			int size = data.size();
 			unordered_set < string > cur;
 			vector<string> local_data;
@@ -79,7 +102,8 @@ class Solution {
 				}
 			}
 			if(this_level){
-				path = Trace(start, end, father);
+				//path = Trace(start, end, father);
+				Trace(start, end, path, father);
 				return path;
 			}
 			find.insert(cur.begin(), cur.end());
