@@ -2,3 +2,13 @@
 Q	Two elements of a binary search tree (BST) are swapped by mistake.
 
 	Recover the tree without changing its structure.
+
+A	using inorder scan the tree, because two elements have been swapped, 
+	so, the inorder scan output like 0, 1, 5, 3, 4, 2, 6
+
+	as for BST, the inorder scan is increasing, the first one decrease take place in 5 -> 3, 
+	the second one is 4 -> 2, 
+	we can mark the two uncommon nodes: first_node(5), second_noe(2) 
+		[we can use a ret pointer to record the node's, we scan now, pre-node]
+
+	we can swap the first_node and second_noe's val to recover the BST

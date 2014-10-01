@@ -31,53 +31,31 @@ void prePrint(TreeNode* root){
 class Solution {
 
 public:
+	void inorder(TreeNode* root, int& last_val, int& pass_val, TreeNode*& first_node, TreeNode*& second_node, int& count, TreeNode*& ret){
+		if(root == NULL)	return;
+		int val = root->val;
+		
+		int l_val = pass_val;
 
-	bool recursion(TreeNode* root, int max, bool left, TreeNode*& ret){
-		#ifdef DEBUG
-		cout<<"val "<<root->val<<" max "<<max<<endl;
-		#endif
-		if(left && root->val > max){
-			ret = root;
-			return false;
-		}
-		if(!left && root->val < max){
-			ret = root;
-			return false;
-		}
-		TreeNode *myleft, *myright;
-		bool isleft = true, isright = true;
 		if(root->left)
-			isleft = recursion(root->left, root->val, true, myleft);
-		if(root->right)
-			isright = recursion(root->right, root->val, false, myright);
+			inorder(root->left, l_val, pass_val, first_node, second_node, count, ret);
 
-		if(!isleft && !isright){
-			assert(myleft);
-			assert(myright);
-			swap(myleft->val, myright->val);
-			return true;	
-		}
-		if(!isleft){
-			assert(myleft);
-			if((left && myleft->val > max) || (!left && myleft->val < max)){
-				ret = myleft;
-				return false;
-			}else{
-				swap(root->val, myleft->val);
-				return true;
+
+		if(val < l_val){
+			if(!first_node){
+				first_node = ret;
 			}
+			second_node = root;
 		}
-		if(!isright){
-			assert(myright);
-			if((left && myright->val > max) || (!left && myright->val < max)){
-				ret = myright;
-				return false;
-			}else{
-				swap(root->val, myright->val);
-				return true;
-			}
-		}
-		return true;
+
+		count++;
+		ret = root;
+
+		int r_val = val;
+		pass_val = val;
+		if(root->right)
+			inorder(root->right, r_val, pass_val, first_node, second_node, count, ret);
+		last_val = r_val;
 	}
 
 	inline void swap(int& lv, int& rv){
@@ -87,29 +65,16 @@ public:
 	}
 
 	void recoverTree(TreeNode* root) {
-		if(root == NULL)	return ;
-		bool left = true, right = true;
-		TreeNode *retl, *retr;
-		if(root->left){
-			left = recursion(root->left, root->val, true, retl);
-		}
-		if(root->right){
-			right = recursion(root->right, root->val, false, retr);
-		}
-		if(!left && !right){
-			assert(retl);
-			assert(retr);
-			swap(retl->val, retr->val);
-		}
-		if(!left){
-			assert(retl);
-			swap(root->val, retl->val);
-		}
-		if(!right){
-			assert(retr);
-			swap(root->val, retr->val);
-		}
-		return;
+		TreeNode *first_node = NULL, *second_node = NULL, *ret = NULL;
+		int last_val;
+		int min = -1000000000;
+		int count = 0;
+		inorder(root, min, min, first_node, second_node, count, ret);
+		
+		#ifdef DEBUG
+		cout<<"first: "<<first_node->val<<" second: "<<second_node->val<<endl;
+		#endif
+		swap(first_node->val, second_node->val);
     }
 
 };
@@ -119,7 +84,8 @@ int main(int argc, char** argv)
 	Solution sl;
 	
 	TreeNode* root = (TreeNode*)malloc(DATASIZE*sizeof(TreeNode));
-	int data[] = {3,2,5,0,1,4};
+	//int data[] = {2,3,1};
+	int data[] = {4,1,5,0,2,3};
 	int count = 0;
 	while(count < DATASIZE){
 		root[count].val = data[count];
