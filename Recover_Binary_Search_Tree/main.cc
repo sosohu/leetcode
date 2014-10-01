@@ -31,14 +31,19 @@ void prePrint(TreeNode* root){
 class Solution {
 
 public:
-	void inorder(TreeNode* root, int& last_val, int& pass_val, TreeNode*& first_node, TreeNode*& second_node, int& count, TreeNode*& ret){
+	void inorder(TreeNode* root,  TreeNode*& first_node, TreeNode*& second_node, int& count, TreeNode*& ret){
 		if(root == NULL)	return;
 		int val = root->val;
-		
-		int l_val = pass_val;
 
 		if(root->left)
-			inorder(root->left, l_val, pass_val, first_node, second_node, count, ret);
+			inorder(root->left, first_node, second_node, count, ret);
+
+		int l_val;
+
+		if(ret)
+			l_val = ret->val;
+		else
+			l_val = val - 1;
 
 
 		if(val < l_val){
@@ -51,11 +56,8 @@ public:
 		count++;
 		ret = root;
 
-		int r_val = val;
-		pass_val = val;
 		if(root->right)
-			inorder(root->right, r_val, pass_val, first_node, second_node, count, ret);
-		last_val = r_val;
+			inorder(root->right,  first_node, second_node, count, ret);
 	}
 
 	inline void swap(int& lv, int& rv){
@@ -66,10 +68,8 @@ public:
 
 	void recoverTree(TreeNode* root) {
 		TreeNode *first_node = NULL, *second_node = NULL, *ret = NULL;
-		int last_val;
-		int min = -1000000000;
 		int count = 0;
-		inorder(root, min, min, first_node, second_node, count, ret);
+		inorder(root, first_node, second_node, count, ret);
 		
 		#ifdef DEBUG
 		cout<<"first: "<<first_node->val<<" second: "<<second_node->val<<endl;
