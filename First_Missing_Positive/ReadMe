@@ -6,3 +6,17 @@ Q	Given an unsorted integer array, find the first missing positive integer.
 	and [3,4,-1,1] return 2.
 
 	Your algorithm should run in O(n) time and uses constant space.
+
+A	insert the value as the key to the orignal array
+	for example:
+		A = {8,9, 3, 2, 1, 6}
+
+	after insert:
+		A = 8,9,3,2,1,6
+			6,9,3,2,1,8
+			6,9,3,2,1,6
+			6,1,3,2,9,6
+			1,1,3,2,9,6
+			1,1,3,2,9,6
+			1,2,3,2,9,6
+	so the first on is 4.

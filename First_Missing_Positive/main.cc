@@ -75,7 +75,40 @@ public:
 	int firstMissingPositive(int A[], int n){
 		preprocess(A, n);
 		if(n == 0)	return 1;
-		return recursion(A, 0, n-1, 0);
+		//return recursion(A, 0, n-1, 0);
+		int last = n - 1;
+		int tmp;
+		for(int i = 0; i <= last;){
+			if(A[i] > n){
+				tmp = A[last];
+				A[last--] = A[i];
+				A[i] = tmp;
+			}else{
+				if(A[i] - 1 == i ){
+					i++;
+				}
+				else{
+					if(A[i] - 1 < i || A[i] - 1 > last){
+						A[A[i] - 1] = A[i];
+						i++;
+					}else{
+						if(A[i] == A[A[i] - 1]){
+							i++;
+						}else{
+							tmp = A[i];
+							A[i] = A[A[i] - 1];
+							A[tmp - 1] = tmp;
+						}
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < n; i++){
+			if(A[i] != i+1)
+				return i+1;
+		}
+		return n+1;
     }
 
 };
@@ -83,8 +116,8 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	int A[] = {1,1,4,1,4};
-	int ret = sl.firstMissingPositive(A, 5);
+	int A[] = {2,2};
+	int ret = sl.firstMissingPositive(A, 2);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 
