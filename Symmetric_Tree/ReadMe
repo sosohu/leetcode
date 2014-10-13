@@ -1,0 +1,21 @@
+
+Q	Symmetric Tree Total Accepted: 25110 Total Submissions: 77762 My Submissions
+	Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+	For example, this binary tree is symmetric:
+
+	    1
+	   / \
+	  2   2
+	 / \ / \
+	3  4 4  3
+	But the following is not:
+	    1
+	   / \
+	  2   2
+	   \   \
+	   3    3
+	Note:
+	Bonus points if you could solve it both recursively and iteratively.
+
+A	for iteration, use two vector to save the left part and right part level by level

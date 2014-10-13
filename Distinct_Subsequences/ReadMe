@@ -1,0 +1,27 @@
+
+Q	Given a string S and a string T, count the number of distinct subsequences of T in S.
+
+	A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+
+	Here is an example:
+	S = "rabbbit", T = "rabbit"
+
+	Return 3.
+
+A	For example, T = aabba; S = aba;
+	Suppose q[0], q[1], q[2] record the num of aba, ba, a
+	at first, q[0] = q[1] = q[2] = 0
+
+	input the T in the reverse order, a, b, b, a, a
+
+	input a: q[2] turn into q[2]++ -> 1 , q[0] turn into q[1] + q[0] -> 0
+	intput a: q[2] turn into q[2]++ -> 2,  q[0] turn into q[1] + q[0] -> 0
+	int b: q[1] turn into q[1] + q[2] -> 2
+	int b: q[1] turn into q[1] + q[2] -> 4
+	int a: q[2] turn into q[2]++ -> 3,  q[0] turn into q[1] + q[0] -> 4
+	int a: q[2] turn into q[2]++ -> 4,  q[0] turn into q[1] + q[0] -> 8
+
+	return q[0]
+
+	say n = S.size(), m = T.size()
+	O(n) time complex , O(m) space complex

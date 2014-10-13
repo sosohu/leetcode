@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta charset="utf-8"><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o?o:n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({QJf3ax:[function(t,n){function e(t){function n(n,e,o){t&&t(n,e,o),o||(o={});for(var a=i(n),u=a.length,c=o[r]||(o[r]={}),f=0;u>f;f++)a[f].apply(c,e);return c}function o(t,n){u[t]=i(t).concat(n)}function i(t){return u[t]||[]}function a(){return e(n)}var u={};return{on:o,emit:n,create:a,listeners:i,_events:u}}var r="nr@context";n.exports=e()},{}],ee:[function(t,n){n.exports=t("QJf3ax")},{}],handle:[function(t,n){n.exports=t("D5DuLP")},{}],D5DuLP:[function(t,n){function e(t,n,e){return r.listeners(t).length?r.emit(t,n,e):(o[t]||(o[t]=[]),void o[t].push(n))}var r=t(1).create(),o={};n.exports=e,e.ee=r,r.q=o},{1:"QJf3ax"}],loader:[function(t,n){n.exports=t("G9z0Bl")},{}],G9z0Bl:[function(t,n){function e(){var t=l.info=NREUM.info;if(t&&t.agent&&t.licenseKey&&t.applicationID&&c&&c.body){l.proto="https"===p.split(":")[0]||t.sslForHttp?"https://":"http://",a("mark",["onload",i()]);var n=c.createElement("script");n.src=l.proto+t.agent,c.body.appendChild(n)}}function r(){"complete"===c.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),u=window,c=u.document,f="addEventListener",s="attachEvent",p=(""+location).split("?")[0],l=n.exports={offset:i(),origin:p,features:{}};c[f]?(c[f]("DOMContentLoaded",o,!1),u[f]("load",e,!1)):(c[s]("onreadystatechange",r),u[s]("onload",e)),a("mark",["firstbyte",i()])},{handle:"D5DuLP"}]},{},["G9z0Bl"]);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"beacon-2.newrelic.com","queueTime":0,"licenseKey":"8d5fb92f6e","agent":"js-agent.newrelic.com/nr-454.min.js","transactionName":"ZwMAYEdSCktRWxZRXV5JJEFbUBBRX1ZNSEBfBA5RWEABTB5OC11FQ1wTQVBAEFFfVj1UW0MS","applicationID":"2098939","errorBeacon":"bam.nr-data.net","applicationTime":180}</script>
+    <title>Problems | LeetCode OJ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    
+
+    <style>
+      body {
+        overflow-y: scroll;
+      }
+      a {
+        color: #0088cc;
+      }
+      a:hover {
+        color: #005580;
+      }
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .block-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .message {
+         border: 1px solid #e6db55;
+         background-color: #ffffe0;
+         padding: 15px 30px 15px 15px;
+         margin: 20px 0;
+       }
+      .navbar-extra {
+         border-radius: 0px;
+         margin-bottom: 30px;
+      }
+      #chat-link {
+        position: fixed;
+        right: 5px;
+        bottom: 10px;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        padding: 5px 15px 10px 15px;
+        -webkit-border-radius: 5px 0 0 5px;
+        -moz-border-radius: 5px 0 0 5px;
+        -ms-border-radius: 5px 0 0 5px;
+        -o-border-radius: 5px 0 0 5px;
+        border-radius: 5px 0 0 5px;
+        -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        color: #979faf;
+      }
+      .glyphicon-envelope {
+        text-align: center;
+        line-height: 26px;
+        margin-right: 5px;
+        position: relative;
+      }
+      [ng-cloak] { display: none; }
+      .editor {
+        font-size: 14px !important;
+        border: 1px solid #e0e0e0;
+        height: 475px;
+      }
+    </style>
+    
+<style>
+  .ac {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background-image: url('/static/images/correct.png');
+    background-repeat: no-repeat;
+  }
+  .notac {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background-image: url('/static/images/question.png');
+    background-repeat: no-repeat;
+  }
+  .table-centered {
+    margin: 0 auto !important;
+    float: none !important;
+    width: 700px;
+  }
+  .header-status {
+    width: 5%;
+  }
+  .header-title {
+    width: 60%;
+  }
+  .header-date {
+    width: 20%;
+    min-width: 100px;
+  }
+  .header-ac {
+    width: 15%;
+    min-width: 100px;
+  }
+  #goTop{
+      padding: 10px 15px 10px 15px;
+      position:fixed;
+      right:10px;
+      bottom:40%;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+      border-radius: 5px;
+      -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      color: #979faf;
+  }
+</style>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/static/jquery/jquery-1.11.1.min.js"><\/script>')</script>
+  </head>
+
+  <body>
+    <div id="bootstrap-css-test" class="hide"></div>
+    <script>
+      if ($('#bootstrap-css-test').is(':visible') === true) {
+        $('head').prepend('<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">');
+      }
+    </script>
+    
+    <div class="navbar navbar-inverse navbar-extra">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">LeetCode OJ</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li id="problemsNav"><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/">Problems</a></li>
+            <li id="pickNav"><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/merge-intervals">Pick One!</a></li>
+            <li id="submissionsNav"><a href="/submissions/">Submissions</a></li>
+            <!-- TODO: not hard code -->
+            
+            <li id=""><a href="/discuss/">Discuss</a></li>
+            
+            
+            
+            <li id="donateNav"><a href="/donate/"><font color="#ed9c28">Donate</font></a></li>
+            
+            
+          </ul>
+          
+          <div class="navbar-form navbar-right">
+            <a class="btn btn-primary" href="/accounts/signup">Sign up</a>
+            <a class="btn btn-default" href="/accounts/login/">Sign in</a>
+          </div>
+          
+          <!--
+          <form class="navbar-form pull-right">
+            <input class="col-md-2" type="text" placeholder="Email">
+            <input class="col-md-2" type="password" placeholder="Password">
+            <button type="submit" class="btn">Sign in</button>
+          </form>
+          -->
+        </div><!--/.navbar-collapse -->  
+      </div>
+    </div> 
+
+    
+  <!-- announcement -->
+  
+    <div id="announcement" class="hide container">
+      <div class="row">
+        <div class="col-md-12 alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <div class="text-center">
+            <div class="row"><h4>Announcement</h4></div>
+            <div class="row">We updated <a href="/faq/"><strong>FAQ</strong> </a> to answer some common questions!</div> <div class="row">Still have problem while using OJ? Welcome to email admin@leetcode.com.</div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /container --> 
+  
+  <!-- end announcement -->
+
+  <!-- confirm_alert -->
+  
+  <!-- end confirm_alert -->
+
+  <!-- confirm_success_panel -->
+  
+  <!-- end confirm_success_panel -->
+
+<div class="container">
+  
+
+  <a id="goTop" class="btn btn-link btn-lg" style="display: none;">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <!-- end scroll_to_top_button -->
+
+  <div class="row">
+    <div class="table-centered">
+      <div id="brief_stats" class="hide col-md-8"><p>Welcome, <a href="/profile/"></a>! You have solved <strong></strong> problems.</p></div>
+      <input id="searchText" type="text" placeholder="Search Problems" class="col-md-4 pull-right search-query">
+    </div>
+  </div>
+  <div id="searchResultRow" class="row" style="display:none">
+    <table id="searchResult" class="table table-striped table-centered">
+      <thead>
+        <tr>
+          <th class="header-status">
+          </th>
+          <th class="header-title">
+            <div id="searchTitleBtn" class="" order='asc'><a href="#">Title</a></div>
+          </th>
+          <th class="header-date">
+            <div id="searchFreshBtn" class="" order='asc'><a href="#">Add Date</a></div>
+          </th>
+          <th class="header-ac">
+            <div id="searchAcrateBtn" class="" order='asc'><a href="#">AC Rates</a></div>
+          </th>
+          
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div id="problemListRow" class="row">
+    <table id="problemList" class="table table-striped table-centered">
+      <thead>
+        <tr>
+          <th class="header-status">
+          </th>
+          <th class="header-title">
+            <div id="titleBtn" class="" order='asc'><a href="#">Title</a></div>
+          </th>
+          <th class="header-date">
+            <div id="freshBtn" class="" order='asc'><a href="#">Add Date</a></div>
+          </th>
+          <th class="header-ac">
+            <div id="acrateBtn" class="" order='asc'><a href="#">AC Rates</a></div>
+          </th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/reverse-words-in-a-string/">Reverse Words in a String</a></td>
+            
+            <td>2014-03-05</td>
+            <td>14.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/evaluate-reverse-polish-notation/">Evaluate Reverse Polish Notation</a></td>
+            
+            <td>2013-11-27</td>
+            <td>19.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/max-points-on-a-line/">Max Points on a Line</a></td>
+            
+            <td>2013-11-22</td>
+            <td>11.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/sort-list/">Sort List</a></td>
+            
+            <td>2013-11-16</td>
+            <td>20.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/insertion-sort-list/">Insertion Sort List</a></td>
+            
+            <td>2013-11-12</td>
+            <td>25.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/lru-cache/">LRU Cache</a></td>
+            
+            <td>2013-11-09</td>
+            <td>14.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-postorder-traversal/">Binary Tree Postorder Traversal</a></td>
+            
+            <td>2013-11-07</td>
+            <td>31.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a></td>
+            
+            <td>2013-11-05</td>
+            <td>35.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/reorder-list/">Reorder List</a></td>
+            
+            <td>2013-11-02</td>
+            <td>20.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/linked-list-cycle-ii/">Linked List Cycle II</a></td>
+            
+            <td>2013-10-30</td>
+            <td>30.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/linked-list-cycle/">Linked List Cycle</a></td>
+            
+            <td>2013-10-28</td>
+            <td>35.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/word-break-ii/">Word Break II</a></td>
+            
+            <td>2013-10-05</td>
+            <td>16.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/word-break/">Word Break</a></td>
+            
+            <td>2013-10-04</td>
+            <td>21.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/copy-list-with-random-pointer/">Copy List with Random Pointer</a></td>
+            
+            <td>2013-10-03</td>
+            <td>23.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/single-number-ii/">Single Number II</a></td>
+            
+            <td>2013-10-02</td>
+            <td>33.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/single-number/">Single Number</a></td>
+            
+            <td>2013-10-01</td>
+            <td>46.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/candy/">Candy</a></td>
+            
+            <td>2013-09-30</td>
+            <td>19.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/gas-station/">Gas Station</a></td>
+            
+            <td>2013-09-28</td>
+            <td>25.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/clone-graph/">Clone Graph</a></td>
+            
+            <td>2013-09-24</td>
+            <td>22.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/palindrome-partitioning-ii/">Palindrome Partitioning II</a></td>
+            
+            <td>2013-02-28</td>
+            <td>18.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/palindrome-partitioning/">Palindrome Partitioning</a></td>
+            
+            <td>2013-02-27</td>
+            <td>26.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/surrounded-regions/">Surrounded Regions</a></td>
+            
+            <td>2013-02-21</td>
+            <td>14.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/sum-root-to-leaf-numbers/">Sum Root to Leaf Numbers</a></td>
+            
+            <td>2013-02-18</td>
+            <td>29.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/longest-consecutive-sequence/">Longest Consecutive Sequence</a></td>
+            
+            <td>2013-02-13</td>
+            <td>28.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/word-ladder-ii/">Word Ladder II</a></td>
+            
+            <td>2013-02-10</td>
+            <td>11.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/word-ladder/">Word Ladder</a></td>
+            
+            <td>2013-02-10</td>
+            <td>18.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/valid-palindrome/">Valid Palindrome</a></td>
+            
+            <td>2013-01-12</td>
+            <td>22.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-maximum-path-sum/">Binary Tree Maximum Path Sum</a></td>
+            
+            <td>2012-11-07</td>
+            <td>20.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">Best Time to Buy and Sell Stock III</a></td>
+            
+            <td>2012-11-06</td>
+            <td>22.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">Best Time to Buy and Sell Stock II</a></td>
+            
+            <td>2012-10-30</td>
+            <td>36.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/best-time-to-buy-and-sell-stock/">Best Time to Buy and Sell Stock</a></td>
+            
+            <td>2012-10-30</td>
+            <td>31.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/triangle/">Triangle</a></td>
+            
+            <td>2012-10-29</td>
+            <td>26.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/pascals-triangle-ii/">Pascal&#39;s Triangle II</a></td>
+            
+            <td>2012-10-28</td>
+            <td>30.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/pascals-triangle/">Pascal&#39;s Triangle</a></td>
+            
+            <td>2012-10-28</td>
+            <td>31.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">Populating Next Right Pointers in Each Node II</a></td>
+            
+            <td>2012-10-28</td>
+            <td>30.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/populating-next-right-pointers-in-each-node/">Populating Next Right Pointers in Each Node</a></td>
+            
+            <td>2012-10-28</td>
+            <td>35.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/distinct-subsequences/">Distinct Subsequences</a></td>
+            
+            <td>2012-10-18</td>
+            <td>24.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/flatten-binary-tree-to-linked-list/">Flatten Binary Tree to Linked List</a></td>
+            
+            <td>2012-10-14</td>
+            <td>28.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/path-sum-ii/">Path Sum II</a></td>
+            
+            <td>2012-10-14</td>
+            <td>27.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/path-sum/">Path Sum</a></td>
+            
+            <td>2012-10-13</td>
+            <td>30.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/minimum-depth-of-binary-tree/">Minimum Depth of Binary Tree</a></td>
+            
+            <td>2012-10-09</td>
+            <td>29.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/balanced-binary-tree/">Balanced Binary Tree</a></td>
+            
+            <td>2012-10-08</td>
+            <td>32.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/convert-sorted-list-to-binary-search-tree/">Convert Sorted List to Binary Search Tree</a></td>
+            
+            <td>2012-10-02</td>
+            <td>27.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/convert-sorted-array-to-binary-search-tree/">Convert Sorted Array to Binary Search Tree</a></td>
+            
+            <td>2012-10-02</td>
+            <td>32.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-level-order-traversal-ii/">Binary Tree Level Order Traversal II</a></td>
+            
+            <td>2012-10-01</td>
+            <td>31.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/">Construct Binary Tree from Inorder and Postorder Traversal</a></td>
+            
+            <td>2012-09-30</td>
+            <td>26.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">Construct Binary Tree from Preorder and Inorder Traversal</a></td>
+            
+            <td>2012-09-30</td>
+            <td>26.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/maximum-depth-of-binary-tree/">Maximum Depth of Binary Tree</a></td>
+            
+            <td>2012-09-29</td>
+            <td>44.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">Binary Tree Zigzag Level Order Traversal</a></td>
+            
+            <td>2012-09-28</td>
+            <td>26.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-level-order-traversal/">Binary Tree Level Order Traversal</a></td>
+            
+            <td>2012-09-28</td>
+            <td>30.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/symmetric-tree/">Symmetric Tree</a></td>
+            
+            <td>2012-09-23</td>
+            <td>32.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/same-tree/">Same Tree</a></td>
+            
+            <td>2012-09-03</td>
+            <td>42.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/recover-binary-search-tree/">Recover Binary Search Tree</a></td>
+            
+            <td>2012-09-01</td>
+            <td>23.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/validate-binary-search-tree/">Validate Binary Search Tree</a></td>
+            
+            <td>2012-08-31</td>
+            <td>25.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/interleaving-string/">Interleaving String</a></td>
+            
+            <td>2012-08-30</td>
+            <td>19.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/unique-binary-search-trees-ii/">Unique Binary Search Trees II</a></td>
+            
+            <td>2012-08-27</td>
+            <td>27.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/unique-binary-search-trees/">Unique Binary Search Trees</a></td>
+            
+            <td>2012-08-27</td>
+            <td>36.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/binary-tree-inorder-traversal/">Binary Tree Inorder Traversal</a></td>
+            
+            <td>2012-08-27</td>
+            <td>35.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/restore-ip-addresses/">Restore IP Addresses</a></td>
+            
+            <td>2012-08-07</td>
+            <td>20.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/reverse-linked-list-ii/">Reverse Linked List II</a></td>
+            
+            <td>2012-06-27</td>
+            <td>26.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/subsets-ii/">Subsets II</a></td>
+            
+            <td>2012-06-25</td>
+            <td>27.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/decode-ways/">Decode Ways</a></td>
+            
+            <td>2012-06-25</td>
+            <td>16.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/gray-code/">Gray Code</a></td>
+            
+            <td>2012-05-20</td>
+            <td>32.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/merge-sorted-array/">Merge Sorted Array</a></td>
+            
+            <td>2012-05-20</td>
+            <td>32.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/scramble-string/">Scramble String</a></td>
+            
+            <td>2012-04-30</td>
+            <td>22.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/partition-list/">Partition List</a></td>
+            
+            <td>2012-04-30</td>
+            <td>26.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/maximal-rectangle/">Maximal Rectangle</a></td>
+            
+            <td>2012-04-23</td>
+            <td>21.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/largest-rectangle-in-histogram/">Largest Rectangle in Histogram</a></td>
+            
+            <td>2012-04-22</td>
+            <td>21.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/remove-duplicates-from-sorted-list-ii/">Remove Duplicates from Sorted List II</a></td>
+            
+            <td>2012-04-22</td>
+            <td>24.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/remove-duplicates-from-sorted-list/">Remove Duplicates from Sorted List</a></td>
+            
+            <td>2012-04-22</td>
+            <td>35.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/search-in-rotated-sorted-array-ii/">Search in Rotated Sorted Array II</a></td>
+            
+            <td>2012-04-19</td>
+            <td>30.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/remove-duplicates-from-sorted-array-ii/">Remove Duplicates from Sorted Array II</a></td>
+            
+            <td>2012-04-19</td>
+            <td>30.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/word-search/">Word Search</a></td>
+            
+            <td>2012-04-18</td>
+            <td>19.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/subsets/">Subsets</a></td>
+            
+            <td>2012-04-18</td>
+            <td>27.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/combinations/">Combinations</a></td>
+            
+            <td>2012-04-18</td>
+            <td>30.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a></td>
+            
+            <td>2012-04-15</td>
+            <td>18.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/sort-colors/">Sort Colors</a></td>
+            
+            <td>2012-04-08</td>
+            <td>32.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/search-a-2d-matrix/">Search a 2D Matrix</a></td>
+            
+            <td>2012-04-06</td>
+            <td>31.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/set-matrix-zeroes/">Set Matrix Zeroes</a></td>
+            
+            <td>2012-04-05</td>
+            <td>30.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/edit-distance/">Edit Distance</a></td>
+            
+            <td>2012-04-04</td>
+            <td>25.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/simplify-path/">Simplify Path</a></td>
+            
+            <td>2012-04-03</td>
+            <td>19.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/climbing-stairs/">Climbing Stairs</a></td>
+            
+            <td>2012-04-03</td>
+            <td>34.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/sqrtx/">Sqrt(x)</a></td>
+            
+            <td>2012-04-03</td>
+            <td>22.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/text-justification/">Text Justification</a></td>
+            
+            <td>2012-04-03</td>
+            <td>14.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/plus-one/">Plus One</a></td>
+            
+            <td>2012-04-02</td>
+            <td>31.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/valid-number/">Valid Number</a></td>
+            
+            <td>2012-04-02</td>
+            <td>11.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/add-binary/">Add Binary</a></td>
+            
+            <td>2012-04-02</td>
+            <td>26.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists</a></td>
+            
+            <td>2012-03-30</td>
+            <td>33.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/minimum-path-sum/">Minimum Path Sum</a></td>
+            
+            <td>2012-03-28</td>
+            <td>31.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/unique-paths-ii/">Unique Paths II</a></td>
+            
+            <td>2012-03-28</td>
+            <td>27.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/unique-paths/">Unique Paths</a></td>
+            
+            <td>2012-03-28</td>
+            <td>31.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/rotate-list/">Rotate List</a></td>
+            
+            <td>2012-03-27</td>
+            <td>22.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/permutation-sequence/">Permutation Sequence</a></td>
+            
+            <td>2012-03-27</td>
+            <td>22.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/spiral-matrix-ii/">Spiral Matrix II</a></td>
+            
+            <td>2012-03-27</td>
+            <td>30.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/length-of-last-word/">Length of Last Word</a></td>
+            
+            <td>2012-03-27</td>
+            <td>29.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/insert-interval/">Insert Interval</a></td>
+            
+            <td>2012-03-27</td>
+            <td>20.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/merge-intervals/">Merge Intervals</a></td>
+            
+            <td>2012-03-26</td>
+            <td>20.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/jump-game/">Jump Game</a></td>
+            
+            <td>2012-03-24</td>
+            <td>27.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/spiral-matrix/">Spiral Matrix</a></td>
+            
+            <td>2012-03-24</td>
+            <td>20.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/maximum-subarray/">Maximum Subarray</a></td>
+            
+            <td>2012-03-21</td>
+            <td>33.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/n-queens-ii/">N-Queens II</a></td>
+            
+            <td>2012-03-20</td>
+            <td>33.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/n-queens/">N-Queens</a></td>
+            
+            <td>2012-03-19</td>
+            <td>26.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/powx-n/">Pow(x, n)</a></td>
+            
+            <td>2012-03-19</td>
+            <td>25.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/anagrams/">Anagrams</a></td>
+            
+            <td>2012-03-19</td>
+            <td>23.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/rotate-image/">Rotate Image</a></td>
+            
+            <td>2012-03-17</td>
+            <td>31.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/permutations-ii/">Permutations II</a></td>
+            
+            <td>2012-03-16</td>
+            <td>25.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/permutations/">Permutations</a></td>
+            
+            <td>2012-03-16</td>
+            <td>31.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/jump-game-ii/">Jump Game II</a></td>
+            
+            <td>2012-03-16</td>
+            <td>24.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/wildcard-matching/">Wildcard Matching</a></td>
+            
+            <td>2012-03-15</td>
+            <td>13.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/multiply-strings/">Multiply Strings</a></td>
+            
+            <td>2012-03-12</td>
+            <td>20.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/trapping-rain-water/">Trapping Rain Water</a></td>
+            
+            <td>2012-03-10</td>
+            <td>28.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/first-missing-positive/">First Missing Positive</a></td>
+            
+            <td>2012-03-08</td>
+            <td>22.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/combination-sum-ii/">Combination Sum II</a></td>
+            
+            <td>2012-03-06</td>
+            <td>24.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/combination-sum/">Combination Sum</a></td>
+            
+            <td>2012-03-06</td>
+            <td>26.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/count-and-say/">Count and Say</a></td>
+            
+            <td>2012-03-05</td>
+            <td>27.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/sudoku-solver/">Sudoku Solver</a></td>
+            
+            <td>2012-03-04</td>
+            <td>20.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/valid-sudoku/">Valid Sudoku</a></td>
+            
+            <td>2012-03-03</td>
+            <td>28.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/search-insert-position/">Search Insert Position</a></td>
+            
+            <td>2012-03-03</td>
+            <td>35.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/search-for-a-range/">Search for a Range</a></td>
+            
+            <td>2012-03-02</td>
+            <td>27.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/search-in-rotated-sorted-array/">Search in Rotated Sorted Array</a></td>
+            
+            <td>2012-03-02</td>
+            <td>28.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/longest-valid-parentheses/">Longest Valid Parentheses</a></td>
+            
+            <td>2012-02-29</td>
+            <td>19.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/next-permutation/">Next Permutation</a></td>
+            
+            <td>2012-02-25</td>
+            <td>25.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/substring-with-concatenation-of-all-words/">Substring with Concatenation of All Words</a></td>
+            
+            <td>2012-02-23</td>
+            <td>18.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/divide-two-integers/">Divide Two Integers</a></td>
+            
+            <td>2012-02-18</td>
+            <td>16.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/implement-strstr/">Implement strStr()</a></td>
+            
+            <td>2012-02-18</td>
+            <td>22.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/remove-element/">Remove Element</a></td>
+            
+            <td>2012-02-16</td>
+            <td>33.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a></td>
+            
+            <td>2012-02-16</td>
+            <td>32.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/reverse-nodes-in-k-group/">Reverse Nodes in k-Group</a></td>
+            
+            <td>2012-02-15</td>
+            <td>24.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/swap-nodes-in-pairs/">Swap Nodes in Pairs</a></td>
+            
+            <td>2012-02-14</td>
+            <td>32.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/merge-k-sorted-lists/">Merge k Sorted Lists</a></td>
+            
+            <td>2012-02-13</td>
+            <td>21.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/generate-parentheses/">Generate Parentheses</a></td>
+            
+            <td>2012-02-12</td>
+            <td>31.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/valid-parentheses/">Valid Parentheses</a></td>
+            
+            <td>2012-01-30</td>
+            <td>28.4%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/remove-nth-node-from-end-of-list/">Remove Nth Node From End of List</a></td>
+            
+            <td>2012-01-27</td>
+            <td>29.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/letter-combinations-of-a-phone-number/">Letter Combinations of a Phone Number</a></td>
+            
+            <td>2012-01-26</td>
+            <td>26.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/4sum/">4Sum</a></td>
+            
+            <td>2012-01-26</td>
+            <td>21.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/3sum-closest/">3Sum Closest</a></td>
+            
+            <td>2012-01-18</td>
+            <td>27.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/3sum/">3Sum</a></td>
+            
+            <td>2012-01-17</td>
+            <td>16.9%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/longest-common-prefix/">Longest Common Prefix</a></td>
+            
+            <td>2012-01-17</td>
+            <td>27.2%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/roman-to-integer/">Roman to Integer</a></td>
+            
+            <td>2012-01-15</td>
+            <td>34.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/integer-to-roman/">Integer to Roman</a></td>
+            
+            <td>2012-01-15</td>
+            <td>33.6%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/container-with-most-water/">Container With Most Water</a></td>
+            
+            <td>2012-01-08</td>
+            <td>31.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/regular-expression-matching/">Regular Expression Matching</a></td>
+            
+            <td>2012-01-08</td>
+            <td>20.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/palindrome-number/">Palindrome Number</a></td>
+            
+            <td>2012-01-04</td>
+            <td>29.1%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/string-to-integer-atoi/">String to Integer (atoi)</a></td>
+            
+            <td>2011-12-26</td>
+            <td>14.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/reverse-integer/">Reverse Integer</a></td>
+            
+            <td>2011-12-25</td>
+            <td>40.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/zigzag-conversion/">ZigZag Conversion</a></td>
+            
+            <td>2011-12-05</td>
+            <td>23.8%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/longest-palindromic-substring/">Longest Palindromic Substring</a></td>
+            
+            <td>2011-11-11</td>
+            <td>20.7%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/add-two-numbers/">Add Two Numbers</a></td>
+            
+            <td>2011-11-01</td>
+            <td>23.0%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/longest-substring-without-repeating-characters/">Longest Substring Without Repeating Characters</a></td>
+            
+            <td>2011-05-15</td>
+            <td>22.3%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/median-of-two-sorted-arrays/">Median of Two Sorted Arrays</a></td>
+            
+            <td>2011-03-27</td>
+            <td>17.5%</td>
+            
+          </tr>
+        
+          <tr>
+            <td>
+              <span class="None"> </span>
+            </td>
+            
+              <td><a href="/home/sosohu/huqinghai/leetcode/doc/oj.leetcode.com/problems/two-sum/">Two Sum</a></td>
+            
+            <td>2011-03-13</td>
+            <td>18.5%</td>
+            
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+ 
+    
+    <div class="container">
+      <hr>
+    </div> <!-- /container --> 
+    <footer>
+    <p class="text-center">
+      <a href="/faq/">Frequently Asked Questions</a> | 
+      <a href="/tos/">Terms of Service</a>
+    </p>
+    <p class="text-center">
+      <a href="//www.iubenda.com/privacy-policy/499831" class="iubenda-white iubenda-embed" title="Privacy Policy">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+    </p>
+    <p class="text-center">Copyright © 2014 LeetCode</p> 
+    </footer>
+    
+
+    
+
+    <script>
+      function initEvent() {
+        $("#resend").click(function () {
+          $("#resendInfo").text("Sending...");
+          $.ajax({
+            url: "/auth/send_verification_email",
+            }).done(function () {
+            $("#resendInfo").addClass("text-success");
+            $("#resendInfo").text("Verification email sent successfully, please check your mailbox."); 
+            }).fail(function () {
+            $("#resendInfo").addClass("text-danger");
+            $("#resendInfo").text("Verification email sent fail, please send again."); 
+          });
+        });
+      };
+      $(document).ready(function () {
+        initEvent();
+        $('#navBar-right img').addClass('img-rounded');
+      });
+    </script>
+    
+<script src="/static/jquery/jquery.tinysort.min.js"></script>
+<script src="/static/jquery/jquery.tinysort.charorder.min.js"></script>
+<script src="/static/jquery/jquery.cookie.js"></script>
+<script>
+  function searchProblems(matchString) {
+    if (matchString) {
+      var problems = $("#problemList tbody tr");
+      var colIndex = $('#problemList th:contains("Title")').index();
+      $("#searchResult tbody tr").remove();
+      $.each(problems, function(index, problem) {
+        var title = $("td:eq(" + colIndex + ") a", problem).text();
+        if (title.match(new RegExp(matchString, "i")))
+        {
+          $("#searchResult tbody").append($(problem).clone());
+        }
+      });
+      $("#searchResultRow").css('display', '');
+      $("#problemListRow").css('display', 'none');
+      $("#searchTitleBtn").attr('order', $("#titleBtn").attr('order'));
+      $("#searchFreshBtn").attr('order', $("#freshBtn").attr('order'));
+      } else {
+      $("#searchResultRow").css('display', 'none');
+      $("#problemListRow").css('display', '');
+      $("#titleBtn").attr('order', $("#searchTitleBtn").attr('order'));
+      $("#freshBtn").attr('order', $("#searchFreshBtn").attr('order'));
+    }
+  }
+  function sortRate (a, b, order){
+    if (a == b) return 0;
+    if (a == 'N/A') return order * -1;
+    if (b == 'N/A') return order;
+    var rate_a = parseFloat(a.trim('%'));
+    var rate_b = parseFloat(b.trim('%'));
+    return ( order * ((rate_a < rate_b) ? -1 : 1));
+  }
+  function sortDate (a, b, order){
+    if (a == b) return 0;
+    var date_a = new Date(a);
+    var date_b = new Date(b);
+    return ( order * ((date_a < date_b) ? -1 : 1));
+  };
+  function hideStatusColumn() {
+    $("table tr th:nth-child(1)").hide();
+    $("table tr td:nth-child(1)").hide();
+  }
+  question_list = {
+    initEvent: function initEvent() {
+      $("#searchBtn").click(function(){
+        var matchString = $("#searchText").val(); 
+        searchProblems(matchString);
+      });
+      $("#searchTitleBtn").click(function (e) {
+        e.preventDefault();
+        $("#searchResult tbody tr").tsort('a', { order : $(this).attr('order') });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      });
+      $("#titleBtn").click(function (e) {
+        e.preventDefault();
+        $("#problemList tbody tr").tsort('a', { order : $(this).attr('order') });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      })
+      $("#searchFreshBtn").click(function (e) {
+        e.preventDefault();
+        var colIndex = $('#searchResult th:contains("Add Date")').index();
+        $("#searchResult tbody tr").tsort('td:eq(' + colIndex + ')', { 
+          order: $(this).attr('order'),
+          sortFunction : function(a, b) {
+            return sortDate(a.s[0], b.s[0], ($(this).attr('order') == 'asc') ? 1 : -1);
+          },
+        });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      })
+      $("#freshBtn").click(function (e) {
+        e.preventDefault();
+        var colIndex = $('#problemList th:contains("Add Date")').index();
+        $("#problemList tbody tr").tsort('td:eq(' + colIndex + ')', { 
+          order: $(this).attr('order'),
+          sortFunction : function(a, b) {
+            return sortDate(a.s[0], b.s[0], ($(this).attr('order') == 'asc') ? 1 : -1);
+          },
+        });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      });
+      $("#searchAcrateBtn").click(function (e) {
+        e.preventDefault();
+        var colIndex = $('#searchResult th:contains("AC Rates")').index();
+        $("#searchResult tbody tr").tsort('td:eq(' + colIndex + ')', { 
+          order: $(this).attr('order'),
+          sortFunction : function(a, b) {
+            return sortRate(a.s[0], b.s[0], ($(this).attr('order') == 'asc') ? 1 : -1);
+          },
+        });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      });
+      $("#acrateBtn").click(function (e) {
+        e.preventDefault();
+        var colIndex = $('#problemList th:contains("AC Rates")').index();
+        $("#problemList tbody tr").tsort('td:eq(' + colIndex + ')', { 
+          order: $(this).attr('order'),
+          sortFunction : function(a, b) {
+            return sortRate(a.s[0], b.s[0], ($(this).attr('order') == 'asc') ? 1 : -1);
+          },
+        });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      });
+      $("#searchHotBtn").click(function (e) {
+        e.preventDefault();
+        var colIndex = $('#searchResult th:contains("Hotness")').index();
+        $("#searchResult tbody tr").tsort('td:eq(' + colIndex + ')', { 
+          order: $(this).attr('order'),
+          sortFunction : function(a, b) {
+            return sortRate(a.s[0], b.s[0], ($(this).attr('order') == 'asc') ? 1 : -1);
+          },
+        });
+        $(this).attr('order', ($(this).attr('order') == 'asc') ?'desc':'asc');
+      });
+      
+      $('#searchText').bind("enterKey",function(e){
+        var matchString = $("#searchText").val(); 
+        searchProblems(matchString);
+      });
+      $('#searchText').keyup(function(e){
+        if(e.keyCode == 13)
+        {
+          $(this).trigger("enterKey");
+        }
+      });
+      $("#announcement button").click(function(e) {
+        $.cookie("announcement", "2");
+      });
+    }
+  };
+  function showSolvedProblemCount() {
+    var solved = $("#problemList tbody tr .ac").length;
+    var total = $("#problemList tbody tr").length;
+    $("#brief_stats strong").text(solved + " / " + total);
+    $("#brief_stats").removeClass("hide");
+  }
+  $(document).ready(function () {
+    
+    hideStatusColumn();
+    
+    $("#problemsNav").addClass('active');
+    if ($.cookie("announcement") !== "2") {
+      $("#announcement").removeClass("hide");
+    };
+    question_list.initEvent();
+
+    // scroll_to_top_button
+    $(window).scroll(function() {
+        if($(this).scrollTop() > 100){
+            $("#goTop").fadeIn("fast");
+        }
+        else{
+            $("#goTop").fadeOut("fast");
+        }
+    });
+    $('#goTop').click(function() {
+        $('html, body').stop().animate({
+          scrollTop: 0
+        }, 500, function() {
+            $("#goTop").fadeOut("fast");
+        }); 
+    });    
+  });
+</script>
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>$.fn.modal || document.write('<script src="/static/bootstrap/js/bootstrap.min.js"><\/script>')</script>
+
+    <a href="mailto:admin@leetcode.com?subject=Feedback" id="chat-link" target="_blank">
+    <i class="glyphicon glyphicon-envelope"></i>Send Feedback</a>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-6849839-6', 'leetcode.com');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+  </body>
+</html>

@@ -39,7 +39,7 @@ public:
 							return false;
 			}
 		}
-		if(mark_point.size() > 2)	return false;
+		if(mark_point.size() > 1)	return false;
 		if(mark_add.size() + mark_minus.size() > 2)	return false;
 		if(marke.size() > 1)	return false;
 
@@ -55,17 +55,9 @@ public:
 				start == marke[0] - 1){
 				return false;
 			}
-			if(mark_point.size() == 1 && mark_point[0] == end &&
-				end == marke[0] + 1){
+			if(mark_point.size() == 1 && mark_point[0] <= end &&
+				mark_point[0] >= marke[0] + 1){
 				return false;
-			}
-			if(mark_point.size() == 2){
-				if(mark_point[1] < marke[0])	return false;
-				if(mark_point[0] > marke[0])	return false;
-				if(mark_point[0] == start && start == marke[0] - 1)
-					return false;
-				if(mark_point[1] == end && end == marke[0] + 1)
-					return false;
 			}
 			if(mark_add.size() + mark_minus.size() == 2){
 				if(s[start] != '+' && s[start] != '-')	return false;
@@ -74,8 +66,8 @@ public:
 				if(end - 1 == marke[0])	return false;
 			}
 			if(mark_add.size() + mark_minus.size() == 1){
-				if((s[start] != '+' || s[start] != '-')
-					&& (s[marke[0] + 1] != '+' || s[marke[0]+1] != '-'))
+				if((s[start] != '+' && s[start] != '-')
+					&& (s[marke[0] + 1] != '+' && s[marke[0]+1] != '-'))
 					return false;
 
 				if((s[start] == '+' || s[start] == '-') && start + 1 == marke[0])
@@ -104,7 +96,7 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	const char* s = "  +0e- ";		
+	const char* s = "-.3e6";		
 	bool ret = sl.isNumber(s);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;

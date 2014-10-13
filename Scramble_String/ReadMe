@@ -35,3 +35,20 @@ Q	Given a string s1, we may represent it as a binary tree by partitioning it to 
 	We say that "rgtae" is a scrambled string of "great".
 
 	Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.
+
+A	as for string s1, s2 with length is n
+
+	set data[i][j][k]: i is the start of s1, j is the start of s2, k is the length
+			means wheather s2[j,j+k] is the scrambled string of s1[i, i+k]
+
+	so, we have the recursive way: data[i][j][k] = ((data[i][j][1] && data[i+1][j+1][k-1]) 
+														|| data[i][j+k-1][1] && data[i+1][j][k-1])
+												||	((data[i][j][2] && data[i+2][j+2][k-2]) 
+														|| data[i][j+k-2][2] && data[i+2][j][k-2])
+												...
+												||	((data[i][j][k-1] && data[i+k-1][j+k-1][1]) 
+														|| data[i][j+1][k-1] && data[i+k-1][j][1])
+
+	so, we can construct it level by level
+
+	return data[0][0][n-1]

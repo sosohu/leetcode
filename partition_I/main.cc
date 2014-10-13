@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -23,6 +23,7 @@ void print(vector<vector<string> > data){
 class Solution {
 
 public:
+
 	bool is_palindrome(string& s){
 		int len = s.length();
 		for(int i = 0; i < len / 2; i++){
@@ -32,65 +33,34 @@ public:
 		return true;
 	}
 
-	void define_op(vector<vector<string> >& data, string& str, vector<vector<string> >& rhs){
-		int len = rhs.size();
-		vector<string> tmp;
-		/*
-		if(len == 0){
-			tmp.push_back(str);
-			data.push_back(tmp);
-			return;
-		}
-		*/
-		for(int i = 0; i < len; i++){
-			tmp = rhs[i];
-			tmp.push_back(str);
-			data.push_back(tmp);
-		}
-	}
-
-	inline void Init(map<string, vector<vector<string> > >& data, 
-					 map<string, bool>& palind,string& s, int n){
-		for(int i = 0; i < n; i++){
-			string str(s,i,1);
-			if(data.count(str) == 0){
-				vector<string> tmp;
-				tmp.push_back(str);
-				data[str].push_back(tmp);
-				palind[str] = true;
-			}
-		}
-	}
-
 	vector<vector<string> > partition(string s) {
 		int len = s.length();
-		map<string, vector<vector<string> > > data;
-		map<string, bool> is_palind;
-		Init(data, is_palind, s, len);
-		string val,str,rhs;
-		vector<string> tmp;
-		for(int step = 2; step <= len; step++){
-			for(int i = 0; i < len - step + 1; i++){
-				val = s.substr(i, step);
-				if(data.count(val) == 1)
-					continue;
-				for(int j = i + step -1; j > i; j--){
-					str = s.substr(j, i +  step - j );
-					rhs = s.substr(i, j - i);
-					if(is_palind.count(str) == 1){
-						define_op(data[val], str, data[rhs]);	
-					}
+		string str, left;
+		vector<vector<string> > tmp;
+		vector<vector<string> > ret;
+		
+		for(int i = 1; i < len ; i++){
+			str = s.substr(len - i, i);
+			if(is_palindrome(str)){
+				left = s.substr(0, len - i);
+				tmp = partition(left);
+				int size = tmp.size();
+				for(int j = 0; j < size; j++){
+					tmp[j].push_back(str);
+					ret.push_back(tmp[j]);
 				}
-				if(is_palind.count(val) == 1 || is_palindrome(val)){
-					tmp.clear();
-					tmp.push_back(val);
-					data[val].push_back(tmp);
-					is_palind[val] = true;
-				}
+					
 			}
 		}
-		return data[s];
-    }
+
+		if(is_palindrome(s)){
+			vector<string> vec;
+			vec.push_back(s);
+			ret.push_back(vec);
+		}
+
+		return ret;
+	}
 
 };
 

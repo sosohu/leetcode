@@ -1,0 +1,17 @@
+
+Q	Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
+
+	For example,
+	Given n = 3, your program should return all 5 unique BST's shown below.
+
+	   1         3     3      2      1
+	    \       /     /      / \      \
+	     3     2     1      1   3      2
+	    /     /       \                 \
+	   2     1         2                 3
+
+A	use recursion can simple many things
+
+	data[1,n] = data[1,i-1] X data[i+1,n]  i = 1,2,...,n
+		
+	data[1, i-1] X data[i+1,n] means left child is 1,...,i-1 and right child is i+1, ... , n ; the root is i

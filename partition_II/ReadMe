@@ -1,10 +1,15 @@
 
 Q	Given a string s, partition s such that every substring of the partition is a palindrome.
-	Return all possible palindrome partitioning of s.
+	Return the minimum cuts needed for a palindrome partitioning of s.
 	For example, given s = "aab",
-	Return
+	Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
 
-	  [
-	    ["aa","b"],
-	    ["a","a","b"]
-	  ]
+A	set min[n] is the min cut of s[1] ... s[n]
+	set P[i][j] is true when s[i] ... s[j] is partitioning
+
+	min[n] = min{ min[j] + 1 };     if j < n && P[j+1][n] ,   it is a DP problem
+
+	so, how the compute the P[i][j]; 
+	P[i][j] = s[i] == s[j] && P[i+1][j-1];     it is a DP problem 
+
+	O(n^2) time complex

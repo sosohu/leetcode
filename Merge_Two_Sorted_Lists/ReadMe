@@ -1,0 +1,4 @@
+
+Q	Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+A	easy, don't forget to set the last one's next pointer NULL

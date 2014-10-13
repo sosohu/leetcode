@@ -11,6 +11,47 @@ class Solution {
 
 public:
 
+	// O(n*m) O(1)
+	bool isMatch(const char *s, const char *p){
+		const char* p1 = s;
+		const char* p2 = p;
+		
+		const char *star_pos = NULL;
+		const char *rec_pos = NULL;
+
+		while(*p1){
+			switch(*p2){
+				case '?':   p1++; p2++; break;
+				case '*':	while(*(p2+1) == '*'){
+									p2++;
+							}
+							star_pos = p2;
+							rec_pos = p1;
+							p2++;
+							break;
+				default:	if(*p1 == *p2){
+								p1++;
+								p2++;
+							}else{
+								if(rec_pos && star_pos){
+									p1 = ++rec_pos;
+									p2 = star_pos;
+									p2++;
+								}else
+									return false;
+							}
+			}
+		}
+		while(*p2){
+			if(*p2 != '*')
+				return false;
+			p2++;
+		}
+		return true;
+	}
+
+	// O(n*m) but, space limit is not good
+	/*
 	bool isMatch(const char *s, const char *p){
 		int len1 = strlen(s);
 		int len2 = strlen(p);
@@ -96,7 +137,9 @@ public:
 		}
 		return data[len1-1][len2-1];
 	}
+	*/
 
+	// time using very high, O(n!*m!)
 	/*
 	bool isMatch(const char *s, const char *p) {
 		int len1 = strlen(s);
@@ -149,7 +192,8 @@ int main(int argc, char** argv)
 	Solution sl;
 	
     //bool ret = sl.isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b");
-	bool ret = sl.isMatch("mississippi","m*i*si*si*si*pi");
+	//bool ret = sl.isMatch("mississippi","m*i*si*si*si*pi");
+	bool ret = sl.isMatch("b","*a*");
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 

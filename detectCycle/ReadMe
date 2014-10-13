@@ -1,0 +1,16 @@
+
+Q	Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+	Follow up:
+	Can you solve it without using extra space?
+
+A	O(n) time using, no space using
+	(1)move from head to the meeting point, fast move 1 points per step, slow is 1
+		slow move distance(s) ,then fast move distance (2*s)
+		s = n*r_len, r_len is the length of circle, n >= 1;
+	(2)one move from meeting point, one move from the head, move s points 
+		when one move from the head to the meeting point again, should move s steps, 
+		at the same tiem, because s = n*r_len, other move s steps from the meeting point 
+		will stop at the meeting point again, so the first point these two pointer meeting
+		is the entry of the cycle.
+    

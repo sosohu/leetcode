@@ -1,0 +1,4 @@
+
+Q	Implement pow(x, n).
+
+A	use binary mul and take care of overflow.

@@ -1,0 +1,7 @@
+
+Q	Given a non-negative number represented as an array of digits, plus one to the number.
+
+	The digits are stored such that the most significant digit is at the head of the list.
+
+A	add from the last bit, you maybe feel it is very simple, so use simple way, do not
+	think it in very complex way.

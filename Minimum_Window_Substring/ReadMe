@@ -1,0 +1,28 @@
+
+Q	Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+	For example,
+	S = "ADOBECODEBANC"
+	T = "ABC"
+	Minimum window is "BANC".
+
+	Note:
+	If there is no such window in S that covers all characters in T, return the emtpy string "".
+
+	If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+
+A	very difficult
+	there are two pointers, I want to say:
+
+	(1) how to search a characters is or is not in the T ?
+			we can make a array with length is 256, expect[256];
+		eg: T = "ABC"  ---->   expect['A'] = 1, expect['B'] = 1, expect['C'] = 1, other = 0;
+		so, we can easyly check the characters in S wheather in T
+
+	(2) how to change the seq we have found?
+			we have found a seg that all characters have been found in the seq.
+		then after the seq, the first characters in the T, if the characters is same
+		to the first one of the seq, we can delete the first one of seq and add this one
+		to the seq, and re-compute the length of seq
+		
+		

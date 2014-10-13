@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+#include <unordered_set>
+#include <stack>
+
+using namespace std;
+
+
+class Solution {
+
+public:
+
+	int detail(int n, string start, string end, unordered_set<string> &dict, unordered_set<string>& find){
+		if(start.compare(end) == 0)
+			return 1;
+		int min = n * 26;
+		int tmp;
+		find.insert(start);
+		string str;
+		for(int i = 0; i < n; i++){
+			str = start;
+			for(int j = 97; j < 123; j++){
+				str[i] = j;
+				if(str.compare(end) == 0)
+					return 2;
+				if(dict.count(str) == 1 && find.count(str) == 0){
+					tmp = detail(n,str,end,dict,find);
+					if(tmp != 0 && min > tmp)
+						min = tmp;
+				}
+			}
+		}
+		if(min == n*26)
+			return 0;
+		return min + 1;
+	}
+
+	int ladderLength(string start, string end, unordered_set<string> &dict) {
+		int len = start.length();
+		unordered_set<string> find;
+		
+		int ret = detail(len, start, end, dict, find);
+		return ret;
+    }
+
+};
+
+int main(int argc, char** argv)
+{
+	Solution sl;
+	unordered_set<string> dict;
+	string data[] = {"hot","dot","dog","lot","log"};
+	for(int i = 0; i < 5; i++)
+		dict.insert(data[i]);
+    int ret = sl.ladderLength("hit", "cog", dict);
+	
+	cout<<"Result  :("<<ret<<")"<<endl;
+
+	return 0;
+
+}

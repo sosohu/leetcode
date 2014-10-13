@@ -1,0 +1,8 @@
+
+Q	Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+
+A	normal recursion maybe run slowly with O(nlgn) time complex
+	because you must read  link nodes from head to the tail again and again in each recursion
+	
+	so, at each recursion, you can record the tail's nodes, it is the  head node of next recursion
+	so, you can only use read the linklist once time with O(n) time using

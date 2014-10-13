@@ -6,3 +6,5 @@ Q: 	Design and implement a data structure for Least Recently Used (LRU) cache.
 	(2)set(key, value) - Set or insert the value if the key is not already present.
 	 When the cache reached its capacity, it should invalidate the least recently
 	 used item before inserting a new item.
+A:  get   O(lgn)
+	set   O(lgn)

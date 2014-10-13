@@ -1,0 +1,22 @@
+
+Q	Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+
+
+	Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
+
+
+	The largest rectangle is shown in the shaded area, which has area = 10 unit.
+
+	For example,
+	Given height = [2,1,5,6,2,3],
+	return 10.
+
+A	S[n] is the largest area of h[1], ... , h[n]
+	left[k] is the longest continuous left direction with value greater than h[k]
+	right[k] is the longest continuous right direction with value greater than h[k]
+
+	for example: 2,3,4,3,1,1
+	the left :   0, 0, 0, 2, 5, 6
+	the right:   3, 2, 0, 0, 1, 0
+
+	S[n] = max{ h[i] * (left[i] + right[i] + 1) }  i = 1, 2, 3, ... , n

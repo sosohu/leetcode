@@ -1,0 +1,6 @@
+
+Q	Implement int sqrt(int x).
+
+	Compute and return the square root of x.
+
+A	use Newton iteration, you should take care of the overflow.

@@ -1,0 +1,6 @@
+
+Q	Given an array of strings, return all groups of strings that are anagrams.
+
+	Note: All inputs will be in lower-case.
+
+A	each string generate a key, and sort the key, merge the key.

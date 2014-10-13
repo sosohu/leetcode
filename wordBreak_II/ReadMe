@@ -1,0 +1,19 @@
+
+Q	Given a string s and a dictionary of words dict, add spaces in s 
+	to constructa a sentence where each word is a valid dictionary word.
+
+	Return all such possible sentences.
+
+	For example, given
+
+	s = "catsanddog", dict = ["cat", "cats", "and", "sand", "dog"].
+	A solution is ["cats and dog", "cat sand dog"].
+
+A	First, you need judge can it be divided. and the using the DP method:
+	S(i,j) = S(i,i)*S(i+1,j) + S(i, i+1)*S(i+2,j) + ... + S(i,j-1)S(j,j)
+		'*' is the special op like mul merge, '+' is also the special op like add merge.
+	in addtion, S(i,j) will push back the string from i to j ig the string is one word
+
+	BTW, you should construct the S(i,j) by down to up with the increase of len(j - i + 1)
+
+	S(1,n) is the anwser

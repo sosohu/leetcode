@@ -1,0 +1,12 @@
+
+Q	Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+
+	For example:
+	Given "25525511135",
+
+	return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+
+A	set data[len][n] record the length of string is len to construct the n ip numbers(0~255)
+		
+	data[len][n] = {data[len-1][n-1] + ".s[n-1]"} + {data[len-2][n-1] + ".s[n-2]s[n-1]"} 
+					+  {data[len-3][n-1] + ".s[n-3]s[n-2]s[n-1]"}  

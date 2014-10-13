@@ -26,12 +26,12 @@ public:
 			return;
 		}
 
-		vector<vector<int> > contain;
-		recursion(contain, n - 1, k - 1);
 		recursion(data, n - 1, k);
-		for(int i = 0; i < contain.size(); i++){
-			contain[i].push_back(n);
-			data.push_back(contain[i]);
+		int start = data.size();
+		recursion(data, n - 1, k - 1);
+		int end = data.size();
+		for(int i = start; i < end; i++){
+			data[i].push_back(n);
 		}
 	}
 
@@ -54,7 +54,7 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	vector<vector<int> > ret = sl.combine(4,3);
+	vector<vector<int> > ret = sl.combine(5,3);
 	
 	for(int i = 0; i < ret.size(); i++){
 		for(int j = 0; j < ret[i].size(); j++)

@@ -35,52 +35,44 @@ public:
 
 	int minCut(string s) {
 		int len = s.length();
-		if(is_palindrome(s))
-			return 0;
-
-		int data[len][len];
-		map<string, int> find;
-
+		bool P[len][len];
 		
 		for(int i = 0; i < len; i++){
-			data[i][i] = 0;
-			for(int j = i + 1; j < len; j++){
-				data[i][j] = -1;
+			P[i][i] = true;
+			if(i < len -1 && s[i] == s[i+1]) 
+				P[i][i+1] = true;
+			else
+				P[i][i+1]  = false;
+		}
+		
+		int j;
+		for(int step = 3; step <= len; step++){
+			for(int i = 0; i <= len - step; i++){
+				j = i + step - 1;
+				if(s[i] == s[j] && P[i+1][j-1])
+					P[i][j] = true;
+				else
+					P[i][j] = false;
 			}
 		}
 
-		int min = len ;
-		int count;
-		string str;
-		for(int step = 2; step <= len; step++){
-			find.clear();
-			for(int i = 0; i <= len - step; i++){
-				str = s.substr(i, step);
-				if(find.count(str) != 1){
-					if(is_palindrome(str)){
-						data[i][i + step -1] = 0;
-						find[str] = 0;
-						continue;
-					}
-				}else{
-					data[i][i + step -1] = find[str];
-					continue;
-				}
-				min  = len;
-				for(int j = i; j < i + step - 1; j++){
-					if(data[i][j] != -1){
-						count = data[i][j] + data[j+1][i + step - 1] + 1;		
-						if(count < min)
-							min = count;
-					}
-				}
-				if(min != len){
-					data[i][i+step-1] = min;
-					find[str] = min;
+		if(P[0][len-1]) return 0;
+
+		int min[len];
+		min[0] = 0;
+
+		for(int step = 1; step < len; step++){
+			if(P[0][step]) { min[step] = 0; continue;}
+			int tmp = step;
+			for(int i = step ; i > 0; i--){
+				if(P[i][step] && tmp > min[i - 1] + 1 ){
+					tmp = min[i-1] + 1;
 				}
 			}
+			min[step] = tmp;
 		}
-		return data[0][len - 1];		
+		
+		return min[len-1];
 	}
 
 };
@@ -88,8 +80,8 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("adabdcaebdcebdcacaaaadbbcadabcbeabaadcbcaaddebdbddcbdacdbbaedbdaaecabdceddccbdeeddccdaabbabbdedaaabcdadbdabeacbeadbaddcbaacdbabcccbaceedbcccedbeecbccaecadccbdbdccbcbaacccbddcccbaedbacdbcaccdcaadcbaebebcceabbdcdeaabdbabadeaaaaedbdbcebcbddebccacacddebecabccbbdcbecbaeedcdacdcbdbebbacddddaabaedabbaaabaddcdaadcccdeebcabacdadbaacdccbeceddeebbbdbaaaaabaeecccaebdeabddacbedededebdebabdbcbdcbadbeeceecdcdbbdcbdbeeebcdcabdeeacabdeaedebbcaacdadaecbccbededceceabdcabdeabbcdecdedadcaebaababeedcaacdbdacbccdbcece");		
-	//string s("ab");
+	//string s("adabdcaebdcebdcacaaaadbbcadabcbeabaadcbcaaddebdbddcbdacdbbaedbdaaecabdceddccbdeeddccdaabbabbdedaaabcdadbdabeacbeadbaddcbaacdbabcccbaceedbcccedbeecbccaecadccbdbdccbcbaacccbddcccbaedbacdbcaccdcaadcbaebebcceabbdcdeaabdbabadeaaaaedbdbcebcbddebccacacddebecabccbbdcbecbaeedcdacdcbdbebbacddddaabaedabbaaabaddcdaadcccdeebcabacdadbaacdccbeceddeebbbdbaaaaabaeecccaebdeabddacbedededebdebabdbcbdcbadbeeceecdcdbbdcbdbeeebcdcabdeeacabdeaedebbcaacdadaecbccbededceceabdcabdeabbcdecdedadcaebaababeedcaacdbdacbccdbcece");		
+	string s("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 	int ret;
 	ret = sl.minCut(s);
 	

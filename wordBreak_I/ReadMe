@@ -1,0 +1,17 @@
+
+Q	Given a string s and a dictionary of words dict, determine if s can be 
+	segmented into a space-separated sequence of one or more dictionary words.
+
+	For example, given
+	s = "leetcode",
+	dict = ["leet", "code"].
+
+	Return true because "leetcode" can be segmented as "leet code".
+
+A	using the DP method:
+	S(i,j) = S(i,i)&&S(i+1,j) || S(i, i+1)&&S(i+2,j) || ... || S(i,j-1)&&S(j,j)
+	in addition, S(i,j) = true if the string from i, j is one word
+
+	BTW, you should construct the S(i,j) by down to up with the increase of len(j - i + 1)
+
+	S(1,n) is the anwser

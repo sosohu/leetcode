@@ -1,0 +1,14 @@
+
+Q	Follow up for "Search in Rotated Sorted Array":
+	What if duplicates are allowed?
+
+	Would this affect the run-time complexity? How and why?
+
+	Write a function to determine if a given target is in the array.
+
+A	for A[low] , ... ,A[high]	
+	mid = (low + high)/2;
+	if(mid == low) we can set low = mid , and try again
+	if(high == low) we can set high = mid , and try again
+
+	default: use the first problem's way.

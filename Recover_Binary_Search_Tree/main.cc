@@ -40,13 +40,7 @@ public:
 
 		int l_val;
 
-		if(ret)
-			l_val = ret->val;
-		else
-			l_val = val - 1;
-
-
-		if(val < l_val){
+		if(ret && val < ret->val){
 			if(!first_node){
 				first_node = ret;
 			}

@@ -1,0 +1,13 @@
+
+Q	Given a binary tree, determine if it is a valid binary search tree (BST).
+
+	Assume a BST is defined as follows:
+
+	The left subtree of a node contains only nodes with keys less than the node's key.
+	The right subtree of a node contains only nodes with keys greater than the node's key.
+	Both the left and right subtrees must also be binary search trees.
+
+A	inorder scan the BST, when scan one node, we will scan its left child, firslty, 
+	and then set a return point(last) to record the pre-node of the node, 
+	compare the node and its pre-node to judge wheather it is right, and set the node as its
+	right child's pre-node to continue judge

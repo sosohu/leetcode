@@ -1,0 +1,17 @@
+
+Q	There are N children standing in a line. Each child is assigned a rating value.
+
+	You are giving candies to these children subjected to the following requirements:
+
+	Each child must have at least one candy.
+	Children with a higher rating get more candies than their neighbors.
+
+	What is the minimum candies you must give?
+
+A	
+	a[p] < a[p+1] < ... < a[i] > a[i+1] > ... > a[q]
+	a[i]'s left value: i - p
+	a[i]'s right value: q - i
+
+	so, a[k]'s left and right value can be constructed by a[k-1]'s left and right value
+

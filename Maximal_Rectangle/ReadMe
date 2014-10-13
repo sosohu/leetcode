@@ -1,0 +1,6 @@
+
+Q	Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
+A	for matrix A[n,m] means n * m matrix
+	S(A[i][j]) means cotains A[i][j]'s max rectangle
+	A[n,m] = max{ A[n-1, m] , S(A[n][0]) , S(A[n][0]), ... , S(A[n][m])} 
+
