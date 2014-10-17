@@ -40,8 +40,11 @@ public:
 		}
 		if(nums[pos-1] < target && nums[pos-1] + nums[0] <= target){
 			int  newpos;
-			if(count[pos-1] == 1)
+			if(count[pos-1] == 1){
+				if(pos - 1 == 0)
+					return data;
 				newpos = binarysearch(nums, 0, pos - 2, target - nums[pos-1]);
+			}
 			else{
 				newpos = binarysearch(nums, 0, pos - 1, target - nums[pos-1]);
 				if(newpos == pos - 1)
@@ -62,6 +65,10 @@ public:
 	}
 
 	vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+		if(num.size() == 0){
+			vector<vector<int> > data;
+			return data;
+		}
 		sort(num.begin(), num.end(), mysort);
 		vector<int> count;
 		vector<int> number;
@@ -86,15 +93,14 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	vector<int> data(7);
-	data[0] = 2;
-	data[1] = 2;
-	data[2] = 2;
-	data[3] = 2;
-	data[4] = 2;
-	data[5] = 2;
-	data[6] = 2;
-	vector<vector<int> > ret = sl.combinationSum2(data, 10);
+	int array[] = {10,1,2,7,6,1,5};
+	vector<int> data;
+	//vector<int> data(7, 0);
+	/*
+	for(int i = 0; i < 7; i++)
+		data[i] = array[i];
+	*/
+	vector<vector<int> > ret = sl.combinationSum2(data, 8);
 
 	cout<<"Result: "<<endl;
 	for(int i = 0; i < ret.size(); i++){
