@@ -13,3 +13,5 @@ Q	Given a collection of candidate numbers (C) and a target number (T), find all 
 	[1, 2, 5] 
 	[2, 6] 
 	[1, 1, 6] 
+
+A	recursion and preprocess and binary search the next value.
