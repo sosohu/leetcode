@@ -1,2 +1,4 @@
 
 Q	Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+A	use a min_heap to get the min value each time.

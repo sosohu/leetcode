@@ -25,8 +25,137 @@ void print(ListNode* data)
 
 class Solution {
 
+	class MinHeap{
+		
+		struct HeapNode{
+			HeapNode *left, *right;
+			ListNode *node;
+			HeapNode(): node(NULL), left(NULL), right(NULL){}
+		};
+
+		public:
+			MinHeap(int size, vector<ListNode*> rhs) : data(size, HeapNode()){
+				for(int i = 0; i < size; i++)
+					data[i].node = rhs[i];
+
+				for(int i = 0; i < size; i++){
+					if(2*i+1 < size){
+						data[i].left = &data[2*i+1];
+					}
+					if(2*i+2 < size){
+						data[i].right = &data[2*i+2];
+					}
+				}
+				adjust_init(&data[0]);
+			}
+
+			~MinHeap(){}
+
+			void adjust(HeapNode *root){
+				if(!root)	return;
+				ListNode *tmp;
+				int left = root->node->val;
+				int right = root->node->val;
+				if(root->left)
+					left = root->left->node->val;
+				if(root->right)
+					right = root->right->node->val;
+				if(root->node->val <= left && root->node->val <= right)	return;
+				if(left < right){
+					tmp = root->node;
+					root->node = root->left->node;
+					root->left->node = tmp;
+					adjust(root->left);
+				}else{
+					tmp = root->node;
+					root->node = root->right->node;
+					root->right->node = tmp;
+					adjust(root->right);
+				}
+			}
+
+			void adjust_init(HeapNode *root){
+				ListNode *tmp;
+				if(root->left){
+					adjust_init(root->left);
+					if(root->node->val > root->left->node->val){
+						tmp = root->node;
+						root->node = root->left->node;
+						root->left->node = tmp;
+					}
+					adjust(root->left);
+				}
+				if(root->right){
+					adjust_init(root->right);
+					if(root->node->val > root->right->node->val){
+						tmp = root->node;
+						root->node = root->right->node;
+						root->right->node = tmp;
+					}
+					adjust(root->right);
+				}
+			}
+
+			ListNode* get_min(){
+				return data[0].node;
+			}
+
+			HeapNode* get_root(){
+				return &data[0];
+			}
+
+			void change_root(ListNode *value){
+				data[0].node = value;
+				adjust(&data[0]);
+			}
+
+			void print(HeapNode* root){
+				if(root){
+					cout<<root->node->val<<endl;
+					print(root->left);
+					print(root->right);
+				}
+			}
+		
+		private:
+			vector<HeapNode> data;	
+	};
+
+	static const int  MAX_VALUE = ((1<<30) - 1 + (1<<30)) ;	
+
 public:
+
+	// O(n*lgk)
+	ListNode *mergeKLists(vector<ListNode*> &lists) {
+		int size = lists.size();
+		if(size == 0)	return NULL;
+		if(size == 1)	return lists[0];
+		ListNode *margin = new ListNode(MAX_VALUE);
+		for(int i = 0; i < size; i++){
+			if(lists[i] == NULL)
+				lists[i] = margin;
+		}
+		MinHeap minheadp(size, lists);
+		int count = 0;
+		ListNode *newhead = new ListNode(0);
+		ListNode *last = newhead, *cur;
+		cur = minheadp.get_min();
+		while(cur->val != MAX_VALUE){
+			//minheadp.print(minheadp.get_root());
+			last->next = cur;
+			last = last->next;
+			if(cur->next == NULL){
+				cur->next = margin;
+			}
+			minheadp.change_root(cur->next);
+			cur = minheadp.get_min();
+		}	
+		last->next = NULL;
+		return newhead->next;
+	}
 	
+	// O(n^2)
+	/*
 	ListNode *mergeKLists(vector<ListNode*> &lists) {
 		int size = lists.size();
 		if(size == 0)	return NULL;
@@ -55,7 +184,7 @@ public:
 		}
 		return newhead->next;
 	}
-
+	*/
 };
 
 int main(int argc, char** argv)
@@ -63,7 +192,7 @@ int main(int argc, char** argv)
 	Solution sl;
 	ListNode* data = (ListNode*)malloc(sizeof(ListNode)*DATASIZE);
 	//int val[DATASIZE] = {-6,-3,3,1,4,5,10,3};
-	int val[DATASIZE] = {1,2,3,4,5,1,3,8,9,3,4,7,8};
+	int val[DATASIZE] = {1,3,5,7,9,2,4,6,8,10,14,17,18};
 	ListNode* head, *pos; 
 	pos = &data[0];
 	for(int i = 0; i < DATASIZE - 1  ; i++){
