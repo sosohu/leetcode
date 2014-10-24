@@ -10,3 +10,5 @@ Q	Given an array S of n integers, are there elements a, b, c, and d in S such th
     (-1,  0, 0, 1)
     (-2, -1, 1, 2)
     (-2,  0, 0, 2)
+
+A	hash map, two items's sum as a map item. you should avoid same result.
