@@ -24,31 +24,23 @@ public:
 		int size = num.size();
 		vector<vector<int> > data;
 		if(size < 3)	return data;
-		unordered_map<int, vector<pair<int , int> > > table;
+		unordered_map<int, vector<int> > table;
 		
 		sort(num.begin(), num.end(), mysort);
 		for(int i = 0; i < size; i++){
-			for(int j = i+1; j < size; j++){
-				table[num[i]+num[j]].push_back(pair<int, int>(i, j));
-			}
+			table[num[i]].push_back(i);
 		}
 		
-		int x,y, prex, prey;
+		int last;
 		for(int i = 0; i < size - 2; i++){
-			int left = 0 - num[i];
-			if(i > 0 && num[i] == num[i-1])
-				continue;
-			if(table.count(left) == 1){
-				for(int j = 0; j < table[left].size(); j++){
-					x = table[left][j].first;
-					y = table[left][j].second;
-					if(j > 0){
-						prex = table[left][j-1].first;
-						if(num[x] == num[prex])
-							continue;
-					}
-					if(x > i & y > i){
-						data.push_back(vector<int>{num[i], num[x], num[y]});
+			if(i > 0 && num[i] == num[i-1])	continue;
+			for(int j = i + 1; j < size - 1; j++){
+				if(j > i + 1 && num[j] == num[j-1])	continue;
+				int left = 0 - num[i] - num[j];
+				if(table.count(left) == 1){
+					last = table[left][table[left].size() - 1];
+					if(last > j){
+						data.push_back(vector<int>{num[i], num[j], num[last]});
 					}
 				}
 			}

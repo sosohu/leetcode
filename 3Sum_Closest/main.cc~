@@ -11,72 +11,51 @@ class Solution {
 
 	class mysort{
 		public:
-			bool operator()(pair<int, pair<int, int> > i, 
-							pair<int, pair<int, int> > j){
-				return i.first < j.first;
+			bool operator()(int i, 
+							int j){
+				return i < j;
 			}
 	} mysort;
 
 public:
 
-	int binarysearch(vector<pair<int, pair<int, int> > > &table, int start, int end,  int target){
-		if(start == end){
-			return table[start].first;
+	int recursion(vector<int> &num, int target, int low, int high, int last){
+		int now, cur;
+		if(low == high - 2){
+			return num[low] + num[low+1] + num[high];
 		}
-		if(start == end - 1){
-			int t_s = table[start].first - target;
-			int t_e = table[end].first - target;
-			return abs(t_s) < abs(t_e)? t_s + target : t_e + target;
-		}
-
-		int mid = (start + end) / 2;
-		if(table[mid].first == target){
-			return target;
-		}
-		if(table[mid].first < target){
-			return binarysearch(table, mid+1, end, target);
-		}else{
-			return binarysearch(table, start, mid-1, target);
-		}
-	}
-
-	int recusion(vector<int> &num, vector<pair<int, pair<int, int> > > &table,
-					int size, int table_size, int target, int pos){
-		int cur;
-		if(pos == size - 3){
-			return num[pos] + num[pos+1] + num[pos+2];
-		}
-		// remove the item contain the num[pos]
-		int last = 0;
-		for(int i = 0; i < table_size; i++){
-			if(table[i].second.first != pos){
-				if(last != i){
-					table[last] = table[i];
-					last++;
-				}
+		if(low < high - 1){
+			cout<<num[low]<<" "<<num[high]<<endl;
+			now = num[low] + num[high] + num[low+1];
+			if(now == target) return now;
+			if(now > target){
+				cur = abs(now - target);
+				int left = recursion(num, target, low, high-1, last);
+				if(cur < abs(left - target)) return now;
+				else	return left;
 			}
+			now = num[low] + num[high] + num[high-1];
+			if(now == target) return now;
+			if(now < target){
+				cur = abs(now - target);
+				int right = recursion(num, target, low+1, high, last);
+				if(cur < abs(right - target)) return now;
+				else	return right;
+			}
+			int right = recursion(num, target, low+1, high, last);
+			int left = recursion(num, target, low, high-1, last);
+			return abs(right - target) < abs(left - target)? right : left;
 		}
-		int left = target - num[pos];
-		cur = binarysearch(table, 0, last, left);
-		cur = cur + num[pos];
-		if(cur == target)	return target;
-		int other = recusion(num, table, size, last+1, target, pos+1);
-		cout<<cur<<" "<<other<<endl;
-		return abs(cur-target) < abs(other-target)? cur : other;
 	}
 
 	int threeSumClosest(vector<int> &num, int target) {
 		int size = num.size();
 		if(size < 3)	return 0;
-		vector<pair<int, pair<int, int> > > table;
-		for(int i = 0; i < size; i++){
-			for(int j = i + 1; j < size; j++){
-				table.push_back(pair<int, pair<int, int> >
-								(num[i]+num[j], pair<int, int>(i, j)));
-			}
-		}
-		sort(table.begin(), table.end(), mysort);
-		return recusion(num, table, size, table.size(), target, 0);
+		sort(num.begin(), num.end(), mysort);
+		int nearest;
+		int low = 0, high = size - 1;
+		int last = -(((-1)<<31) + 1);
+		return recursion(num, target, low, high, last);
     }
 
 };
@@ -86,12 +65,12 @@ int main(int argc, char** argv)
 	Solution sl;
 	//int A[] = {2,39,66,69,-5,54,-51,47,-20,82,41,-96,38,-87,-18,21,59,70,100,37,-25,8,-38,-27,75,24,69,-43,92,-55,87,-96,-34,-2,70,3,29,2,-32,58,3,56,33,-11,61,0,-40,25,-27,-73,-67,-23,-53,-62,20,-25,33,-27,-45,57,3,86,-18,-84,-4,-74,-99,67,-54,-70,-14,29,-41,-80,28,24,59,75,-52,-21,-48,27,-24,-30,-88,51,60,-15,2,86,63,-28,-51,-97,-60,92,-79,-20,-44,12,83,100,9,-76,-7,-75,36,23,3,-55,-3,-37,-64,16,40,6,-24,-30,-53,-78,-32,63,-53,54,38,19,55,-90,80,-93,-68,-7,71,-92,-9,15,53,-76,-30,27,72,76,36,-77,-4,68,34,29,-45,-60,-55,29,53,-45,0,84,52,30,57,1,9,-99,77,14,14,-75,15,-9,8,-84,-94,47,59,-31,-83,9,68,-1,-68,64,55,18,42};
 	//vector<int> data(183,0);
-	int A[] = {-26,84,-85,2,99,42,-28,16,-97,-59,64,-67,-30,18,-15,-11,-60,-79,41,-29,49,-33,21,-8,-73,6,-31,31,-23,82,-34,12,86,38,-4,99,4,63,-13,-42,-4,89,88,-30,0,15,37,-95,-85,15,66,8,43,95,-76,75,-16,48,15,-82,56,83,91,81,-76,-29,7,-77,-42,39,-73,29,43,-60,21,-5,-3,1,32,34,-77,49,68,-1,-63,93,-20,-57,-65,53,23,96,79,87,-12,-18,51,39,-24,27,13,-55,-6,28,95,91,-71,77,49,-26,-17,-83,43,-86,28,20,64,-6,53,40,81,-30,-83,67,-3,25,37,54,95,14,84,-96,76,15,35,41,-86,33,10,-32,59,100,30,-9,58,-80,23,20,43,93,58,-26,37,44,-24,27,99,-46,-80,-85,-44,-45,-72,-32,33,-24,91,-67,75,-40,52,49,94,-10,82,-76,-92,58,18,-43,47,-75,-17,-30,-17,-57,37,51,-32,69,54,-71,-98,-74,-17,99,84,-67,80,-24,-100,98,19,99,-7,-98,-43,73,-97,-21,96,-44,59};
-	vector<int> data(213,0);
+	int A[] = {1,2,4,8,16,32,64,128};
+	vector<int> data(8,0);
 	for(int i = 0; i < data.size(); i++)
 		data[i] = A[i];
 	
-	int ret = sl.threeSumClosest(data, -186);
+	int ret = sl.threeSumClosest(data, 82);
 
 	cout<<ret<<endl;
 
