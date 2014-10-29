@@ -9,46 +9,63 @@ class Solution {
 public:
 
 	bool isMatch(const char *s, const char *p) {
-		const char *ps, *pp, *star = NULL, *lasts;
+		#ifdef DEBUG
+		cout<<*s<<" "<<*p<<endl;
+		#endif
+		if(*s == '\0' && *p == '\0')
+			return true;
+		if(*p == '\0')
+			return false;
+		if(*s == '\0'){
+			while(*p != '\0' && *(p+1) == '*'){
+				p++;
+				p++;
+			}
+			if(*p == '\0')
+				return true;
+			else
+				return false;
+		}
+		const char *ps, *pp;
 		ps = s;
 		pp = p;
-		while(*ps != '\0' && *pp != '\0'){
-			if(*pp != '*' && *pp != '.'){
-				if(*ps != *pp){
-					if(star != NULL){
-						ps = ++lasts;
-						pp = star + 1;
-					}else{
-						return false;
-					}
-				}else{
+		int ret = false;
+		if(*p == '.'){
+			if(*(p+1) == '*'){
+				ret = ret | isMatch(s, p+2);
+				s++;
+				ps = s;
+				while(*ps != '\0'){
+					ret = ret | isMatch(ps, p+2);
 					ps++;
-					pp++;
-					continue;
 				}
+				if(*ps == '\0' && *(p+2) == '\0')	return true;
+				ret = ret | isMatch(ps, p+2);
+				return ret;
 			}else{
-				if(*pp == '.'){
+				return isMatch(++s, ++p);
+			}
+		}
+		// default not . or *
+		if(*s == *p){
+			if(*(p+1) == '*'){
+				ps = s;
+				while(*ps != '\0' && *ps == *s){
+					ret = ret | isMatch(ps, p+2);
 					ps++;
-					pp++;
-				}else{
-					while(*(pp+1) != '\0' && *(pp+1) == '*'){
-						pp++;
-					}
-					if(*(pp+1) == '\0')	return true;
-					lasts = ps;
-					star = pp;
-					pp++;
-				}	
-			}
+				}
+				if(*ps == '\0' && *(p+2) == '\0')	return true;
+				ret = ret | isMatch(ps, p+2);
+				return ret;
+			}else{
+				return isMatch(++s, ++p);
+			}	
+		}else{
+			if(*(p+1) == '*'){
+				return isMatch(s, p+2);
+			}else
+				return false;
 		}
-		if(*ps == '\0'){
-			while(*pp != '\0' & *pp == '*'){
-				pp++;
-			}
-			if(*pp != '\0')	return false;
-			else	return true;
-		}
-		return false;
     }
 
 };
@@ -56,8 +73,8 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	const char *s1 = "aaaaaaaadppffcadad";		
-	const char *s2 = "aaa**ad**ff.adad";		
+	const char *s1 = "";		
+	const char *s2 = "c*c*";
     int ret = sl.isMatch(s1, s2);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
