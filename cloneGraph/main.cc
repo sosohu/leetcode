@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <cstdlib>
 #include <vector>
 #include <stack>
 #include <map>
@@ -10,7 +10,6 @@ struct UndirectedGraphNode {
 	int label;
 	vector<UndirectedGraphNode *> neighbors;
 	UndirectedGraphNode(int x) : label(x) {};
-	UndirectedGraphNode()  {};
 };
 
 void print(UndirectedGraphNode* data, bool is_free = false){
@@ -44,70 +43,29 @@ class Solution {
 
 public:
 
+	void recursion(UndirectedGraphNode *root, UndirectedGraphNode *&ret){
+		if(root == NULL){
+			ret = NULL;
+			return;
+		}
+		//if(root->label == (-1)<<31)	return;
+		ret = new UndirectedGraphNode(1);
+		ret->label = root->label;
+		//root->label = (-1)<<31;
+		for(int i = 0; i < root->neighbors.size(); i++){
+			if(root->neighbors[i]->label == root->label){
+				ret->neighbors.push_back(ret);
+			}else{
+				ret->neighbors.push_back(NULL);
+				recursion(root->neighbors[i], ret->neighbors[i]);
+			}
+		}
+	}
+
 	UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
 		if(node == NULL) return NULL;
-		UndirectedGraphNode* pos = node;
-		UndirectedGraphNode* tmp;
-		stack<UndirectedGraphNode*> s;
-		s.push(pos);
-		int len;
-		while(!s.empty()){
-			pos = s.top();
-			s.pop();
-			len = pos->neighbors.size();
-			tmp = new UndirectedGraphNode(pos->label);
-			pos->neighbors.push_back(tmp);
-			for(int i = 0; i < len; i++){
-				if(pos->neighbors[i] != pos){
-					tmp = pos->neighbors[i];
-					int tmp_len = tmp->neighbors.size();
-					if(tmp_len == 0)
-						s.push(tmp);
-					else{
-						if(!(tmp->neighbors[tmp_len - 1]->label == tmp->label 
-							&& tmp->neighbors[tmp_len -1] != tmp))
-							s.push(tmp);
-					}
-				}
-			}
-		}
-		#ifndef DEBUG
-		print(node);
-		#endif
-		s.push(node);
-		UndirectedGraphNode* tmp_tmp;
-		int len_len;
-		len = node->neighbors.size();
-		UndirectedGraphNode* ret = node->neighbors[len - 1];
-		while(!s.empty()){
-			pos = s.top();
-			s.pop();
-			len = pos->neighbors.size();
-			tmp = pos->neighbors[len - 1];
-			for(int i = 0; i < len - 1; i++){
-				if(pos->neighbors[i] == pos){
-					tmp->neighbors.push_back(tmp);
-				}
-				else{
-					int long_len = pos->neighbors[i]->neighbors.size();
-					UndirectedGraphNode* node_new = 
-								pos->neighbors[i]->neighbors[long_len - 1];
-					tmp->neighbors.push_back(node_new);
-					tmp_tmp = pos->neighbors[i];
-					len_len = tmp_tmp->neighbors.size();
-					if(len_len > 1){
-						if(tmp_tmp->neighbors[len_len - 1] != 
-											tmp_tmp->neighbors[len_len - 2])
-						s.push(tmp_tmp);
-					}
-				}
-			}
-			/*
-			pos->neighbors.erase(pos->neighbors.begin() + len - 1, 
-									pos->neighbors.end());
-			*/
-			pos->neighbors.push_back(pos->neighbors[len - 1]);
-		}
+		UndirectedGraphNode *ret;
+		recursion(node, ret);
 		return ret;
     }
 
@@ -117,19 +75,18 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("  hello my world ada ");		
-    UndirectedGraphNode node[10];
+    UndirectedGraphNode node(-1);
 
-	node[0].label = -1;
-	node[0].neighbors.push_back(&node[0]);
-	node[0].neighbors.push_back(&node[0]);
+	node.neighbors.push_back(&node);
+	node.neighbors.push_back(&node);
 
-	print(&node[0]);
+	print(&node);
 	
-	UndirectedGraphNode* ret = sl.cloneGraph(&node[0]);
+	UndirectedGraphNode* ret = sl.cloneGraph(&node);
 	
 	print(ret, true);
 
+	delete ret;
 	return 0;
 
 }
