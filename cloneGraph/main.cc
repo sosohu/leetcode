@@ -65,13 +65,15 @@ public:
 						s.push(tmp);
 					else{
 						if(!(tmp->neighbors[tmp_len - 1]->label == tmp->label 
-							&& tmp->neighbors[len -1] != tmp))
+							&& tmp->neighbors[tmp_len -1] != tmp))
 							s.push(tmp);
 					}
 				}
 			}
 		}
+		#ifndef DEBUG
 		print(node);
+		#endif
 		s.push(node);
 		UndirectedGraphNode* tmp_tmp;
 		int len_len;
