@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -43,21 +44,26 @@ class Solution {
 
 public:
 
-	void recursion(UndirectedGraphNode *root, UndirectedGraphNode *&ret){
+	void recursion(UndirectedGraphNode *root, UndirectedGraphNode *&ret, unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> &find){
 		if(root == NULL){
 			ret = NULL;
 			return;
 		}
-		//if(root->label == (-1)<<31)	return;
+		//if(find.count(root) == 1)	return;
+		int size = root->neighbors.size();
 		ret = new UndirectedGraphNode(1);
 		ret->label = root->label;
-		//root->label = (-1)<<31;
-		for(int i = 0; i < root->neighbors.size(); i++){
+		find[root] = ret;
+		for(int i = 0; i < size; i++){
 			if(root->neighbors[i]->label == root->label){
 				ret->neighbors.push_back(ret);
 			}else{
 				ret->neighbors.push_back(NULL);
-				recursion(root->neighbors[i], ret->neighbors[i]);
+				if(find.count(root->neighbors[i]) == 1){
+					ret->neighbors[i] = find[root->neighbors[i]];
+				}else{
+					recursion(root->neighbors[i], ret->neighbors[i], find);
+				}
 			}
 		}
 	}
@@ -65,7 +71,8 @@ public:
 	UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
 		if(node == NULL) return NULL;
 		UndirectedGraphNode *ret;
-		recursion(node, ret);
+		unordered_map <UndirectedGraphNode*, UndirectedGraphNode*> find;
+		recursion(node, ret, find);
 		return ret;
     }
 
@@ -86,7 +93,6 @@ int main(int argc, char** argv)
 	
 	print(ret, true);
 
-	delete ret;
 	return 0;
 
 }
