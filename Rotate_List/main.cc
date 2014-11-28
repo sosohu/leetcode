@@ -33,12 +33,11 @@ public:
 		int len = 0;
 		ListNode *pos1, *pos2;
 		pos2 = head;
-		while(pos2 != NULL){
+		while(pos2 != NULL && len < k){
 			pos2 = pos2->next;
 			len++;
 		}
-		k = k%len;
-		if(k == 0)	return head;
+		if(!pos2) return rotateRight(head, k%len);
 		pos1 = head;
 		pos2 = head; 
 		for(int i = 0; i < k; i++){

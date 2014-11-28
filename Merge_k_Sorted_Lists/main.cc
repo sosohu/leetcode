@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -126,6 +127,7 @@ class Solution {
 public:
 
 	// O(n*lgk)
+	/*
 	ListNode *mergeKLists(vector<ListNode*> &lists) {
 		int size = lists.size();
 		if(size == 0)	return NULL;
@@ -152,6 +154,26 @@ public:
 		}	
 		last->next = NULL;
 		return newhead->next;
+	}
+	*/
+
+	// using multimap rather defined MinHeap
+	ListNode *mergeKLists(vector<ListNode*> &lists) {
+		multimap<int, int> data;
+		ListNode ret(0) , *pos = &ret;
+		for(int i = 0; i < lists.size(); i++){
+			if(lists[i])
+				data.insert(make_pair(lists[i]->val, i));
+		}
+		while(!data.empty()){
+			int index = data.begin()->second;
+			data.erase(data.begin());
+			pos = pos->next = lists[index];
+			lists[index] = lists[index]->next;
+			if(lists[index])
+				data.insert(make_pair(lists[index]->val, index));
+		}
+		return ret.next;
 	}
 	
 	// O(n^2)

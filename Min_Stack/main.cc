@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Author :          Qinghai Hu
+ * Email :           ustc.sosohu@gmail.com
+ * Last modified :   2014-11-14 12:37
+ * Filename :        main.cc
+ * Description :     This program is free software, you can redistribute it and/or
+                     modify it under the terms of the GNU General Public License
+                     as published by the Free Software Foundation.
+ * *****************************************************************************/
+
 #include <iostream>
 #include <string>
 #include <stack>

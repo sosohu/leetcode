@@ -27,6 +27,7 @@ class Solution {
 
 public:
 
+	/*
 	ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
 		if(l1 == NULL)	return l2;
 		if(l2 == NULL)	return l1;
@@ -60,6 +61,18 @@ public:
 		}
 		return head;
     }
+	*/
+
+	// second version
+	ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+		ListNode newhead(0), *pos = &newhead;
+		while(l1 || l2){
+			if(!l1)	return (pos->next = l2, newhead.next);
+			if(!l2)	return (pos->next = l1, newhead.next);
+			(l1->val < l2->val)? (pos = pos->next = l1, l1 = l1->next) : (pos = pos->next = l2, l2 = l2->next);
+		}
+		return newhead.next;
+	}
 
 
 };

@@ -26,7 +26,8 @@ void print(ListNode* data)
 class Solution {
 
 public:
-	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+
+	ListNode *addTwoNumbers_1st(ListNode *l1, ListNode *l2) {
 		if(!l1)	return l2;
 		if(!l2)	return l1;
 		ListNode *p1, *p2, *p;
@@ -67,6 +68,19 @@ public:
 		}
 		return l2;
     }	
+	
+	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+		ListNode head(0), *ret = &head;
+		int cin = 0, val;
+		while(l1 || l2 || cin){
+			val = (l1? l1->val : 0) + (l2? l2->val : 0) + cin;
+			ret = ret->next = new ListNode(val % 10);
+			cin = val / 10;
+			if(l1)	l1 = l1->next;
+			if(l2)	l2 = l2->next;
+		}
+		return head.next;
+	}
 
 };
 
