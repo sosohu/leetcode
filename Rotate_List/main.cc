@@ -27,7 +27,7 @@ class Solution {
 
 public:
 
-	ListNode *rotateRight(ListNode *head, int k) {
+	ListNode *rotateRight_1st(ListNode *head, int k) {
 		if(head == NULL)	return NULL;
 		if(k == 0)	return head;
 		int len = 0;
@@ -53,6 +53,24 @@ public:
 		last->next = NULL;
 		return pos1;
     }	
+
+	ListNode *rotateRight(ListNode *head, int k) {
+		if(!head || k < 1)	return head;
+		ListNode *pos = head, *pre = head;
+		int count = 0;
+		for(; count < k && pos; count++){
+			pos = pos->next;
+		}
+		if(!pos)	return rotateRight(head, k%count);
+		while(pos->next){
+			pos = pos->next;
+			pre = pre->next;
+		}
+		pos->next = head;
+		head = pre->next;
+		pre->next = NULL;
+		return head;
+	}
 
 };
 

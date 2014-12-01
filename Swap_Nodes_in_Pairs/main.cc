@@ -26,7 +26,7 @@ class Solution {
 
 public:
 	
-	ListNode *swapPairs(ListNode *head) {
+	ListNode *swapPairs_1st(ListNode *head) {
 		ListNode *newhead = new ListNode(0);
 		newhead->next = head;
 		ListNode *p1, *p2, *last;
@@ -42,6 +42,20 @@ public:
 			p1 = p1->next;
 		}
 		return newhead->next;
+	}
+
+	ListNode *swapPairs(ListNode *head) {
+		if(!head || !head->next)	return head;
+		ListNode newhead(0), *first = &newhead, *second = &newhead;
+		newhead.next = head;
+		while(first->next && first->next->next){
+			second = first->next;
+			first->next = second->next;
+			second->next = first->next->next;
+			first->next->next = second;
+			first = second;
+		}
+		return newhead.next;
 	}
 
 };

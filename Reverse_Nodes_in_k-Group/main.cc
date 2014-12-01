@@ -26,7 +26,7 @@ class Solution {
 
 public:
 	
-	ListNode *reverseKGroup(ListNode *head, int k) {
+	ListNode *reverseKGroup_1st(ListNode *head, int k) {
 		ListNode *newhead = new ListNode(0);
 		newhead->next = head;
 		ListNode *pos, *last_head, *last_tail, *tmp;
@@ -56,6 +56,29 @@ public:
 			}
 		}
 		return newhead->next;
+	}
+
+	ListNode *reverseKGroup(ListNode *head, int k) {
+		if(!head || k <= 1)	return head;
+		ListNode newhead(0), *first = &newhead, *second = &newhead, *pos = head;
+		newhead.next = head;
+		int count = 0;
+		while(pos){
+			pos = pos->next;
+			count++;
+		}
+		while(count >= k){
+			second = first->next;
+			for(int i = 0; i < k - 1; i++){
+				pos = second->next;
+				second->next = pos->next;
+				pos->next = first->next;
+				first->next = pos;
+			}
+			count = count - k;
+			first = second;
+		}
+		return newhead.next;
 	}
 
 };
