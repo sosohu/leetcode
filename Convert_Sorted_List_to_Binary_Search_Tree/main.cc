@@ -62,7 +62,7 @@ public:
 		return father;
 	}
 
-	TreeNode *sortedListToBST(ListNode *head) {
+	TreeNode *sortedListToBST_1st(ListNode *head) {
 		ListNode* tail = head, *pos = head;
 		int n = 0;
 		while(pos != NULL){
@@ -70,6 +70,34 @@ public:
 			n++;
 		}
 		return detail(head, tail, n);
+	}
+
+	TreeNode* DFS(ListNode* &head, int n){
+		if(n == 0)	return NULL;
+		TreeNode *root;
+		if(n == 1){
+			root = new TreeNode(head->val);
+			head = head->next;
+			return root;
+		}
+		TreeNode *left = DFS(head, n/2);
+		root = new TreeNode(head->val);
+		head = head->next;
+		TreeNode *right = DFS(head, n - 1 - n/2 );
+		root->left = left;
+		root->right = right;
+		return root;
+	}
+
+	TreeNode *sortedListToBST(ListNode *head) {
+		if(!head)	return NULL;
+		int count = 0;
+		ListNode *pos = head;
+		while(pos){
+			pos = pos->next;
+			count++;
+		}
+		return DFS(head, count);
 	}
 
 };

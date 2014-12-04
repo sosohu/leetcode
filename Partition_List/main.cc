@@ -27,7 +27,7 @@ class Solution {
 
 public:
 
-	ListNode *partition(ListNode *head, int x) {
+	ListNode *partition_1st(ListNode *head, int x) {
 		if(head == NULL)	return NULL;
 	
     	ListNode* newhead = new ListNode(0);
@@ -54,6 +54,23 @@ public:
 		}    
 		return newhead->next;
     }
+
+	ListNode *partition(ListNode *head, int x) {
+		if(!head || !head->next)	return head;
+		ListNode	less(0), greater(0), *pos = head;
+		ListNode	*lpos = &less, *gpos = &greater;
+		while(pos){
+			if(pos->val < x){
+				lpos = lpos->next = pos;
+			}else{
+				gpos = gpos->next = pos;
+			}
+			pos = pos->next;
+		}
+		gpos->next = NULL;
+		lpos->next = greater.next;
+		return less.next;
+	}
 };
 
 

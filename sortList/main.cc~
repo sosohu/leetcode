@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdlib.h>
-#include <vector>
 
 
 using namespace std;
@@ -96,7 +95,7 @@ public:
 		return s->next;	
 	}
 
-	ListNode *sortList_1st(ListNode *head) {
+	ListNode *sortList(ListNode *head) {
 		if(head == NULL) return NULL;
 		ListNode* pos, *tail;
 		pos = head;
@@ -110,57 +109,8 @@ public:
 		return mergesort(head, tail,n);
     }	
 
-	ListNode* MergeSortedList(ListNode *pHead1, ListNode *pHead2){
-    	if(!pHead1) return pHead2;
-    	if(!pHead2) return pHead1;
-    	ListNode *pos1 = pHead1, *pos2 = pHead2;
-    	ListNode *ret = pHead1->val < pHead2->val? (pos1 = pos1->next, pHead1) 
-                    : (pos2 = pos2->next, pHead2);
-   		ListNode *pos = ret;
-    	while(pos1 && pos2){
-    	    if(pos1->val < pos2->val){
-    	        pos->next = pos1;
-    	        pos1 = pos1->next;
-    	    }else{
-    	        pos->next = pos2;
-    	        pos2 = pos2->next;
-    	    }
-    	    pos = pos->next;
-    	}   
-    	if(pos1){
-    	    pos->next = pos1;
-    	}   
-    	if(pos2){
-        	pos->next = pos2;
-   		 }   
-    	return ret;
-	}
-
-
-    //仿照SGI STL里面的List容器的sort函数，实现迭代版的归并排序
-	 ListNode *sortList(ListNode *pHead){
-	    if(!pHead || !pHead->next)  return pHead;
-	    vector<ListNode*> counter;
-	    for(int i = 0; i < 64; i++)
-	        counter.push_back(NULL);
-	    ListNode *carry;
-	    ListNode *pos = pHead;
-	    int fill = 0;
-	    while(pos){
-	        carry = new ListNode(pos->val);
-	        pos = pos->next;
-	        int i = 0;
-	        for(i = 0; i < fill && counter[i]; i++){
-	            carry = MergeSortedList(carry, counter[i]);
-	            counter[i] = NULL;
-	        }
-	        counter[i] = carry;
-	        if(i == fill) fill++;
-	    }
-	    for(int i = 1; i < fill; i++){
-	        counter[i] = MergeSortedList(counter[i-1], counter[i]);
-	    }
-	    return counter[fill-1];
+	ListNode *sortList(ListNode *head) {
+		
 	}
 
 };

@@ -76,15 +76,15 @@ public:
 		}
 		pos = head;
 		while(pos){
-			pos->next->random = pos->random? pos->random->next : NULL;
+			pos->next->random = pos->random->next;
 			pos = pos->next->next;
 		}
 		pos = head;
 		ret = pos->next;
-		while(pos){
+		while(pos && pos->next->next){
 			tmp = pos->next;
 			pos->next = tmp->next;
-			tmp->next = pos->next? pos->next->next : NULL;
+			tmp->next = pos->next->next;
 			pos = pos->next;
 		}
 		return ret;

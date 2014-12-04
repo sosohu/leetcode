@@ -27,7 +27,7 @@ class Solution {
 
 public:
 	
-	ListNode *insertionSortList(ListNode *head) {
+	ListNode *insertionSortList_1st(ListNode *head) {
 		if(head == NULL) return NULL;
 		ListNode  header(0);
 		header.next = head;
@@ -52,6 +52,28 @@ public:
 		}
 		return head->next;
     }
+
+	ListNode *insertionSortList(ListNode *head) {
+		if(!head || !head->next)	return head;
+		ListNode newhead(0);
+		newhead.next = head;
+		ListNode *pos = head, *begin = &newhead, *tmp;
+		while(pos->next){
+			begin = &newhead;
+			while(begin != pos && begin->next->val <= pos->next->val){
+				begin = begin->next;
+			}
+			if(begin == pos){
+				pos = pos->next;
+			}else{
+				tmp = pos->next;
+				pos->next = tmp->next;
+				tmp->next = begin->next;
+				begin->next = tmp;
+			}
+		}
+		return newhead.next;
+	}
 
 };
 

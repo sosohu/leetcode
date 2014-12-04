@@ -27,7 +27,7 @@ class Solution {
 
 public:
 	
-	ListNode *deleteDuplicates(ListNode *head) {
+	ListNode *deleteDuplicates_1st(ListNode *head) {
 		if(head == NULL)	return NULL;
 
 		ListNode *pre, *pos, *newhead;
@@ -51,6 +51,28 @@ public:
 				pos = pos->next;
 		}			
 		return newhead->next;
+	}
+
+	ListNode *deleteDuplicates(ListNode *head) {
+		if(!head || !head->next)	return head;
+		ListNode newhead(0);
+		ListNode *pre = &newhead, *next = head->next;
+		newhead.next = head;
+		while(next){
+			if(pre->next->val == next->val){
+				next = next->next;
+			}else{
+				if(pre->next->next == next){
+					pre = pre->next;
+				}else{
+					pre->next = next;
+				}
+				next = next->next;
+			}
+		}
+		if(pre->next->next != next)
+			pre->next = next;
+		return newhead.next;
 	}
 
 };

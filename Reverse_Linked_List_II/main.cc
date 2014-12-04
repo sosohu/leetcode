@@ -27,7 +27,7 @@ class Solution {
 
 public:
 	
-	ListNode *reverseBetween(ListNode *head, int m, int n) {
+	ListNode *reverseBetween_1st(ListNode *head, int m, int n) {
 		if(m == n)	return head;
 
 		ListNode* newhead = new ListNode(0);
@@ -49,6 +49,24 @@ public:
 			tmp->next = smp;	
 		}
 		return newhead->next;
+	}
+
+	ListNode *reverseBetween(ListNode *head, int m, int n) {
+		if(!head || !head->next || m >= n)	return head;
+		ListNode newhead(0);
+		newhead.next = head;
+		ListNode *pos = &newhead, *next, *tmp;
+		for(int i = 0; i < m - 1; i++){
+			pos = pos->next;
+		}
+		next = pos->next;
+		for(int i = 0; i < n - m; i++){
+			tmp = next->next;
+			next->next = tmp->next;
+			tmp->next = pos->next;
+			pos->next = tmp;
+		}
+		return newhead.next;
 	}
 };
 

@@ -26,7 +26,7 @@ class Solution {
 
 public:
 
-	void reorderList(ListNode *head) {
+	void reorderList_1st(ListNode *head) {
 		if(head == NULL || head->next == NULL) return;
 		ListNode* pos = head;
 		int len = 0;
@@ -62,6 +62,32 @@ public:
 			sub_pos = sub_pos->next->next;
 		}
 		head = sub_header.next;
+	}
+
+	void reorderList(ListNode *head) {
+		if(!head || !head->next)	return;
+		ListNode *slow = head, *fast = head->next, *left = head, *right, *tmp;
+		while(fast && fast->next){
+			slow = slow->next;
+			fast = fast->next->next;
+		}
+		right = slow->next;
+		while(right->next){
+			tmp = right->next;
+			right->next = tmp->next;
+			tmp->next = slow->next;
+			slow->next = tmp;
+		}
+		right = slow->next;
+		slow->next = NULL;
+		while(left->next){
+			tmp = right->next;
+			right->next = left->next;
+			left->next = right;
+			right = tmp;
+			left = left->next->next;
+		}
+		left->next = right;
 	}
 
 };
