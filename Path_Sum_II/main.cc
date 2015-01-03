@@ -19,7 +19,7 @@ class Solution {
 
 public:
 
-	vector<vector<int> > pathSum(TreeNode *root, int sum){
+	vector<vector<int> > pathSum_1st(TreeNode *root, int sum){
 		vector<vector<int> > tmp = detail(root, sum);
 		vector<vector<int> > ret = tmp;
 		for(int i = 0; i < tmp.size(); i++){
@@ -59,6 +59,25 @@ public:
 			ret.push_back(right[i]);
 		}
 		return ret;
+	}
+
+	vector<vector<int> > pathSum(TreeNode *root, int sum){
+		vector<int> cur;
+		vector<vector<int> > result;
+		recursion(root, cur, result, sum);
+		return result;
+	}
+
+	void recursion(TreeNode *root, vector<int> &cur, vector<vector<int> > &result, int sum){
+		if(!root)	return;
+		cur.push_back(root->val);
+		if(!root->left && !root->right && root->val == sum)
+			result.push_back(cur);
+		if(root->left)
+			recursion(root->left, cur, result, sum - root->val);
+		if(root->right)
+			recursion(root->right, cur, result, sum - root->val);
+		cur.pop_back();
 	}
 };
 

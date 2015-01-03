@@ -16,7 +16,7 @@ class Solution {
 
 public:
 
-	void connect(TreeLinkNode *root) {
+	void connect_1st(TreeLinkNode *root) {
 		if(root == NULL)
 			return;
 
@@ -44,6 +44,20 @@ public:
 		}	
     }
 
+	void connect(TreeLinkNode *root) {
+		if(!root)	return;
+		TreeLinkNode *cur = root, *next;
+		cur->next = NULL;
+		while(cur->left){
+			next = cur->left;
+			while(cur){
+				cur->left->next = cur->right;
+				cur->right->next = cur->next? cur->next->left : NULL;
+				cur = cur->next;
+			}
+			cur = next;
+		}
+	}
 };
 
 int main(int argc, char** argv)

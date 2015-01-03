@@ -48,12 +48,34 @@ public:
 		return father;
 	}
 
-	TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
+	TreeNode *buildTree_1st(vector<int> &inorder, vector<int> &postorder) {
 		int size = inorder.size();
 		if(size == 0)
 			return NULL;
 		return detail(inorder, postorder, 0, size - 1, 0, size - 1);
     }
+
+	TreeNode* recursion(vector<int> &inorder, vector<int> &postorder,
+							int s_in, int e_in, int s_po, int e_po){
+		if(s_in > e_in)	return NULL;
+		if(s_in == e_in) return (new TreeNode(inorder[s_in]));
+		TreeNode *root = new TreeNode(postorder[e_po]);
+		int split_in, split_po;
+		for(split_in = s_in; split_in <= e_in; split_in++){
+			if(postorder[e_po] == inorder[split_in])
+				break;
+		}
+		split_po = s_po + split_in - s_in;
+		root->left = recursion(inorder, postorder, s_in, split_in - 1, s_po , split_po - 1 );
+		root->right = recursion(inorder, postorder, split_in + 1, e_in, split_po, e_po - 1);
+		return root;
+	}
+
+	TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
+		if(inorder.size() != postorder.size() || inorder.size() == 0)
+			return NULL;
+		return recursion(inorder, postorder, 0, inorder.size() - 1, 0, postorder.size() - 1);
+	}
 
 };
 

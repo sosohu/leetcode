@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <stack>
+#include <climits>
 
 #define DATASIZE 10
 
@@ -18,7 +20,7 @@ class Solution {
 
 public:
 	
-	int maxDepth(TreeNode *root) {
+	int maxDepth_1st(TreeNode *root) {
 		if(root == NULL)
 			return 0;
 		if(root->left == NULL && root->right == NULL)
@@ -41,6 +43,38 @@ public:
 		deepth++;
 		return deepth;		
     }
+
+	int maxDepth(TreeNode *root) {
+		if(!root)	return 0;
+		int left = maxDepth(root->left);
+		int right = maxDepth(root->right);
+		return left < right? right + 1 : left + 1;
+	}
+
+	//前序迭代
+	int maxDepth_iter(TreeNode *root) {
+		if(!root)	return 0;
+		stack<pair<TreeNode*, int> > s;
+		s.push(make_pair(root, 1));
+		pair<TreeNode*, int> curr;
+		int result = INT_MIN;
+		while(!s.empty()){
+			curr = s.top();
+			s.pop();
+			if(!curr.first->left && !curr.first->right){
+				if(result < curr.second)
+					result = curr.second;
+				continue;
+			}
+			if(curr.first->left){
+				s.push(make_pair(curr.first->left, curr.second + 1));
+			}
+			if(curr.first->right){
+				s.push(make_pair(curr.first->right, curr.second + 1));
+			}
+		}
+		return result;
+	}
 
 };
 

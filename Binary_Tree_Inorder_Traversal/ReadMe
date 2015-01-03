@@ -11,3 +11,4 @@ Q	Given a binary tree, return the inorder traversal of its nodes' values.
 	return [1,3,2].
 
 A	recursion maybe very simple, iteration can be better.
+	mirror way.

@@ -30,7 +30,7 @@ class Solution {
 
 public:
 
-	vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+	vector<vector<int> > zigzagLevelOrder_1st(TreeNode *root) {
 		vector<vector<int> > data;
 		vector<vector<TreeNode*> > tree;
 		
@@ -72,6 +72,34 @@ public:
 				}
 			}
 			data.push_back(vec);
+		}
+		return data;
+	}
+
+	vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+		vector<vector<int> > data;
+		if(!root)	return data;
+		vector<TreeNode*> cur, next;
+		next.push_back(root);
+		bool left_right = true;
+		while(1){
+			vector<int> tmp;
+			cur = next;
+			next.clear();
+			int size = cur.size();
+			for(int i = 0; i < size; i++){
+				if(cur[i]->left)
+					next.push_back(cur[i]->left);
+				if(cur[i]->right)
+					next.push_back(cur[i]->right);
+				if(left_right)
+					tmp.push_back(cur[i]->val);
+				else
+					tmp.push_back(cur[size - 1 - i]->val);
+			}
+			data.push_back(tmp);
+			left_right = !left_right;
+			if(next.empty())	break;
 		}
 		return data;
 	}

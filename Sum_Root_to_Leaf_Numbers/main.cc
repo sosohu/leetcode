@@ -40,11 +40,30 @@ public:
 		return;
 	}
 
-	int sumNumbers(TreeNode *root) {
+	int sumNumbers_1st(TreeNode *root) {
 		int sum = 0;
 		sumNumbers_Detail(root, sum);
 		return sum;
     }
+
+	void dfs(TreeNode *root, int track, int &sum){
+		if(!root)	return;
+		track = track*10 + root->val;
+		if(!root->left && !root->right){
+			sum = sum + track;
+		}
+		if(root->left)
+			dfs(root->left, track, sum);
+		if(root->right)
+			dfs(root->right, track, sum);
+	}
+
+	int sumNumbers(TreeNode *root) {
+		int sum = 0;
+		int track = 0;
+		dfs(root, track, sum);
+		return sum;
+	}
 
 };
 

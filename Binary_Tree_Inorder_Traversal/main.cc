@@ -67,10 +67,39 @@ public:
 		}
 		return data;
 	}
+
+	// second time coding
+	vector<int> InOrderTraversal(TreeNode* root){
+		vector<int> data;
+		if(!root)   return data;
+		stack<TreeNode*> s;
+		TreeNode *pos = root;
+		s.push(pos);
+		while(pos->left){
+			pos = pos->left;
+			s.push(pos);
+		}   
+		while(!s.empty()){
+			pos = s.top();
+			s.pop();
+			data.push_back(pos->val);
+			if(pos->right){
+				pos = pos->right;
+				s.push(pos);
+				while(pos->left){
+					pos = pos->left;
+					s.push(pos);
+				}
+			}
+		}
+		return data;
+	}
+
 	
 	vector<int> inorderTraversal(TreeNode *root) {
 		//return recursion(root);
-		return iteration(root);
+		//return iteration(root);
+		return InOrderTraversal(root);
     }
 
 };

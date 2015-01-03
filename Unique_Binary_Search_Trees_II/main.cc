@@ -18,6 +18,7 @@ struct TreeNode {
 class Solution {
 
 public:
+	/* 1st
 	vector<TreeNode* > generate(int start, int end){
 
 		vector<TreeNode*> data;
@@ -51,6 +52,36 @@ public:
 		}
 		return generate(1, n);
     }
+	*/
+
+	vector<TreeNode*> generate(int start, int end){
+		if(start == end){
+			return vector<TreeNode*>(1, new TreeNode(start));
+		}
+		vector<TreeNode*> data;
+		if(start > end){
+			data.push_back(NULL);
+			return data;
+		}
+		for(int i = start; i <= end; i++){
+			TreeNode* root;
+			vector<TreeNode*> left = generate(start, i - 1);
+			vector<TreeNode*> right = generate(i + 1, end);
+			for(int j = 0; j < left.size(); j++){
+				for(int k = 0; k < right.size(); k++){
+					root = new TreeNode(i);
+					root->left = left[j];
+					root->right = right[k];
+					data.push_back(root);
+				}
+			}
+		}
+		return data;
+	}
+
+	vector<TreeNode*> generateTrees(int n) {
+		return generate(1, n);
+	}
 
 };
 

@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <algorithm>
 
 #define DATASIZE 10
 
@@ -30,7 +31,7 @@ class Solution {
 
 public:
 
-	vector<vector<int> > levelOrderBottom(TreeNode *root) {
+	vector<vector<int> > levelOrderBottom_1st(TreeNode *root) {
 		vector<vector<int> > data;
 		vector<vector<TreeNode*> > tree;
 		if(root == NULL)
@@ -63,6 +64,22 @@ public:
 				v.push_back(tree[j][k]->val);
 			data.push_back(v);
 		}
+		return data;
+	}
+
+	void dfs(TreeNode *root, int level, vector<vector<int> >& data){
+		if(!root)	return;
+		if(level > data.size())
+			data.push_back(vector<int>());
+		data[level-1].push_back(root->val);
+		dfs(root->left, level+1, data);
+		dfs(root->right, level+1, data);
+	}
+
+	vector<vector<int> > levelOrderBottom(TreeNode *root) {
+		vector<vector<int> > data;
+		dfs(root, 1, data);
+		reverse(data.begin(), data.end());
 		return data;
 	}
 

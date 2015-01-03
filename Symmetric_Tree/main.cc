@@ -2,6 +2,7 @@
 #include <string>
 #include <stdlib.h>
 #include <vector>
+#include <deque>
 
 #define DATASIZE 7
 
@@ -21,11 +22,9 @@ public:
 
 	// recursively
 	bool recursion(TreeNode* root, TreeNode* symm){
-		if(root == NULL && symm == NULL)
+		if(!root && !symm)
 			return true;
-		if(root == NULL)	return false;
-		if(symm == NULL)	return false;
-		
+		if(!root || !symm)	return false;
 		if(root->val != symm->val)	return false;
 		if(root == symm)	return recursion(root->left, symm->right);
 		return recursion(root->left, symm->right) && recursion(root->right, symm->left);
@@ -66,12 +65,32 @@ public:
 		return true;
 	}
 
-	bool isSymmetric(TreeNode* root){
+	bool isSymmetric_1st(TreeNode* root){
 		if(root == NULL)
 			return true;
 		//return recursion(root, root);
 		return iteration(root);
     }
+
+
+	bool isSymmetric(TreeNode* root){
+		if(!root) return true;
+		deque<TreeNode*> left(1, root->left), right(1, root->right);
+		TreeNode *l, *r;
+		while(!left.empty() && !right.empty()){
+			l = left.front();
+			r = right.front();
+			left.pop_front();
+			right.pop_front();
+			if(!l && !r)	continue;
+			if(!l || !r || l->val != r->val)	return false;
+			left.push_back(l->left);
+			left.push_back(l->right);
+			right.push_back(r->right);
+			right.push_back(r->left);
+		}
+		return true;
+	}
 
 };
 
@@ -80,7 +99,7 @@ int main(int argc, char** argv)
 	Solution sl;
 	
 	TreeNode* root = (TreeNode*)malloc(DATASIZE*sizeof(TreeNode));
-	int data[] = {0,1,1,2,1,2,2};
+	int data[] = {0,1,1,2,2,2,2};
 	int count = 0;
 	while(count < DATASIZE){
 		root[count].val = data[count];

@@ -28,13 +28,10 @@ class Solution {
 public:
 
 	TreeNode* detail(vector<int> &inorder, vector<int> &preorder, int in_start, int in_end, int pre_start, int pre_end){
-		if(in_start > in_end || pre_start > pre_end)
-			return NULL;
-
+		if(in_start > in_end || pre_start > pre_end) return NULL;
 		int val = preorder[pre_start];
+
 		TreeNode* father = new TreeNode(val);
-
-
 		TreeNode *left = NULL, *right = NULL;
 		
 		int in_pos = in_start, pre_pos = pre_start;
@@ -54,8 +51,7 @@ public:
 
 	TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
 		int size = inorder.size();
-		if(size == 0)
-			return NULL;
+		if(size == 0) return NULL;
 		return detail(inorder, preorder, 0, size - 1, 0, size - 1);
     }
 

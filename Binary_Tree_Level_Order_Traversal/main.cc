@@ -30,7 +30,7 @@ class Solution {
 
 public:
 
-	vector<vector<int> > levelOrder(TreeNode *root) {
+	vector<vector<int> > levelOrder_1st(TreeNode *root) {
 		vector<vector<int> > data;
 		vector<vector<TreeNode*> > tree;
 		if(root == NULL)
@@ -62,6 +62,30 @@ public:
 			for(int k = 0; k < tree[j].size(); k++)
 				v.push_back(tree[j][k]->val);
 			data.push_back(v);
+		}
+		return data;
+	}
+
+	vector<vector<int> > levelOrder(TreeNode *root) {
+		vector<vector<int> > data;
+		if(!root)	return data;
+		vector<TreeNode*> cur, next;
+		next.push_back(root);
+		int count = 0;
+
+		while(1){
+			vector<int> tmp;
+			cur = next;
+			next.clear();
+			for(int i = 0; i < cur.size(); i++){
+				tmp.push_back(cur[i]->val);
+				if(cur[i]->left)
+					next.push_back(cur[i]->left);
+				if(cur[i]->right)
+					next.push_back(cur[i]->right);
+			}
+			data.push_back(tmp);
+			if(next.empty())	break;
 		}
 		return data;
 	}

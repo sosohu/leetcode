@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <stack>
 
 #define DATASIZE 7
 
@@ -18,7 +19,7 @@ class Solution {
 
 public:
 
-	bool hasPathSum(TreeNode *root, int sum) {
+	bool hasPathSum_1st(TreeNode *root, int sum) {
 		if(root == NULL)
 			return false;
 		int val = root->val;
@@ -36,6 +37,26 @@ public:
 			return hasPathSum(root->right, sum);
 		return false;
     }
+
+	bool hasPathSum(TreeNode *root, int sum) {
+		if(!root)	return false;
+		stack<pair<TreeNode*, int> > s;
+		s.push(make_pair(root, root->val));
+		TreeNode *node;
+		int e;
+		while(!s.empty()){
+			node = s.top().first;
+			e = s.top().second;
+			s.pop();
+			if(!node->left && !node->right && e == sum)
+				return true;
+			if(node->left)
+				s.push(make_pair(node->left, e + node->left->val));
+			if(node->right)
+				s.push(make_pair(node->right, e + node->right->val));
+		}
+		return false;
+	}
 
 };
 

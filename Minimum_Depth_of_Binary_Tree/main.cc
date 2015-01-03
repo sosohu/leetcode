@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <algorithm>
+#include <stack>
+#include <climits>
 
 #define DATASIZE 7
 
@@ -18,7 +21,7 @@ class Solution {
 
 public:
 	
-	 int minDepth(TreeNode *root) {
+	 int minDepth_1st(TreeNode *root) {
 		if(root == NULL)
 			return 0;
 		if(root->left == NULL && root->right == NULL)
@@ -41,6 +44,60 @@ public:
 		deepth++;
 		return deepth;		
     }
+
+	int minDepth_2nd(TreeNode *root) {
+		if(!root)	return 0;
+		if(!root->left && !root->right)	return 1;
+		if(!root->left)
+			return minDepth(root->right) + 1;
+		if(!root->right)
+			return minDepth(root->left) + 1;
+		return min(minDepth(root->left), minDepth(root->right)) + 1;
+	}
+
+	
+	void dfs(TreeNode *root, int &result, int depth){
+		if(result < depth + 1) return;
+		if(!root->left && !root->right){
+			result = depth + 1;
+			return;
+		}
+		if(root->left)
+			dfs(root->left, result, depth + 1);
+		if(root->right)
+			dfs(root->right, result, depth + 1);
+	}
+
+	int minDepth_3nd(TreeNode *root) {
+		if(!root)	return 0;
+		int result = INT_MAX;
+		dfs(root, result, 0);
+		return result;
+	}
+
+	// iteraterion version
+	int minDepth(TreeNode *root) {
+		if(!root)	return 0;
+		stack<pair<TreeNode*, int> > s;
+		s.push(make_pair(root, 1));
+		int	 result = -((1<<31) + 1);
+		TreeNode *node;
+		int depth;
+		while(!s.empty()){
+			node = s.top().first;
+			depth = s.top().second;
+			s.pop();
+			if(result < depth)	continue;
+			if(!node->left && !node->right)
+				result = depth;
+
+			if(node->left )
+				s.push(make_pair(node->left, depth + 1));
+			if(node->right)
+				s.push(make_pair(node->right, depth + 1));
+		}
+		return result;
+	}
 
 };
 

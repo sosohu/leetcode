@@ -60,7 +60,7 @@ public:
 		lv = rv - lv;
 	}
 
-	void recoverTree(TreeNode* root) {
+	void recoverTree_1st(TreeNode* root) {
 		TreeNode *first_node = NULL, *second_node = NULL, *ret = NULL;
 		int count = 0;
 		inorder(root, first_node, second_node, count, ret);
@@ -71,6 +71,31 @@ public:
 		swap(first_node->val, second_node->val);
     }
 
+	void dfs(TreeNode* root, int& last, TreeNode* &first, TreeNode* &second){
+		if(root->left){
+			dfs(root->left, last, first, second);
+		}
+		if(root->val < last){
+			second = root;
+		}
+		if(!second){
+			first = root;
+		}
+		last = root->val;
+		if(root->right){
+			dfs(root->right, last, first, second);
+		}
+	}
+
+	void recoverTree(TreeNode* root) {
+		if(!root)	return;
+		TreeNode *first = NULL, *second = NULL;
+		int min = (-1)<<31;
+		dfs(root, min, first, second);
+		int tmp = first->val;
+		first->val = second->val;
+		second->val = tmp;
+	}
 };
 
 int main(int argc, char** argv)

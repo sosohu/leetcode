@@ -39,12 +39,29 @@ public:
 		return true;
 	}
 
-	bool isBalanced(TreeNode *root) {
+	bool isBalanced_1st(TreeNode *root) {
 		if(root == NULL)
 			return true;
 		int deepth;
 		return detail(root, deepth);
     }
+
+	bool dfs(TreeNode *root, int &hight){
+		if(!root){
+			hight = 0;
+			return true;
+		}
+		int left, right;
+		bool is_left = dfs(root->left, left);
+		bool is_right = dfs(root->right, right);
+		hight = left > right? left + 1 : right + 1;
+		return is_left && is_right && (abs(left - right) < 2);
+	}
+
+	bool isBalanced(TreeNode *root) {
+		int hight;
+		return dfs(root, hight);
+	}
 
 };
 

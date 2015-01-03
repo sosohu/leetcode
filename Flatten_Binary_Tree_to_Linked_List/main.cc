@@ -18,7 +18,7 @@ class Solution {
 
 public:
 
-	void flatten(TreeNode *root) {
+	void flatten_1st(TreeNode *root) {
 		if(root == NULL)
 			return;
 		TreeNode* pos = root, * last = root;
@@ -41,6 +41,45 @@ public:
 		last->left = NULL;
 		last->right = NULL;
     }
+
+	void flatten_2nd(TreeNode *root) {
+		if(!root)	return;
+		stack<TreeNode*> s;
+		s.push(root);
+		TreeNode *last = NULL, *cur;
+		while(!s.empty()){
+			cur = s.top();
+			s.pop();
+			if(last)
+				last->right = cur;
+			if(cur->right)
+				s.push(cur->right);
+			if(cur->left)
+				s.push(cur->left);
+			cur->left = NULL;
+			last = cur;
+		}
+		last->right = NULL;
+	}
+
+	void flatten(TreeNode *root) {
+		TreeNode *tail;
+		recursion(root, tail);
+	}
+
+	TreeNode* recursion(TreeNode *root, TreeNode* &tail){
+		if(!root)	return NULL;
+		TreeNode *next = NULL;
+		tail = root;
+		if(root->left)
+			next = recursion(root->left, tail);
+		if(root->right)
+			tail->right = recursion(root->right, tail);
+		root->left = NULL;
+		if(next)
+			root->right = next;
+		return root;
+	}
 
 };
 

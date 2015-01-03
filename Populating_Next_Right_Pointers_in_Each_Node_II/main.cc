@@ -16,7 +16,7 @@ class Solution {
 
 public:
 
-	void connect(TreeLinkNode *root) {
+	void connect_1st(TreeLinkNode *root) {
 		if(root == NULL)
 			return;
 
@@ -57,6 +57,40 @@ public:
 				maxson = maxfather->right;
 		}	
     }
+
+	void connect(TreeLinkNode *root) {
+		if(!root)	return;
+		TreeLinkNode *cur = root, *next, *last;
+		cur->next = NULL;
+		do{
+			next = NULL;
+			while(cur){
+				if(cur->left){
+					if(next){
+						last->next = cur->left;
+						last = last->next;
+					}
+					else{
+						last = cur->left;
+						next = last;
+					}
+				}
+				if(cur->right){
+					if(next){
+						last->next = cur->right;
+						last = last->next;
+					}
+					else{
+						last = cur->left;
+						next = last;
+					}
+				}
+				cur = cur->next;
+			}
+			last->next = NULL;
+			cur = next;
+		}while(cur);
+	}
 
 };
 

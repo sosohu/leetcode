@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <climits>
 
 #define DATASIZE 7
 
@@ -43,11 +44,39 @@ public:
 		if(inside < right_inside && right_inside != 0) inside = right_inside;
 	}
 
-	int maxPathSum(TreeNode *root) {
+	int maxPathSum_1st(TreeNode *root) {
 		int inside, outside;
 		detail(root, inside, outside);
 		return inside;	
     }
+
+	int dfs(TreeNode *root, int &result){
+		if(!root)	return 0;
+		if(!root->left && !root->right){
+			if(result < root->val)
+				result = root->val;
+			return root->val > 0? root->val : 0;
+		}
+		int left = 0, right = 0;
+		if(root->left){
+			left = dfs(root->left, result);
+		}
+		if(root->right){
+			right = dfs(root->right, result);
+		}
+		int cur = root->val + left + right;
+		if(result < cur)
+			result = cur;
+		int add = left > right ? left : right;
+		if(add < 0)	return root->val > 0? root->val : 0;
+		return root->val + add > 0 ? root->val + add : 0;
+	}
+
+	int maxPathSum(TreeNode *root) {
+		int result = INT_MIN;
+		dfs(root, result);
+		return result;
+	}
 
 };
 
