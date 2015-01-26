@@ -96,6 +96,38 @@ public:
 		first->val = second->val;
 		second->val = tmp;
 	}
+
+	//迭代
+	void recoverTree_iter(TreeNode* root) {
+		if(!root)	return;
+		TreeNode *first = NULL, *second = NULL, *cur;
+		int last = INT_MIN;
+		stack<TreeNode*> s;
+		s.push(root);
+		while(!s.empty()){
+			cur = s.top();
+			while(cur){
+				s.push(cur->left);
+				cur = cur->left;
+			}
+			s.pop();
+			if(!s.empty()){
+		    	cur = s.top();
+		    	if(cur->val < last){
+		    		second = cur;
+		    	}
+		    	if(!second){
+				    first = cur;
+			    }
+			    last = cur->val;
+			    s.pop();
+			    s.push(cur->right);
+			}
+		}
+		int tmp = first->val;
+		first->val = second->val;
+		second->val = tmp;
+	}
 };
 
 int main(int argc, char** argv)

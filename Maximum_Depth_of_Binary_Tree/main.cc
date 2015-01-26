@@ -76,6 +76,29 @@ public:
 		return result;
 	}
 
+	// learned by boya
+	int maxDepth_iter_2nd(TreeNode *root) {
+		if(!root)	return 0;
+		stack<TreeNode*>	s;
+		s.push(root);
+		TreeNode *curr = root, *last = NULL;
+		while(!s.empty()){
+			if(curr){
+				if(curr->left == last || curr->right == last){
+					last = curr;
+					cur = s.top();
+					s.pop();
+				}else{
+					s.push(curr->left);
+				}
+			}else{
+				curr = s.top();
+				if(curr->right)
+					s.push(curr->right);
+			}
+		}
+	}
+
 };
 
 int main(int argc, char** argv)

@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	bool isMatch(const char *s, const char *p) {
+	bool isMatch_1st(const char *s, const char *p) {
 		#ifdef DEBUG
 		cout<<*s<<" "<<*p<<endl;
 		#endif
@@ -68,13 +68,37 @@ public:
 		}
     }
 
+	bool isMatch(const char *s, const char *p) {
+		switch(*s){
+			case '\0': 	if(*p == '\0')	return true;
+						if(*p == '*')	return false;
+						if(*(p+1) != '*')	return false;
+						p++;
+						while(*p != '\0' && *p == '*')	p++;
+						if(*p != '\0')	return isMatch(s, p);
+						return true;
+			default:	if(*p == '\0')	return false;
+						if(*(p+1) != '*'){
+							if(*s == *p || *p == '.')	return isMatch(++s, ++p);
+							else	return false;
+						}else{
+							const char* cur = p;
+							p++;
+							while(*p != '\0' && *p == '*')	p++;
+							if(isMatch(s, p))	return true;
+							if(*s == *cur || *cur == '.') 	return isMatch(++s, cur);
+							else	return false;
+						}
+		}
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	const char *s1 = "";		
-	const char *s2 = "c*c*";
+	const char *s1 = "a";		
+	const char *s2 = ".*..a*";
     int ret = sl.isMatch(s1, s2);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;

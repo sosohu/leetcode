@@ -102,6 +102,23 @@ public:
 		return InOrderTraversal(root);
     }
 
+	vector<int> InOrderTraversal_1(TreeNode* root){
+		vector<int> data;
+		if(!root)	return data;
+		stack<TreeNode*> s;
+		TreeNode *pos = root;
+		while(!s.empty() || pos){
+			while(pos){
+				s.push(pos);
+				pos = pos->left;
+			}
+			pos = s.top();
+			s.pop();
+			data.push_back(pos->val);
+			pos = pos->right;  //这个非常重要
+		}
+	}
+
 };
 
 int main(int argc, char** argv)
