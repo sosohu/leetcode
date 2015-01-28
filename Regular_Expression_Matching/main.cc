@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <cstring>
 
 using namespace std;
-
 
 class Solution {
 
@@ -68,7 +69,8 @@ public:
 		}
     }
 
-	bool isMatch(const char *s, const char *p) {
+	//递归做法
+	bool isMatch_2nd(const char *s, const char *p) {
 		switch(*s){
 			case '\0': 	if(*p == '\0')	return true;
 						if(*p == '*')	return false;
@@ -92,13 +94,40 @@ public:
 		}
 	}
 
+	//动态规划
+	bool isMatch(const char *s, const char *p) {
+		int ls = strlen(s);
+		int lp = strlen(p);
+		vector<vector<bool> > isMatch(ls+1, vector<bool>(lp+1, false));
+		isMatch[0][0] = true;
+		int di, dj;
+		for(int i = 0; i < ls + 1; i++){ // 注意起始坐标
+			di = i - 1;
+			for(int j = 1; j < lp + 1; j++){ // 注意起始坐标
+				dj = j - 1;
+				if(p[dj] != '*'){
+					isMatch[i][j] = di != -1 && isMatch[i-1][j-1] && (s[di] == p[dj] || p[dj] == '.');
+				}else{
+					if(dj == 0) { isMatch[i][j] = false; continue; }
+					if(p[dj-1] == '.'){
+							isMatch[i][j] = isMatch[i][j-2] || (di != -1 && isMatch[i-1][j]);
+					}else{
+						if(p[dj-1] == '*')	isMatch[i][j] = isMatch[i][j-1];	
+						else isMatch[i][j] = isMatch[i][j-2] || (di != -1 && s[di] == p[dj-1] && isMatch[i-1][j]);
+					}
+				}
+			}
+		}
+		return isMatch[ls][lp];
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	const char *s1 = "a";		
-	const char *s2 = ".*..a*";
+	const char *s1 = "aasdfasdfasdfasdfas";		
+	const char *s2 = "aasdf.*asdf.*asdf.*asdf.*s";
     int ret = sl.isMatch(s1, s2);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
