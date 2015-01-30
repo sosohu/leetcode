@@ -105,7 +105,7 @@ public:
 								case ' ': break;	
 								case '-': 	
 								case '+': state = 1; break;	
-								case '.': state = 4; break;	
+								case '.': state = 3; break;	
 								default:  if(isNum(*s))	state = 2;
 										  else return false;
 							}
@@ -113,7 +113,7 @@ public:
 						}
 				case 1:	{
 							switch(*s){
-								case '.': state = 4; break;	
+								case '.': state = 3; break;	
 								default:  if(isNum(*s))	state = 2;
 										  else return false;
 							}
@@ -121,55 +121,55 @@ public:
 						}
 				case 2: {
 							switch(*s){
-								case ' ': state = 10; break;	
-								case '.': state = 6; break;	
-								case 'e': state = 7; break;	
+								case ' ': state = 8; break;	
+								case '.': state = 4; break;	
+								case 'e': state = 5; break;	
 								default:  if(!isNum(*s)) return false;
 							}
 							break;
 						}
-				case 4: {
-							if(isNum(*s)) state = 6;
+				case 3: {
+							if(isNum(*s)) state = 4;
 							else return false;
 							break;
 						}
-				case 6: {
+				case 4: {
 							switch(*s){
-								case ' ': state = 10; break;	
-								case 'e': state = 7; break;	
+								case ' ': state = 8; break;	
+								case 'e': state = 5; break;	
 								default:  if(!isNum(*s)) return false;
 							}
 							break;
 						}
-				case 7: {
+				case 5: {
 							switch(*s){
 								case '+': ;
-								case '-': state = 8; break;
-								default:  if(isNum(*s)) state = 9;
+								case '-': state = 6; break;
+								default:  if(isNum(*s)) state = 7;
 										  else return false;
 							}
 							break;
 						}
-				case 8: {
-							if(isNum(*s)) state = 9;
+				case 6: {
+							if(isNum(*s)) state = 7;
 							else return false;
 							break;
 						}
-				case 9: {
+				case 7: {
 							switch(*s){
-								case ' ': state = 10; break;
+								case ' ': state = 8; break;
 								default:  if(!isNum(*s)) return false;
 							}
 							break;
 						}
-				case 10: {
+				case 8: {
 							if(*s != ' ') return false;
 							break;
 						}
 			}
 			s++;
 		}
-		if(state == 10 || state == 6 || state == 9 || state == 2)
+		if(state == 8 || state == 4 || state == 7 || state == 2)
 			return true;
 		return false;
 	}
