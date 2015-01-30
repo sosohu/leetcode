@@ -10,7 +10,7 @@ class Solution {
 
 public:
 
-	bool isNumber(const char *s) {
+	bool isNumber_1st(const char *s) {
 		int len = strlen(s);	
 		vector<int> marke, mark_add, mark_minus, mark_point;
 		int pos , start, end;
@@ -91,12 +91,95 @@ public:
 		return true;
     }
 
+	bool isNum(const char s){
+		return s <= '9' && s >= '0';
+	}
+
+	bool isNumber(const char *s) {
+		int state = 0;
+		if(!s)	return false;
+		while(*s){
+			switch(state){
+				case 0: {
+							switch(*s){
+								case ' ': break;	
+								case '-': 	
+								case '+': state = 1; break;	
+								case '.': state = 4; break;	
+								default:  if(isNum(*s))	state = 2;
+										  else return false;
+							}
+							break;
+						}
+				case 1:	{
+							switch(*s){
+								case '.': state = 4; break;	
+								default:  if(isNum(*s))	state = 2;
+										  else return false;
+							}
+							break;
+						}
+				case 2: {
+							switch(*s){
+								case ' ': state = 10; break;	
+								case '.': state = 6; break;	
+								case 'e': state = 7; break;	
+								default:  if(!isNum(*s)) return false;
+							}
+							break;
+						}
+				case 4: {
+							if(isNum(*s)) state = 6;
+							else return false;
+							break;
+						}
+				case 6: {
+							switch(*s){
+								case ' ': state = 10; break;	
+								case 'e': state = 7; break;	
+								default:  if(!isNum(*s)) return false;
+							}
+							break;
+						}
+				case 7: {
+							switch(*s){
+								case '+': ;
+								case '-': state = 8; break;
+								default:  if(isNum(*s)) state = 9;
+										  else return false;
+							}
+							break;
+						}
+				case 8: {
+							if(isNum(*s)) state = 9;
+							else return false;
+							break;
+						}
+				case 9: {
+							switch(*s){
+								case ' ': state = 10; break;
+								default:  if(!isNum(*s)) return false;
+							}
+							break;
+						}
+				case 10: {
+							if(*s != ' ') return false;
+							break;
+						}
+			}
+			s++;
+		}
+		if(state == 10 || state == 6 || state == 9 || state == 2)
+			return true;
+		return false;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	const char* s = "-.3e6";		
+	const char* s = "-.3";		
 	bool ret = sl.isNumber(s);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
