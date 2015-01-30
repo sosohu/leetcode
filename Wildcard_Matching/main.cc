@@ -12,7 +12,7 @@ class Solution {
 public:
 
 	// O(n*m) O(1)
-	bool isMatch(const char *s, const char *p){
+	bool isMatch_1st(const char *s, const char *p){
 		const char* p1 = s;
 		const char* p2 = p;
 		
@@ -185,6 +185,31 @@ public:
 		return ret;
     }*/
 
+	//DP
+	bool isMatch(const char *s, const char *p){
+		int ls = strlen(s);
+		int lp = strlen(p);
+		vector<vector<bool> > dp(ls + 1, vector<bool>(lp + 1, false));
+		dp[0][0] = true;
+		for(int j = 1; j < lp + 1; j++){
+			if(p[j-1] != '*')	break;
+			dp[0][j] = true;
+		}
+		int di, dj;
+		for(int i = 1; i < ls + 1; i++){
+			di = i - 1;
+			for(int j = 1; j < lp + 1; j++){
+				dj = j - 1;
+				if(p[dj] == '*'){
+					dp[i][j] = dp[i][j-1] || dp[i-1][j];
+				}else{
+					dp[i][j] = dp[i-1][j-1] && (p[dj] == '.'? true : s[di] == p[dj]);
+				}
+			}
+		}
+		return dp[ls][lp];
+	}
+
 };
 
 int main(int argc, char** argv)
@@ -193,7 +218,7 @@ int main(int argc, char** argv)
 	
     //bool ret = sl.isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b");
 	//bool ret = sl.isMatch("mississippi","m*i*si*si*si*pi");
-	bool ret = sl.isMatch("b","*a*");
+	bool ret = sl.isMatch("ba","*a*");
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 
