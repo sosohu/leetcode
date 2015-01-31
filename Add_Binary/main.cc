@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	string addBinary(string a, string b) {
+	string addBinary_1st(string a, string b) {
 		int la = a.length();
 		int lb = b.length();
 		string ret;
@@ -48,6 +48,21 @@ public:
 		reverse(ret.begin(), ret.end());
 		return ret;
     }
+
+	string addBinary(string a, string b) {
+		int la = a.length(), lb = b.length();
+		int carry = 0, sum = 0;
+		string ret;
+		while(la || lb || carry){
+			sum = carry + (la > 0? a[la-1] - '0' : 0) + (lb > 0? b[lb-1] - '0' : 0);
+			ret.push_back(sum%2 + '0');
+			carry = sum/2;
+			if(la)	la--;
+			if(lb)	lb--;
+		}
+		reverse(ret.begin(), ret.end());
+		return ret;
+	}
 
 };
 

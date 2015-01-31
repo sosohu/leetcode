@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	int lengthOfLastWord(const char *s) {
+	int lengthOfLastWord_1st(const char *s) {
 		int length;
 		int pos = 0;
 		while(s[pos] != '\0' && s[pos] == ' '){
@@ -27,6 +27,18 @@ public:
 			if(s[pos] == '\0') return length;
 		}
     }
+
+	int lengthOfLastWord(const char *s) {
+		int len = 0;
+		if(!s)	return len;
+		while(*s){
+			while(*s && *s == ' ') s++;
+			if(*s == '\0')	return len;
+			len = 0;
+			while(*s && *s != ' ') {s++; len++;}
+		}
+		return len;
+	}
 
 };
 

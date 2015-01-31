@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ class Solution {
 
 public:
 
-	vector<string> anagrams(vector<string> &strs) {
+	vector<string> anagrams_1st(vector<string> &strs) {
 		vector<string> ret;
 		int size = strs.size();
 		vector<node> data(size, node());
@@ -60,6 +61,39 @@ public:
 		
 		return ret;
     }
+
+	string genIndex(string& str){
+		vector<int> table(26, 0);
+		for(int i = 0; i < str.length(); i++){
+			table[str[i] - 'a']++;
+		}
+		string ret;
+		for(int i = 0; i < 26; i++){
+			for(int j = 0; j < table[i]; j++){
+				ret.push_back(i + 'a');
+			}
+		}
+		return ret;
+	}
+
+	vector<string> anagrams(vector<string> &strs) {
+		int size = strs.size();
+		unordered_map<string, vector<string> > table;
+		for(int i = 0; i < size; i++){
+			//string index = genIndex(strs[i]);
+			string index = strs[i];
+			sort(index.begin(), index.end());
+			table[index].push_back(strs[i]);
+		}
+		vector<string> ret;
+		for(unordered_map<string, vector<string> >::iterator iter = table.begin();
+			iter != table.end(); iter++){
+			if(iter->second.size() > 1){
+				ret.insert(ret.end(), iter->second.begin(), iter->second.end());
+			}
+		}
+		return ret;
+	}
 
 };
 

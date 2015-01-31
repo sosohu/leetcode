@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	string 	intToRoman(int num) {
+	string 	intToRoman_1st(int num) {
 		string str;
 		if(num > 999){
 			while(num > 999){
@@ -82,6 +82,19 @@ public:
 			default: return "";
 		}
     }
+
+	//多么简洁完美的解法
+	string 	intToRoman(int num) {
+		string ret;
+		int stand[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+		string symbol[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+		for(int i = 0; num > 0; i++){
+			int count = num / stand[i];
+			num = num % stand[i];
+			for(; count > 0; count--) ret += symbol[i];
+		}
+		return ret;
+	}
 
 };
 

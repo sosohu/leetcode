@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
 		return false;
 	}
 
-	bool isPalindrome(string s) {
+	bool isPalindrome_1st(string s) {
 		string tmp;
 		int size = s.size();
 		if(size <= 1) return true;
@@ -40,12 +41,26 @@ public:
 		}
     }
 
+	bool isPalindrome(string s) {
+		int len = s.length();
+		int start = 0, end = len - 1;
+		while(start < end){
+			while(start < end && !isAlpha(s[start]))	start++;
+			if(start == end)	return true;
+			while(end > start && !isAlpha(s[end]))	end--;
+			if(s[start] != s[end] && abs(s[start] - s[end]) != abs('a' - 'A')) return false;
+			start++;
+			end--;
+		}
+		return true;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("2a2");		
+	string s("Aa");		
     bool ret = sl.isPalindrome(s);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;

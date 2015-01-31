@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ class Solution {
 
 public:
 
-	string longestCommonPrefix(vector<string> &strs) {
+	string longestCommonPrefix_1st(vector<string> &strs) {
 		int size = strs.size();
 		string str;
 		if(size == 0)	return str;
@@ -41,6 +42,20 @@ public:
 		str = strs[0].substr(0, count);
 		return str;
     }
+
+	string longestCommonPrefix(vector<string> &strs) {
+		string ret;
+		if(strs.size() == 0)	return ret;
+		int len = INT_MAX;
+		for(int i = 0; i < strs.size(); i++)
+			if(len > strs[i].length())	len = strs[i].length();
+		for(int j = 0; j < len; j++){
+			for(int i = 1; i < strs.size(); i++)
+				if(strs[i][j] != strs[i-1][j])	return ret;
+			ret.push_back(strs[0][j]);
+		}
+		return ret;
+	}
 
 };
 
