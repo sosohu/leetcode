@@ -95,7 +95,7 @@ public:
 		return s <= '9' && s >= '0';
 	}
 
-	bool isNumber(const char *s) {
+	bool isNumber_2nd(const char *s) {
 		int state = 0;
 		if(!s)	return false;
 		while(*s){
@@ -172,6 +172,43 @@ public:
 		if(state == 8 || state == 4 || state == 7 || state == 2)
 			return true;
 		return false;
+	}
+
+	enum lexical{ valid, space, sign, number, dot, e };
+
+	int isType(const char c){
+		switch(c){
+			case ' ': return 1;
+			case '+': ;
+			case '-': return 2;
+			case '.': return 4;
+			case 'e': return 5;
+			default: if(c <= '9' && c >= '0')	return 3;
+					 else return 0;
+		}
+	}
+
+	bool isNumber(const char *s) {
+		if(!s)	return false;
+		//状态转移矩阵, -1表示非法
+		int map[9][6] = {
+			-1, 0, 1, 2, 3, -1,  // 0状态的转移
+			-1, -1, -1, 2, 3, -1,
+			-1, 8, -1, 2, 4, 5,
+			-1, -1, -1, 4, -1, -1,
+			-1, 8, -1, 4, -1, 5,
+			-1, -1, 6, 7, -1, -1,
+			-1, -1, -1, 7, -1, -1,
+			-1, 8, -1, 7, -1, -1,
+			-1, 8, -1, -1, -1, -1 
+		};
+		int state = 0;
+		while(*s){
+			state = map[state][isType(*s)];
+			if(state == -1)	return false;
+			s++;
+		}
+		return state == 2 || state == 4 || state == 7 || state == 8;
 	}
 
 };
