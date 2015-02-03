@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	vector<string> fullJustify(vector<string> &words, int L) {
+	vector<string> fullJustify_1st(vector<string> &words, int L) {
 		int size = words.size();
 		vector<string> data;
 
@@ -61,6 +61,56 @@ public:
 		data.push_back(line_str);
 		return data;
     }
+
+	vector<string> fullJustify(vector<string> &words, int L) {
+		vector<string> ret;
+		if(L < 1 || !words.size()){ 
+			string str(L, ' ');
+			ret.push_back(str);	
+			return ret;
+		}
+		int last = 0, cur = 0, num = 0, left = 0;
+		while(cur < words.size()){
+			int sum = 0;
+			last = cur;
+			while(cur < words.size() && sum + words[cur].length() <= L){
+				sum = sum + words[cur].length() + 1;
+				cur++;
+			}
+			num = cur - last; // 词数
+			sum = sum - num; // num个词总长
+			left = L - sum; // 余下空格长度
+			if(num == 1){
+				string margin(left, ' ');
+				words[last] = words[last] + margin;
+				ret.push_back(words[last]);
+				continue;
+			}
+			if(cur == words.size()){
+				string line, s(1, ' ');
+				for(int i = 0; i < num - 1; i++){
+					line = line + words[last++] + s;
+				}
+				line = line + words[last++];
+				string margin(left - num + 1, ' ');
+				line = line + margin;
+				ret.push_back(line);
+				continue;
+			}
+			int gap = left / (num - 1);
+			int remain = left % (num - 1);
+			string line, s1(gap + (remain == 0? 0 : 1), ' '), s2(gap, ' ');
+			for(int i = 0; i < remain; i++){
+				line = line + words[last++] + s1;
+			}
+			for(int i = remain; i < num - 1; i++){
+				line = line + words[last++] + s2;
+			}
+			line += words[last];
+			ret.push_back(line);
+		}
+		return ret;
+	}
 
 };
 

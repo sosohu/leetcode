@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <climits>
 
 using namespace std;
 
@@ -9,7 +11,7 @@ class Solution {
 
 public:
 
-	int lengthOfLongestSubstring(string s) {
+	int lengthOfLongestSubstring_1st(string s) {
 		vector<int> appear = vector<int>(256, -1);
 		int len = s.length();
 		if(len == 0)	return 0;
@@ -35,6 +37,24 @@ public:
 		}
 		return max;
     }
+
+	int lengthOfLongestSubstring(string s) {
+		vector<bool> appear(256, false);
+		int ret = 0, con = 0;
+		for(int i = 0; i < s.length(); i++){
+			if(!appear[s[i]]){
+				con++;
+				appear[s[i]] = true;
+				ret = max(ret, con);
+			}else{
+				for(int j = i - con; j < i && s[j] != s[i]; j++){
+					appear[s[j]] = false;
+					con--;
+				}
+			}
+		}
+		return ret;
+	}
 
 };
 

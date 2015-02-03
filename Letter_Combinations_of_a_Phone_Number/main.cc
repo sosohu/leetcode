@@ -54,7 +54,7 @@ public:
 		}
 	}
 
-	vector<string> letterCombinations(string digits) {
+	vector<string> letterCombinations_1st(string digits) {
 		vector<string> data;
 		int len = digits.length();
 		if(len == 0){
@@ -64,8 +64,34 @@ public:
 		recursion(data, digits, len, len-1);
 		return data;
     }
+	
+
+	void recursion(vector<string> &result, string &digits, string map[], string& path, int end){
+		if(end < 0){
+			result.push_back(path);
+			return;
+		}
+		int index = digits[end] - '0';
+		string tmp = path;
+		path = " " + path;
+		for(int i = 0; i < map[index].length(); i++){
+			path[0] = map[index][i];
+			recursion(result, digits, map, path, end - 1);
+		}
+		path = tmp;
+	}
+
+	vector<string> letterCombinations(string digits) {
+		int len = digits.length();
+		vector<string> result;
+		string map[] = {" ","", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+		string path;
+		recursion(result, digits, map, path, len - 1);
+		return result;
+	}
 
 };
+
 
 int main(int argc, char** argv)
 {

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -8,7 +10,7 @@ class Solution {
 
 public:
 
-	string minWindow(string S, string T) {
+	string minWindow_1st(string S, string T) {
 		int expect[256] = {0};
 		int appear[256] = {0};
 		int sl = S.length(); 
@@ -45,6 +47,26 @@ public:
 		if(min  == sl + 1)	return "";
 		return S.substr(win_start, win_end - win_start + 1);
     }
+
+	string minWindow(string S, string T) {
+		vector<int> table(256, 0);
+		vector<int> apper(256, 0);
+		for(int i = 0; i < T.length(); i++) table[T[i]]++;
+		int len = INT_MAX, num = 0, last = 0, pos = 0;
+		for(int i = 0; i < S.length(); i++){
+			apper[S[i]]++;
+			if(apper[S[i]] <= table[S[i]]) num++;
+			while(apper[S[last]] > table[S[last]]){
+				apper[S[last]]--;
+				last++;
+			}
+			if(num == T.length() && len > i - last + 1){
+				len = i - last + 1;
+				pos = last;
+			}
+		}
+		return num == T.length()? S.substr(pos, len) : "";
+	}
 
 };
 

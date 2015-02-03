@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	string convert(string s, int nRows) {
+	string convert_1st(string s, int nRows) {
 		int size = s.length();
 		string str;
 		if(size == 0)	return str;
@@ -39,14 +39,30 @@ public:
 		return str;
     }
 
+	string convert(string s, int nRows) {
+		if(nRows == 1)	return s;
+		int len = s.length();
+		string ret;
+		for(int i = 0; i < nRows; i++){
+			int start = i, gap = nRows - i - 1;
+			while(start < len){
+				ret.push_back(s[start]);
+				if(!gap) gap = nRows - 1 - gap;
+				start = start + 2*gap;
+				gap = nRows - 1 - gap;
+			}
+		}
+		return ret;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("A");		
+	string s("PAYPALISHIRING");		
 
-	string ret = sl.convert(s, 1);
+	string ret = sl.convert(s, 3);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 
