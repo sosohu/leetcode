@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <climits>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,7 +11,7 @@ class Solution {
 
 public:
 
-int maxProfit(vector<int> &prices) {
+int maxProfit_1st(vector<int> &prices) {
 		int sum = 0;
 		int size = prices.size();
 		if(size == 0) return 0;
@@ -38,6 +40,17 @@ int maxProfit(vector<int> &prices) {
 		return sum;
     }
 
+int maxProfit(vector<int> &prices) {
+	if(prices.size() == 0)	return 0;
+	int rightMax = prices[prices.size() - 1];
+	int get = 0;
+	for(int i = prices.size() - 2; i >= 0; i--){
+		rightMax = max(prices[i], rightMax);
+		if(get < rightMax - prices[i])
+			get = rightMax - prices[i];
+	}
+	return get;
+}
 
 };
 

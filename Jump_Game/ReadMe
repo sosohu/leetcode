@@ -10,4 +10,4 @@ Q	Given an array of non-negative integers, you are initially positioned at the f
 
 	A = [3,2,1,0,4], return false.
 
-A	some detail need to take care for performance.
+A	solve it from tail to head use greedy.

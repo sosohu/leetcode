@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <numeric>
 
 using namespace std;
 
@@ -43,7 +44,7 @@ private:
 
 public:
 
-	int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+	int canCompleteCircuit_1st(vector<int> &gas, vector<int> &cost) {
 		vector<int> weight;
 		vector<int>::iterator iter_gas, iter_cost;
 		int p = 0;
@@ -63,6 +64,26 @@ public:
 		if(start != -1) return start;
 		return -1;
     }
+
+	int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+		int size = gas.size();
+		if(size == 0 || gas.size() != cost.size())
+			return -1;
+		if(accumulate(gas.begin(), gas.end(), 0) < accumulate(cost.begin(), cost.end(), 0))
+			return -1;
+		int sum = 0;
+		int start = -1;
+		for(int i = 0; i < size; i++){
+			sum += gas[i] - cost[i];
+			if(sum >= 0 && start == -1)
+				start = i;
+			if(sum < 0){
+				sum = 0;
+				start = -1;
+			}
+		}
+		return start;
+	}
 
 };
 

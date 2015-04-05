@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	bool canJump(int A[], int n) {
+	bool canJump_1st(int A[], int n) {
 		if(n == 0)	return false;
 		vector<bool> path(n, false);
 		path[n-1] = true;
@@ -25,6 +25,17 @@ public:
 		}
 		return path[0];
     }
+
+	bool canJump(int A[], int n) {
+		int pos = n - 1;
+		while(pos > 0){
+			int j = pos;
+			while(--j >= 0)
+				if(A[j] + j >= pos) break;
+			pos = j;
+		}
+		return pos == 0;
+	}
 
 };
 

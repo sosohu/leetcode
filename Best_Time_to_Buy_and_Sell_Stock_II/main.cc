@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	int maxProfit(vector<int> &prices) {
+	int maxProfit_1st(vector<int> &prices) {
 		int sum = 0;
 		int valley = 0;
 		int size = prices.size();
@@ -31,6 +31,24 @@ public:
 		}
 		return sum;
     }
+
+	int maxProfit(vector<int> &prices) {
+		int last = -1;
+		int sum = 0;
+		int size = prices.size();
+		for(int i = 0; i < size - 1; i++){
+			if(prices[i] < prices[i+1] && last == -1)
+				last = prices[i];
+			if(prices[i] > prices[i+1] && last != -1){
+				sum +=  prices[i] - last;
+				last = -1;
+			}
+		}
+		if(last != -1){
+			sum += prices[size - 1] - last;
+		}
+		return sum;
+	}
 
 };
 

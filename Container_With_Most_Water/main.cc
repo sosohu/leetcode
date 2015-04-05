@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ class Solution {
 
 public:
 
-	int maxArea(vector<int> &height) {
+	int maxArea_1st(vector<int> &height) {
 		int size = height.size();
 		if(size <= 1)	return 0;
 		int low = 0;
@@ -28,6 +29,18 @@ public:
 		}
 		return max;
     }
+
+	int maxArea(vector<int> &height) {
+		int size = height.size();
+		int water = 0;
+		int left = 0, right = size - 1;
+		while(left < right){
+			water = max(water, min(height[left], height[right])*(right - left));
+			if(height[left] < height[right])	left++;
+			else	right--;
+		}
+		return water;
+	}
 
 };
 

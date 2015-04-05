@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ inline int get(vector<int> ratings, int pos, int len){
 
 public:
 
-	int candy(vector<int> &ratings) {
+	int candy_1st(vector<int> &ratings) {
 		int len = ratings.size();
 		int left, right, pos, add, sum =0;
 		int last_left, last_right;
@@ -68,6 +69,21 @@ public:
 		sum =  sum + len;
 		return sum;
    }
+
+	int candy(vector<int> &ratings) {
+		int size = ratings.size();
+		vector<int> left(size, 0), right(size, 0);
+		for(int i = 1; i < size; i++)
+			if(ratings[i] > ratings[i-1]) left[i] = left[i-1] + 1;
+			else	left[i] = 0;
+		for(int i = size - 2; i >= 0; i--)
+			if(ratings[i] > ratings[i+1]) right[i] = right[i+1] + 1;
+			else	right[i] = 0;
+		int sum = 0;
+		for(int i = 0; i < size; i++)
+			sum += max(left[i], right[i]) + 1;
+		return sum;
+	}
 
 };
 
