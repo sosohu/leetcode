@@ -14,7 +14,7 @@ public:
 		return recursion(n-1) + recursion(n-2);
 	}
 
-	int climbStairs(int n) {
+	int climbStairs_1st(int n) {
 		//return recursion(n);
 		if(n <= 2)
 			return n;
@@ -26,6 +26,17 @@ public:
 		}
 		return a2;
     }
+
+	int climbStairs(int n) {
+		if(n <= 1)	return n;
+		int fn1 = 2, fn2 = 1, fn = 2;
+		for(int i = 3; i <= n; i++){
+			fn = fn1 + fn2;
+			fn2 = fn1;
+			fn1 = fn;
+		}
+		return fn;
+	}
 
 };
 

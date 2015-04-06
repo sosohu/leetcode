@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <stack>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,7 +11,7 @@ class Solution {
 
 public:
 
-	int longestValidParentheses(string s) {
+	int longestValidParentheses_1st(string s) {
 		int len = s.length();
 		stack<int>	sk;
 		int pos = 0;
@@ -39,6 +41,27 @@ public:
 		}
 		return last;
     }
+
+	int longestValidParentheses(string s) {
+		int size = s.size();
+		vector<int> dp(size + 1, 0);
+		int max = 0;
+		for(int i = size - 2; i >= 0; i--){
+			if(s[i] == '('){
+				if(s[i+1] == ')'){
+					dp[i] = 2 + dp[i+2];
+				}else{
+					if(i + dp[i+1] < size - 1){
+						if(s[i + dp[i+1] + 1] == ')')
+					 		dp[i] = 2 + dp[i+1] + dp[i + dp[i+1] + 2];
+					}
+				}
+			}
+			if(max < dp[i])
+				max = dp[i];
+		}
+		return max;
+	}
 
 };
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ class Solution {
 
 public:
 
-	int maxSubArray(int A[], int n) {
+	int maxSubArray_1st(int A[], int n) {
 		if(n == 1)	return A[0];
 
 		int continus = A[0], inter = A[0];
@@ -30,6 +31,17 @@ public:
 		}
 		return inter;
     }
+
+	int maxSubArray(int A[], int n) {
+		if(n <= 0)	return 0;
+		int maxCon = A[0];
+		vector<int> con(n, A[0]);
+		for(int i = 1; i < n; i++){
+			con[i] = max(A[i], con[i-1] + A[i]);
+			if(maxCon < con[i])	maxCon = con[i];
+		}
+		return maxCon;
+	}
 };
 
 int main(int argc, char** argv)

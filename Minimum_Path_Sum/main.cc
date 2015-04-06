@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <climits>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,7 +11,7 @@ class Solution {
 
 public:
 
-	int minPathSum(vector<vector<int> > &grid) {
+	int minPathSum_1st(vector<vector<int> > &grid) {
 		int n = grid.size();
 		if(n == 0)	return 0;
 		int m = grid[0].size();
@@ -33,6 +35,20 @@ public:
 		}
 		return data[n-1][m-1];
     }
+
+	int minPathSum(vector<vector<int> > &grid) {
+		int n = grid.size();
+		int m = grid[0].size();
+		vector<vector<int> > dp(grid);
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < m; j++){
+				if(i + j != 0){
+					dp[i][j] = grid[i][j] + 
+							min((i > 0? dp[i-1][j] : INT_MAX), (j > 0? dp[i][j-1] : INT_MAX));
+				}
+			}
+		return dp[n-1][m-1];
+	}
 
 };
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -58,7 +59,7 @@ public:
 		return ret;
     }
 
-	bool isScramble(string s1, string s2) {
+	bool isScramble_1st(string s1, string s2) {
 		if(s1.length() <= 0)	return false;
 		if(s1.compare(s2) == 0)
 			return true;
@@ -66,12 +67,31 @@ public:
 		return iteration(s1, s2);
 	}
 
+	bool isScramble(string s1, string s2) {
+		int n = s1.size();
+		if(n == 0 || s1.size() != s2.size() ) return false;
+		vector<vector<vector<bool> > > dp(n, vector<vector<bool> >(n, vector<bool>(n+1, false)));
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < n; j++)
+				dp[i][j][1] = s1[i] == s2[j];
+		for(int l = 2; l < n+1; l++){
+			for(int i = 0; i <= n - l; i++)
+				for(int j = 0; j <= n - l; j++){
+					for(int k = 1; k < l; k++){
+						dp[i][j][l] = dp[i][j][l] || (dp[i][j][k] && dp[i+k][j+k][l-k])
+										|| (dp[i][j+l-k][k] && dp[i+k][j][l-k]);
+					}
+				}
+		}
+		return dp[0][0][n];
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s1("xstjzkfpkggnhjzkpfjoguxvkbuopi"), s2("xbouipkvxugojfpkzjhnggkpfkzjts");		
+	string s1("xstjzkfpkggnhjzkpfjoguxvkbuoip"), s2("xbouipkvxugojfpkzjhnggkpfkzjts");		
 
 	bool ret = sl.isScramble(s1, s2);
 	
