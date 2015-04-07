@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <climits>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,7 +34,7 @@ public:
 		
 	}
 
-	int minimumTotal(vector<vector<int> > &triangle) {
+	int minimumTotal_1st(vector<vector<int> > &triangle) {
 		int size = triangle.size();
 		if(size == 0)	return 0;
 		vector<int> deliver;
@@ -40,6 +42,24 @@ public:
 			deliver.push_back(0);
 		return recursion(triangle, 0, 0, size, deliver);
     }
+
+	int minimumTotal(vector<vector<int> > &triangle) {
+		int n = triangle.size();
+		if( n == 0)	return 0;
+		vector<int> odp(triangle[0]);
+		vector<int> ndp(triangle[0]);
+		for(int i = 1; i < n; i++){
+			odp = ndp;
+			ndp.clear();
+			ndp.resize(i+1);
+			for(int j = 0; j < triangle[i].size(); j++){
+				ndp[j] = triangle[i][j] + min((j == 0? INT_MAX : odp[j-1]), 
+								(j == triangle[i].size()-1? INT_MAX : odp[j]));
+			}
+		}
+		auto iter = min_element(ndp.begin(), ndp.end());
+		return *iter;
+	}
 
 };
 

@@ -10,7 +10,7 @@ class Solution {
 
 public:
 
-	int numDistinct(string S, string T) {
+	int numDistinct_1st(string S, string T) {
 		int nt = T.length();
 		int ns = S.length();
 		if(nt == 0 || ns == 0)
@@ -50,13 +50,28 @@ public:
 		return q[0];
     }
 
+	int numDistinct(string S, string T) {
+		int n = S.size();
+		int m = T.size();
+		vector<vector<int> > dp(n+1, vector<int>(m+1, 0));
+		for(int j = 0; j < m; j++)
+			for(int i = j; i < n; i++){
+				if(S[i] == T[j]){
+					dp[i+1][j+1] = dp[i][j+1] + (j == 0? 1 : dp[i][j]);
+				}else{
+					dp[i+1][j+1] = dp[i][j+1];
+				}
+			}
+		return dp[n][m];
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
 	//string s("aabdbaabeeadcbbdedacbbeecbabebaeeecaeabaedadcbdbcdaabebdadbbaeabdadeaabbabbecebbebcaddaacccebeaeedababedeacdeaaaeeaecbe"), t("bddabdcae");		
-	string s("bbbbbb"), t("babb");
+	string s("rabbbit"), t("rabbit");
     int ret = sl.numDistinct(s,t);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;

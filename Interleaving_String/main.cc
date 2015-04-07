@@ -100,10 +100,29 @@ bool iteration(string s1, string s2, string s3){
 		return data[len1][len2];
 	}
 
-bool isInterleave(string s1, string s2, string s3) {
+bool isInterleave_1st(string s1, string s2, string s3) {
 		//return recursion(s1, s2, s3, s1.length(), s2.length(), s3.length());
 		return iteration(s1, s2, s3);
     }
+
+bool isInterleave(string s1, string s2, string s3) {
+	int n1 = s1.size(), n2 = s2.size(), n3 = s3.size();
+	if(n1 + n2 != n3) return false;
+	vector<vector<int> > dp(n1+1, vector<int>(n2+1, false));
+	dp[0][0] = true;
+	for(int i = 0; i < n1; i++)
+		if(s1[i] == s3[i])	dp[i+1][0] = true;
+		else	break;
+	for(int i = 0; i < n2; i++)
+		if(s2[i] == s3[i])	dp[0][i+1] = true;
+		else	break;
+	for(int i = 0; i < n1; i++)
+		for(int j = 0; j < n2; j++){
+			dp[i+1][j+1] = (s1[i] == s3[i+j+1] && dp[i][j+1])
+							|| (s2[j] == s3[i+j+1] && dp[i+1][j]);
+		}
+	return dp[n1][n2];
+}
 
 };
 
