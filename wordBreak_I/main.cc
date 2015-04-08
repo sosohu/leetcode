@@ -11,7 +11,7 @@ class Solution {
 
 public:
 
-	bool wordBreak(string s, unordered_set<string> &dict) {
+	bool wordBreak_1st(string s, unordered_set<string> &dict) {
 		int len = s.length();
 		if(len == 0)
 			return false;
@@ -41,6 +41,21 @@ public:
 		}
 		//cout<<data[0][len-1]<<endl;
 		return data[0][len-1];
+	}
+
+	bool wordBreak(string s, unordered_set<string> &dict) {
+		int n = s.size();
+		vector<bool> dp(n+1, false);
+		dp[0] = true;
+		for(int i = 0; i < n; i++){
+			for(int j = i; j >= 0; j--){
+				if(dict.count(s.substr(j, i - j + 1)) != 0){
+					dp[i+1] =  dp[j];
+					if(dp[i+1])	break;
+				}
+			}
+		}
+		return dp[n];
 	}
 
 };

@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <climits>
+#include <algorithm>
 
 using namespace std;
 
@@ -33,7 +35,7 @@ public:
 		return true;
 	}
 
-	int minCut(string s) {
+	int minCut_1st(string s) {
 		int len = s.length();
 		bool P[len][len];
 		
@@ -73,6 +75,34 @@ public:
 		}
 		
 		return min[len-1];
+	}
+
+	int minCut(string s) {
+		int n = s.size();
+		vector<vector<bool> > palin(n, vector<bool>(n, false));
+		for(int i = 0; i < n; i++){
+			for(int j = 0; i + j < n && i - j >= 0; j++){
+				if(s[i-j] == s[i+j]) palin[i-j][i+j] = true;
+				else break;
+			}
+		}
+		for(int i = 0; i < n-1; i++){
+			for(int j = 0; i + j < n - 1 && i - j >= 0; j++){
+				if(s[i-j] == s[i+j+1]) palin[i-j][i+j+1] = true;
+				else break;
+			}
+		}
+		vector<int> dp(n+1, 0);
+		for(int i = 0; i < n; i++){
+			int minCur = INT_MAX;
+			for(int j = 0; j <= i; j++){
+				if(palin[j][i]){
+					minCur = min(minCur, dp[j] + 1);
+				}
+			}
+			dp[i+1] = minCur;
+		}
+		return dp[n] - 1;
 	}
 
 };

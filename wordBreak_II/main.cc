@@ -164,22 +164,39 @@ public:
 	}
 	*/
 
+	void genPath(string &s, vector<vector<int> > &dp, vector<string> &ret, 
+				int pos, vector<string>& path){
+		if(pos < 0){
+			int size = path.size();
+			string cur = path[size-1];
+			for(int i = size - 2; i >= 0; i--){
+				cur += " " + path[i];
+			}
+			ret.push_back(cur);
+			return;
+		}
+		for(int i = 0; i < dp[pos+1].size(); i++){
+			path.push_back(s.substr(dp[pos+1][i], pos - dp[pos+1][i] + 1));
+			genPath(s, dp, ret, dp[pos+1][i] - 1, path);
+			path.pop_back();
+		}
+	}
+
 	vector<string> wordBreak(string s, unordered_set<string> &dict) {
 		int n = s.size();
-		vector<vector<string> > dp(n+1, vector<string>());
-		dp[0].push_back("");
+		vector<vector<int> > dp(n+1, vector<int>());
+		dp[0].push_back(-1);
 		for(int i = 0; i < n; i++)
 			for(int j = i; j >= 0; j--){
 				string tail = s.substr(j , i - j + 1);
-				if(dict.count(tail) != 0){
-					for(int k = 0; k < dp[j].size(); k++){
-						dp[i+1].push_back(dp[j][k] + " " + tail);
-					}
+				if(dict.count(tail) != 0 && dp[j].size() != 0){
+					dp[i+1].push_back(j);
 				}
 			}
-		for(int i = 0; i < dp[n].size(); i++)
-			dp[n][i].erase(dp[n][i].begin());
-		return dp[n];
+		vector<string> ret;
+		vector<string> path;
+		genPath(s, dp, ret, n-1, path);
+		return ret;
 	}
 
 };
@@ -187,10 +204,10 @@ public:
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("a");
+	string s("aaa");
 	//string s("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab");
 	//unordered_set<string> d({"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"});
-	unordered_set<string> d({"a"});
+	unordered_set<string> d({"a", "aa"});
 	//unordered_set<string> d({"a"});
 	//vector<string> ret = sl.wordBreak_n2(s,d);
 	/*

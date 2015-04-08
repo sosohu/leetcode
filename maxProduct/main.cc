@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -59,10 +61,26 @@ public:
 		return ret;
 	}
 
-	int maxProduct(int A[], int n) {
+	int maxProduct_1st(int A[], int n) {
 		int pos, neg;
 		return detail(A, n, pos, neg);
     }
+
+	int maxProduct(int A[], int n) {
+		if(n <= 0)	return 0;
+		vector<int> maxCon(n, A[0]);
+		vector<int> minCon(n, A[0]);
+		for(int i = 1; i < n; i++){
+			if(A[i] >= 0){
+				maxCon[i] = max(maxCon[i-1]*A[i], A[i]);
+				minCon[i] = min(minCon[i-1]*A[i], A[i]);
+			}else{
+				maxCon[i] = max(minCon[i-1]*A[i], A[i]);
+				minCon[i] = min(maxCon[i-1]*A[i], A[i]);
+			}
+		}
+		return *max_element(maxCon.begin(), maxCon.end());
+	}
 
 };
 
