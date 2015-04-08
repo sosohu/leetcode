@@ -80,7 +80,7 @@ public:
 		return data[0][len-1];
 	}
 
-	vector<string> wordBreak(string s, unordered_set<string> &dict) {
+	vector<string> wordBreak_1st(string s, unordered_set<string> &dict) {
 		int len = s.length();
 		vector<string> ret;
 		if(len == 0)
@@ -163,6 +163,24 @@ public:
 		return ret;
 	}
 	*/
+
+	vector<string> wordBreak(string s, unordered_set<string> &dict) {
+		int n = s.size();
+		vector<vector<string> > dp(n+1, vector<string>());
+		dp[0].push_back("");
+		for(int i = 0; i < n; i++)
+			for(int j = i; j >= 0; j--){
+				string tail = s.substr(j , i - j + 1);
+				if(dict.count(tail) != 0){
+					for(int k = 0; k < dp[j].size(); k++){
+						dp[i+1].push_back(dp[j][k] + " " + tail);
+					}
+				}
+			}
+		for(int i = 0; i < dp[n].size(); i++)
+			dp[n][i].erase(dp[n][i].begin());
+		return dp[n];
+	}
 
 };
 
