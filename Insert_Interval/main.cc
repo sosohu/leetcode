@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <climits>
+#include <algorithm>
 
 using namespace std;
 
@@ -15,7 +17,7 @@ class Solution {
 
 public:
 
-	vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
+	vector<Interval> insert_1st(vector<Interval> &intervals, Interval newInterval) {
 		int size = intervals.size();
 		vector<Interval> data;
 		if(size == 0){
@@ -93,6 +95,31 @@ public:
 			data.push_back(intervals[j]);
 		return data;
     }
+
+	vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
+		vector<Interval> result;
+		Interval cur = newInterval;
+		int pos = 0;
+		bool isMerge = false;
+		while(pos < intervals.size()){
+			if(isMerge || cur.start > intervals[pos].end){
+				result.push_back(intervals[pos]);
+				pos++;
+			}else{
+				if(cur.end >= intervals[pos].start){
+					cur.start = min(cur.start, intervals[pos].start);
+					while(pos < intervals.size() && cur.end >= intervals[pos].start){
+						cur.end = max(intervals[pos].end, cur.end);
+						pos++;
+					}
+				}
+				result.push_back(cur);
+				isMerge = true;
+			}
+		}
+		if(!isMerge)	result.push_back(cur);
+		return result;
+	}
 
 };
 

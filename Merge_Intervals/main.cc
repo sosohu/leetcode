@@ -23,7 +23,7 @@ class Solution {
 
 public:
 
-	vector<Interval> merge(vector<Interval> &intervals) {
+	vector<Interval> merge_1st(vector<Interval> &intervals) {
 		sort(intervals.begin(), intervals.end(), mysort);
 		int len = intervals.size();
 		vector<Interval> data;
@@ -56,6 +56,23 @@ public:
 		}
 		return data;
     }
+
+	vector<Interval> merge(vector<Interval> &intervals) {
+		vector<Interval> result;
+		sort(intervals.begin(), intervals.end(), mysort);
+		Interval cur;
+		int pos = 0;
+		while(pos < intervals.size()){
+			cur = intervals[pos];
+			pos++;
+			while(pos < intervals.size() && cur.end >= intervals[pos].start){
+				cur.end = max(cur.end, intervals[pos].end);
+				pos++;
+			}
+			result.push_back(cur);
+		}
+		return result;
+	}
 
 };
 

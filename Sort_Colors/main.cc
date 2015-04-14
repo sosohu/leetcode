@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	void sortColors(int A[], int n) {
+	void sortColors_1st(int A[], int n) {
 		int pos_1 = -1, pos_2 = -1;	
 		for(int i = 0; i < n; i++){
 			if(A[i] == 0){
@@ -46,15 +46,34 @@ public:
 		}
     }
 
+	void sortColors(int A[], int n) {
+		if(n <= 1)	return;
+		int zero_pos = 0, two_pos = n - 1;
+		for(int i = 0; i <= two_pos;){
+			if(A[i] == 0){
+				if(zero_pos != i) swap(A[zero_pos], A[i]);
+				else	i++;
+				zero_pos++;
+			}else if(A[i] == 2){
+				if(two_pos != i) swap(A[two_pos], A[i]);
+				else i++;
+				two_pos--;
+			}else{
+				i++;
+			}
+		}
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	int A[] = {2, 0};
-	sl.sortColors(A, 2);
+	int A[] = {2, 0,1,1,2,1};
+	int n = sizeof(A) / sizeof(int);
+	sl.sortColors(A, n);
 	
-	for(int i = 0; i < 2; i++)
+	for(int i = 0; i < n; i++)
 		cout<<A[i]<<endl;
 
 	return 0;
