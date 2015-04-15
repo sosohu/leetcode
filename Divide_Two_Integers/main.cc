@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <climits>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ class Solution {
 
 public:
 
-	int divide(int dividend, int divisor) {
+	int divide_1st(int dividend, int divisor) {
 		bool minus = false;
 
 		if(divisor == 1)    return dividend;
@@ -57,12 +58,37 @@ public:
 			return low + left;
     }
 
+	int div2n(int &dividend, int divisor){
+		if(dividend > divisor){
+			dividend = 0;
+			return 0;
+		}
+		int i = 1;
+		while(divisor > dividend - divisor ){
+			divisor +=divisor;
+			i = i + i;
+		}
+		dividend -= divisor;
+		return i;
+	}
+
+	int divide(int dividend, int divisor) {
+		bool isMinus = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0);
+		dividend = dividend < 0? dividend : -dividend;
+		divisor = divisor < 0? divisor : -divisor;
+		int result = 0;
+		while(dividend){
+			result -= div2n(dividend, divisor);
+		}
+		return isMinus? result : (result == INT_MIN? INT_MAX : -result);
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-    int ret = sl.divide(-2147483648, 2);
+    int ret = sl.divide(-2147483648, -1);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 

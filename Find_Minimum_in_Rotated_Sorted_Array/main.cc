@@ -23,13 +23,31 @@ public:
 		}
 	}
 
-	int findMin(vector<int> &num) {
+	int findMin_1st(vector<int> &num) {
 		int size = num.size();
 		if(size == 0)	return 0;
 		if(size == 1)	return num[0];
 		if(num[0] < num[size - 1])	return num[0];
 		return recursion(num, 0, size - 1);
     }
+
+	int binary_search(vector<int> &num, int begin, int end){
+		if(begin >= end)	return num[begin];
+		if(num[begin] < num[end])	return num[begin];
+		int mid = (begin + end) / 2;
+		if(num[mid] > num[begin]){
+			return binary_search(num, mid, end);
+		}else if(num[mid] == num[begin]){
+			return num[mid+1];
+		}else{
+			return binary_search(num, begin, mid);
+		}
+	}
+
+	int findMin(vector<int> &num) {
+		int n = num.size();
+		return binary_search(num, 0, n-1);
+	}
 
 };
 

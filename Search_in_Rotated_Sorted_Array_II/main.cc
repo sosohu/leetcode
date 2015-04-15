@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	bool search(int A[], int n, int target) {
+	bool search_1st(int A[], int n, int target) {
 		int low = 0, high = n - 1;
 		int mid;
 		while(low <= high){
@@ -38,6 +38,35 @@ public:
 
 		return false;
     }
+
+	bool binary_sarch(int A[], int n, int target){
+		if(n < 1)	return false;
+		int mid = n/2;
+		if(A[mid] == target)	return true;
+		if(A[mid] < target)	return binary_sarch(&A[mid+1], n - mid -1, target);
+		else	binary_sarch(A, mid, target);
+	}
+
+	bool search(int A[], int n, int target) {
+		if(n < 1)	return false;
+		if(n == 1)	return A[0] == target? true : false;
+		int mid = n/2;
+		if(A[mid] == target)	return true;
+		if(A[mid] > A[0]){
+			if(A[mid] > target && A[0] <= target)
+				return binary_sarch(A, mid, target);
+			return search(&A[mid+1], n - mid - 1, target);
+		}else if(A[mid] < A[0]){
+			if(A[mid] < target && A[n-1] >= target)
+				return binary_sarch(&A[mid+1], n - mid - 1, target);
+			return search(A, mid, target);
+		}else{
+			int pos = 0;
+			while(pos < mid && A[pos] == A[mid])	pos++;
+			if(pos == mid)		return search(&A[mid+1], n - mid - 1, target);
+			else	return search(&A[pos], mid - pos, target);
+		}
+	}
 
 };
 
