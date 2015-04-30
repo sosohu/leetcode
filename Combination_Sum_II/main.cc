@@ -64,7 +64,7 @@ public:
 		return data;
 	}
 
-	vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+	vector<vector<int> > combinationSum2_1st(vector<int> &num, int target) {
 		if(num.size() == 0){
 			vector<vector<int> > data;
 			return data;
@@ -87,6 +87,42 @@ public:
 		return recursion(number, count, target, number.size());
     }
 
+	void backtrack(vector<int> &key, vector<int> &count, int target,
+					int pos, vector<vector<int> > &result, vector<int> &track){
+		if(target == 0){
+			result.push_back(track);
+			return;
+		}
+		if(pos == -1)	return;
+		if(count[pos] > 0 && key[pos] <= target){
+			track.push_back(key[pos]);
+			count[pos]--;
+			backtrack(key, count, target - key[pos], pos, result, track);
+			count[pos]++;
+			track.pop_back();
+		}
+		backtrack(key, count, target, pos-1, result, track);
+	}
+
+	vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+		sort(num.begin(), num.end(), greater<int>());
+		vector<int> key, count, track;
+		vector<vector<int> > result;
+		if(num.size() == 0)	return result;
+		int last = 0;
+		for(int i = 1; i < num.size(); i++){
+			if(num[i] != num[i-1]){
+				key.push_back(num[last]);
+				count.push_back(i - last);
+				last = i;
+			}
+		}
+		key.push_back(num[last]);
+		count.push_back(num.size() - last);
+		backtrack(key, count, target, key.size() - 1, result, track);
+		return result;
+	}
+
 
 };
 
@@ -94,8 +130,8 @@ int main(int argc, char** argv)
 {
 	Solution sl;
 	int array[] = {10,1,2,7,6,1,5};
-	vector<int> data;
-	//vector<int> data(7, 0);
+	//vector<int> data;
+	vector<int> data(&array[0], &array[7]);
 	/*
 	for(int i = 0; i < 7; i++)
 		data[i] = array[i];

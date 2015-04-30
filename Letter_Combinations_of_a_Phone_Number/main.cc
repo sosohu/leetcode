@@ -4,6 +4,7 @@
 
 using namespace std;
 
+string table[] = {" ","", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 class Solution {
 
@@ -81,12 +82,34 @@ public:
 		path = tmp;
 	}
 
-	vector<string> letterCombinations(string digits) {
+	vector<string> letterCombinations_2nd(string digits) {
 		int len = digits.length();
 		vector<string> result;
 		string map[] = {" ","", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 		string path;
 		recursion(result, digits, map, path, len - 1);
+		return result;
+	}
+
+	void dfs(vector<string> &result, string& digits, string& trace, int pos){
+		if(pos == digits.size()){
+			result.push_back(trace);
+			return;
+		}
+		string& all = table[digits[pos] - '0'];
+		for(int i = 0; i <  all.size(); i++){
+			trace.push_back(all[i]);
+			dfs(result, digits, trace, pos+1);
+			trace.erase(trace.size() - 1);
+		}
+	}
+
+	vector<string> letterCombinations(string digits) {
+		vector<string> result;
+		int n = digits.size();
+		if(n == 0)	return result;
+		string trace;
+		dfs(result, digits, trace, 0);	
 		return result;
 	}
 

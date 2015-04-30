@@ -35,7 +35,7 @@ public:
 		data.insert(data.end(), right_data.begin(), right_data.end());
 	}
 
-	vector<string> generateParenthesis(int n) {
+	vector<string> generateParenthesis_1st(int n) {
 		if(n == 1){
 			return vector<string>(1, "()");
 		}
@@ -43,6 +43,27 @@ public:
 		recursion(data, n, 0, 0);
 		return data;
     }
+
+	void dfs(vector<string> &result, int n, string& trace, int left){
+		if(left == -1 || (n == 0 && left != 0))	return;
+		if(n == 0){
+			result.push_back(trace);
+			return ;
+		}
+		trace.push_back('(');
+		dfs(result, n-1, trace, left+1);
+		trace[trace.size()-1] = ')';
+		dfs(result, n-1, trace, left - 1);
+		trace.erase(trace.size()-1);
+	}
+
+	vector<string> generateParenthesis(int n) {
+		vector<string> result;
+		string trace;
+		int left = 0;
+		dfs(result, 2*n, trace, left);
+		return result;
+	}
 
 };
 

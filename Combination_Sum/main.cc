@@ -42,10 +42,37 @@ public:
 		return data;
 	}
 
-	vector<vector<int> > combinationSum(vector<int> &nums, int target) {
+	vector<vector<int> > combinationSum_1st(vector<int> &nums, int target) {
 		sort(nums.begin(), nums.end(), mysort);
 		return recursion(nums, target, nums.size());
     }
+
+	void backtrack(vector<int> &num, int target, int pos, 
+					vector<vector<int> > &result, vector<int> &track){
+		if(target == 0){
+			result.push_back(track);
+			return;
+		}
+		if(pos == -1)	return;
+		if(num[pos] <= target){
+			track.push_back(num[pos]);
+			backtrack(num, target - num[pos], pos, result, track);
+			track.pop_back();
+		}
+		pos--;
+		while(pos >= 0 && num[pos] == num[pos+1]) pos--;
+		if(pos >= 0){
+			backtrack(num, target, pos, result, track);
+		}
+	}
+
+	vector<vector<int> > combinationSum(vector<int> &nums, int target) {
+		sort(nums.begin(), nums.end(), greater<int>());
+		vector<vector<int> > result;
+		vector<int> track;
+		backtrack(nums, target, nums.size()-1, result, track);
+		return result;
+	}
 
 };
 
