@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include <algorithm>
+#include <climits>
 
 using namespace std;
 
@@ -44,7 +45,7 @@ class Solution {
 			reverse(path[i].begin(), path[i].end());
 	}
 
-	 vector < vector < string > >findLadders(string start, string end,
+	 vector < vector < string > >findLadders_1st(string start, string end,
 						  unordered_set < string >
 						  &dict) {
 		int len = start.length();
@@ -94,6 +95,57 @@ class Solution {
 		return path;
 	}
 
+	void genTrack(vector<pair<string, int> > &tree, int pos, vector<string> &track){
+		if(pos == 0){
+			track.push_back(tree[0].first);
+			return;
+		}
+		genTrack(tree, tree[pos].second, track);
+		track.push_back(tree[pos].first);
+	}
+
+	/*多一丁点计算都会超时,多一丁点空间都会超空间......*/
+	vector<vector<string> > findLadders(string start, string end,
+						  				unordered_set<string> &dict){
+		dict.insert(start);
+		vector<vector<string> > result;
+		vector<pair<string, int> > tree;
+		unordered_map<string, int> used;
+		used[start] = 0;
+		tree.push_back(make_pair(start, -1));
+		int last = 1, pre = -1, pos = 0;
+		bool found = false;
+		string cur, tmp;
+		while(pos < last){
+			cur = tree[pos].first;
+			tmp = cur;
+			for(int i = 0; i < cur.size(); i++){
+				cur = tmp;
+				for(int j = 'a'; j <= 'z'; j++){
+					cur[i] = j;
+					if(cur.compare(end) == 0){
+						found = true;
+						vector<string> track;
+						genTrack(tree, pos, track);
+						track.push_back(end);
+						result.push_back(track);
+						continue;
+					}
+					if(dict.count(cur) == 1 && (used.count(cur) == 0 || used[cur] >= pre )){
+						used[cur] = pos;
+						tree.push_back(make_pair(cur, pos));
+					}
+				}
+			}
+			pos++;
+			if(!found && pos == last){
+			    pre = last;
+				last = tree.size();
+			}
+		}
+		return result;
+	}
+
 };
 
 int main(int argc, char **argv)
@@ -101,10 +153,10 @@ int main(int argc, char **argv)
 	Solution sl;
 	unordered_set < string > dict;
 	string data[] =
-	    { "hot","dot","dog","lot","log" };
-	for (int i = 0; i < 5; i++)
+	    {"ted","tex","red","tax","tad","den","rex","pee"};
+	for (int i = 0; i < 8; i++)
 		dict.insert(data[i]);
-	vector < vector < string > >ret = sl.findLadders("hit", "cog", dict);
+	vector < vector < string > >ret = sl.findLadders( "red","tax", dict);
 
 	for (int i = 0; i < ret.size(); i++) {
 		for (int j = 0; j < ret[i].size(); j++)

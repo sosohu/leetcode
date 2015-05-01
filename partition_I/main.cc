@@ -33,7 +33,7 @@ public:
 		return true;
 	}
 
-	vector<vector<string> > partition(string s) {
+	vector<vector<string> > partition_1st(string s) {
 		int len = s.length();
 		string str, left;
 		vector<vector<string> > tmp;
@@ -62,12 +62,48 @@ public:
 		return ret;
 	}
 
+	void backtrack(vector<vector<string> > &result, vector<string> &track,
+					vector<vector<bool> > &pal, string &s, int pos, int n){
+		if(pos == n){
+			result.push_back(track);
+			return;
+		}
+		for(int j = pos; j < n; j++){
+			if(pal[pos][j]){
+				track.push_back(s.substr(pos, j - pos + 1));
+				backtrack(result, track, pal, s, j+1, n);
+				track.pop_back();
+			}
+		}
+	}
+
+	vector<vector<string> > partition(string s) {
+		int n = s.size();
+		vector<vector<string> > result;
+		vector<string> track;
+		vector<vector<bool> > pal(n, vector<bool>(n, false));
+		for(int i = 0; i < n; i++){
+			for(int j = 0; i - j >= 0 && i + j < n; j++){
+				if(s[i-j] != s[i+j]) break;
+				pal[i-j][i+j] = true;
+			}
+		}
+		for(int i = 1; i < n; i++){
+			for(int j = 1; i - j >= 0 && i + j <= n; j++){
+				if(s[i-j] != s[i+j-1]) break;
+				pal[i-j][i+j-1] = true;
+			}
+		}
+		backtrack(result, track, pal, s, 0, n);
+		return result;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string s("aaa");		
+	string s("bb");		
     vector<vector<string> > ret = sl.partition(s);
 	
 	print(ret);

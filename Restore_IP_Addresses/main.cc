@@ -69,9 +69,41 @@ public:
 		return data;
 	}
 
-	vector<string> restoreIpAddresses(string s) {
+	vector<string> restoreIpAddresses_1st(string s) {
 		return recursion(s, s.length(), 4);	
     }
+
+	int getCon(string &s, int pos, int len){
+		if(s[pos] == '0' || pos+1 == len)	return 1;
+		if(pos+2 == len)	return 2;
+		string substr = s.substr(pos, 3);
+		if(substr.compare("256") < 0)	return 3;
+		return 2;
+	}
+
+	void backtrack(vector<string> &result, string &track, string &s,
+					int pos, int len, int count, int n){
+		if(count == n && pos == len){
+			result.push_back(track);
+			return;
+		}
+		if(count == n || pos == len) return;
+		int con = getCon(s, pos, len);
+		string tmp = track;
+		for(int i = 1; i <= con; i++){
+			track = tmp + (tmp.empty()? "" : ".") + s.substr(pos, i);
+			backtrack(result, track, s, pos+i, len, count+1, n);
+		}
+		track = tmp;
+	}
+
+	vector<string> restoreIpAddresses(string s) {
+		int n = s.length();
+		vector<string> result;	
+		string track;
+		backtrack(result, track, s, 0, n, 0, 4);
+		return result;
+	}
 
 };
 
