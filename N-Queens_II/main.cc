@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -61,10 +62,42 @@ public:
 		return data;
     }
 
-	int totalNQueens(int n) {
+	int totalNQueens_1st(int n) {
 		vector<vector<bool> > mark(n, vector<bool>(n, true));
 		return recursion(n, n-1, mark);
     }
+
+	bool isSafe(vector<pair<int, int> > &queens, int i, int j){
+		for(int k = 0; k < queens.size(); k++){
+			int x = queens[k].first, y = queens[k].second;
+			if(x == i || y == j || abs(i - x) == abs(j - y))
+				return false;
+		}
+		return true;
+	}
+
+	void backtrack(int &result, vector<pair<int, int> > &queens,
+					int row, int row_num){
+		if(row == row_num){
+			result++;
+			return;
+		}
+		for(int i = 0; i < row_num; i++){
+			if(isSafe(queens, row, i)){
+				queens.push_back(make_pair(row, i));
+				backtrack(result, queens, row+1, row_num);
+				queens.pop_back();
+			}
+		}
+	}
+
+	int totalNQueens(int n) {
+		if(n <= 0)	return 0;
+		vector<pair<int, int> > queens;
+		int result = 0;
+		backtrack(result, queens, 0, n);
+		return result;
+	}
 
 };
 

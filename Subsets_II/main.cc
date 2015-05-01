@@ -48,12 +48,47 @@ public:
 		return data;		
 	}
 	
-	vector<vector<int> > subsetsWithDup(vector<int> &S) {
+	vector<vector<int> > subsetsWithDup_1st(vector<int> &S) {
 		vector<int> tmp = S;
 		sort(tmp.begin(), tmp.end(), mysort);
 		int len = S.size();
 		return recursion(tmp, len);
     }
+
+	void backtrack(vector<vector<int> > &result, vector<int> &track, vector<int> & data,
+					vector<int> &count, int pos, int n){
+		if(pos == n){
+			result.push_back(track);
+			return;
+		}
+		for(int i = 0; i < count[pos]; i++){
+			track.push_back(data[pos]);
+			backtrack(result, track, data, count, pos+1, n);
+		}
+		for(int i = 0; i < count[pos]; i++){
+			track.pop_back();
+		}
+		backtrack(result, track, data, count, pos+1, n);
+	}
+
+	vector<vector<int> > subsetsWithDup(vector<int> &S) {
+		sort(S.begin(), S.end());
+		vector<int> data, count;
+		int last = 0;
+		for(int i = 1; i < S.size(); i++){
+			if(S[i] != S[i-1]){
+				data.push_back(S[last]);
+				count.push_back(i - last);
+				last = i;
+			}
+		}
+		data.push_back(S[last]);
+		count.push_back(S.size() - last);
+		vector<vector<int> > result;
+		vector<int> track;
+		backtrack(result, track, data, count, 0, data.size());
+		return result;
+	}
 
 };
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -45,7 +46,7 @@ public:
 		return data;
     }
 
-	vector<vector<string> > solveNQueens(int n) {
+	vector<vector<string> > solveNQueens_1st(int n) {
 		vector<vector<bool> > mark(n, vector<bool>(n, true));
 		vector<vector<int> > data =  recursion(n, n-1, mark);
 		vector<vector<string> > ret;
@@ -65,13 +66,51 @@ public:
 		return ret;
 	}
 
+	bool isSafe(vector<pair<int, int> > &queens, int i, int j){
+		for(int k = 0; k < queens.size(); k++){
+			int x = queens[k].first, y = queens[k].second;
+			if(x == i || y == j || abs(i - x) == abs(j - y))
+				return false;
+		}
+		return true;
+	}
+
+	void backtrack(vector<vector<string> > &result, vector<pair<int, int> > &queens,
+					vector<string> &track, int row, int row_num){
+		if(row == row_num){
+			result.push_back(track);
+			return;
+		}
+		string lines(row_num, '.');
+		for(int i = 0; i < row_num; i++){
+			if(isSafe(queens, row, i)){
+				queens.push_back(make_pair(row, i));
+				lines[i] = 'Q';
+				track.push_back(lines);
+				backtrack(result, queens, track, row+1, row_num);
+				track.pop_back();
+				lines[i] = '.';
+				queens.pop_back();
+			}
+		}
+	}
+
+	vector<vector<string> > solveNQueens(int n) {
+		vector<vector<string> > result;
+		if(n <= 0)	return result;
+		vector<pair<int, int> > queens;
+		vector<string> track;
+		backtrack(result, queens, track, 0, n);
+		return result;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
 	
-    vector<vector<string> > ret = sl.solveNQueens(5);
+    vector<vector<string> > ret = sl.solveNQueens(4);
 	
 	for(int i = 0; i < ret.size(); i++){
 		for(int j = 0; j < ret[i].size(); j++)

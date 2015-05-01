@@ -50,7 +50,7 @@ public:
 		return ret;
 	}
 
-	bool exist(vector<vector<char> > &board, string word) {
+	bool exist_1st(vector<vector<char> > &board, string word) {
 		int len = word.length();
 		int n = board.size();
 		if(len == 0)	return true;
@@ -77,6 +77,32 @@ public:
 		}
 		return ret;
     }
+
+	bool backtrack(vector<vector<char> > &board, vector<vector<bool> > &used, string &word,
+					int i, int j, int n, int m, int pos, int len){
+		if(pos == len)	return true;
+		if(i < 0 || i >= n || j < 0 || j >= m || used[i][j])	return false;
+		if(board[i][j] == word[pos]){
+			used[i][j] = true;
+			if(backtrack(board, used, word, i+1, j, n, m, pos+1, len))	return true;
+			if(backtrack(board, used, word, i-1, j, n, m, pos+1, len))	return true;
+			if(backtrack(board, used, word, i, j+1, n, m, pos+1, len))	return true;
+			if(backtrack(board, used, word, i, j-1, n, m, pos+1, len))	return true;
+			used[i][j] = false;
+		}
+		if(pos != 0)	return false;
+		if(backtrack(board, used, word, i, j+1, n, m, pos, len))	return true;
+		if(j == m-1 && backtrack(board, used, word, i+1, 0, n, m, pos, len))	return true;
+		return false;
+	}
+
+	bool exist(vector<vector<char> > &board, string word) {
+		int n = board.size(), len = word.size();
+		if(n == 0 || len == 0)	return false;
+		int m = board[0].size();
+		vector<vector<bool> > used(n, vector<bool>(m, false));
+		return backtrack(board, used, word, 0, 0, n, m, 0, len);
+	}
 
 };
 

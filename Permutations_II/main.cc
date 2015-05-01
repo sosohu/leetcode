@@ -77,7 +77,7 @@ public:
 		return data;	
 	}
 
-	vector<vector<int> > permuteUnique(vector<int> &num) {
+	vector<vector<int> > permuteUnique_1st(vector<int> &num) {
 		int len = num.size();	
 		vector<vector<int> > data;
 		if(len == 0)	return data;
@@ -112,6 +112,25 @@ public:
 		}
 		return data;
     }
+
+    vector<vector<int> > permuteUnique(vector<int>& nums) {
+		vector<int> data(nums);
+		sort(data.begin(), data.end());
+		vector<vector<int> > result;
+		while(1){
+			int peak = data.size() - 1;
+			while(peak > 0 && data[peak] <= data[peak-1])	peak--;
+			result.push_back(data);
+			if(peak == 0)	break;
+			int before_peak = peak - 1;
+			vector<int>::iterator next_peak = lower_bound(data.begin() + peak, data.end(), 
+										data[before_peak], greater<int>());
+			next_peak--;
+			swap(data[before_peak], *next_peak);
+			reverse(data.begin() + peak, data.end());
+		}
+		return result;
+	}
 
 };
 

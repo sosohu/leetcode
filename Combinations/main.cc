@@ -35,7 +35,7 @@ public:
 		}
 	}
 
-	vector<vector<int> > combine(int n, int k) {
+	vector<vector<int> > combine_1st(int n, int k) {
 		vector<vector<int> > data;
 		if(k == 0 || n <= 0 || n < k) return data;
 		if(n == k){
@@ -49,6 +49,25 @@ public:
 		return data;
     }
 
+	void backtrack(vector<vector<int> > &result, vector<int> &track,
+					int count, int k, int pos, int n){
+		if(count == k){
+			result.push_back(track);
+			return;
+		}
+		if(pos >= n || k <= 0 || n <= 0)	return;
+		track.push_back(pos+1);
+		backtrack(result, track, count+1, k, pos+1, n);
+		track.pop_back();
+		backtrack(result, track, count, k, pos+1, n);
+	}
+
+	vector<vector<int> > combine(int n, int k) {
+		vector<vector<int> > result;
+		vector<int> track;
+		backtrack(result, track, 0, k, 0, n);
+		return result;
+	}
 };
 
 int main(int argc, char** argv)

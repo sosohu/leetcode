@@ -33,7 +33,7 @@ public:
 		}
 	}
 
-	vector<vector<int> > subsets(vector<int> &S) {
+	vector<vector<int> > subsets_1st(vector<int> &S) {
 		int n = S.size();
 		vector<vector<int> > data;
 		if(n == 0)	return data;
@@ -42,6 +42,27 @@ public:
 		return data;
     }
 
+	void backtrack(vector<vector<int> > &result, vector<int> &track,
+					vector<int> &S, int pos, int n){
+		if(pos == n){
+			result.push_back(track);
+			return;
+		}
+		track.push_back(S[pos]);
+		backtrack(result, track, S, pos+1, n);
+		track.pop_back();
+		backtrack(result, track, S, pos+1, n);
+	}
+
+	vector<vector<int> > subsets(vector<int> &S) {
+		sort(S.begin(), S.end());
+		int n = S.size();
+		vector<vector<int> > result;
+		vector<int> track;
+		backtrack(result, track, S, 0, n);
+		return result;
+	}
+	
 };
 
 int main(int argc, char** argv)

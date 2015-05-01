@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ class Solution {
 
 public:
 
-	vector<int> grayCode(int n) {
+	vector<int> grayCode_1st(int n) {
 		vector<int> data;
 		vector<int> last;
 		if(n == 0){
@@ -33,6 +34,43 @@ public:
 		}
 		return data;
     }
+
+	void backtrack(vector<int> &result, int &track, int pos, int n){
+		if(n <= 0 || n > 31)	return;
+		if(pos == n){
+			result.push_back(track);
+			return;
+		}
+		backtrack(result, track, pos+1, n);
+		track |= (0x1 << pos);
+		backtrack(result, track, pos+1, n);
+		track ^= (0x1 << pos);
+	}
+
+	/*题目理解不对,错误答案*/
+	vector<int> grayCode_DFS(int n) {
+		vector<int> result;
+		int track = 0;
+		backtrack(result, track, 0, n);
+		return result;
+	}
+
+	vector<int> grayCode(int n) {
+		vector<int> result;
+		if(n < 0 || n > 31)	return result;
+		if(n == 0) return vector<int>(1, 0);
+		vector<int> last{0, 1};
+		result = last;
+		for(int i = 1; i < n; i++){
+			last = result;
+			reverse(last.begin(), last.end());
+			for(int j = 0; j < last.size(); j++){
+				last[j] |= (0x1 << i);
+				result.push_back(last[j]);
+			}
+		}
+		return result;
+	}
 
 };
 
