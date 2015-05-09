@@ -1,63 +1,50 @@
 /*******************************************************************************
  * Author :          Qinghai Hu
  * Email :           ustc.sosohu@gmail.com
- * Last modified :   2014-11-14 12:37
+ * Last modified :   2015-05-09 17:14
  * Filename :        main.cc
  * Description :     This program is free software, you can redistribute it and/or
                      modify it under the terms of the GNU General Public License
                      as published by the Free Software Foundation.
  * *****************************************************************************/
-
 #include <iostream>
-#include <string>
-#include <stack>
+#include <vector>
 
 using namespace std;
 
 
-class MinStack {
+class Solution {
 
 public:
 
-	void push(int x) {
-		data.push(x);
-		if(track.empty() || x <= track.top())
-			track.push(x);
+    int majorityElement(vector<int>& nums) {
+		if(nums.size() == 0)	return -1;
+		int p1 = nums[0], p2, c1 = 1, c2 = 0;
+		for(int i = 1; i < nums.size(); i++){
+			if(c1 && nums[i] == p1)	c1++;
+			else	if(c2 && nums[i] == p2)	c2++;
+			else	if(!c1){
+				p1 = nums[i];
+				c1++;
+			}
+			else	if(!c2){
+				p2 = nums[i];
+				c2++;
+			}else{
+				c1--;
+				c2--;
+			}
+		}
+		return c1 > c2? p1 : p2;
     }
 
-    void pop(){
-		if(data.top() == track.top())
-			track.pop();
-		data.pop();
-    }
-
-    int top(){
-		return data.top();
-    }
-
-    int getMin(){
-		return track.top();
-    }
-
-private:
-	stack<int> data;
-	stack<int> track;
 };
 
 int main(int argc, char** argv)
 {
-	MinStack ms;
-	ms.push(-1);
-	ms.push(-2);
-	ms.push(0);
-	ms.push(-1);
-	ms.push(-2);
-	ms.push(0);
-	cout<<ms.getMin()<<endl;
-	ms.pop();
-	cout<<ms.getMin()<<endl;
-	ms.pop();
-	cout<<ms.getMin()<<endl;
+	Solution sl;
+	vector<int> nums{1,2,3,1,2,3,1,1,1};
+	cout<<sl.majorityElement(nums)<<endl;
 
 	return 0;
 

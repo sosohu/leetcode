@@ -1,5 +1,14 @@
+/*******************************************************************************
+ * Author :          Qinghai Hu
+ * Email :           ustc.sosohu@gmail.com
+ * Last modified :   2015-05-09 14:53
+ * Filename :        main.cc
+ * Description :     This program is free software, you can redistribute it and/or
+                     modify it under the terms of the GNU General Public License
+                     as published by the Free Software Foundation.
+ * *****************************************************************************/
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -9,82 +18,65 @@ using namespace std;
 
 class LRUCache {
 private:
-	typedef std::pair<int,int> Value_CountID;    // value, count_id
-	std::map<int, Value_CountID> data;	 // key, vale cound_id
-	typedef std::pair<long int,int> Time_Key;    // count, time
-	std::vector<Time_Key> count;     // count , key
+	struct ListNode{
+		int key;
+		int value;
+		ListNode *pre, *next;
+		ListNode(int key = -1, int value = -1) : key(key), value(value), pre(NULL), next(NULL)
+		{} 
+	};
+
+	unordered_map<int, ListNode*> table;
+	ListNode seq_head;
+	ListNode seq_end;
 	int capacity;
 	int size;
-	long time_max;
 
 private:
-	int min_countID(int s, int e, int n){
-		if(n == 1) return s;
-		int part = s + n / 2;
-		int up = min_countID(part , e , n - n/2 );
-		int down = min_countID(s, part - 1, n/2);
-		int min;
-		min = count[up].first < count[down].first? up:down;
-		return min;
+	void seq_push_back(ListNode *pos){
+		seq_end.pre->next = pos;
+		pos->pre = seq_end.pre;
+		seq_end.pre = pos;
+		pos->next = &seq_end;
 	}
 
-	int getLRU(){
-		int min_count_id = min_countID(0, size -1 , size);
-		return count[min_count_id].second;
+	void seq_erase(ListNode *pos){
+		pos->pre->next = pos->next;
+		pos->next->pre = pos->pre;
 	}
 
 public:
 
-	LRUCache(int capacity){
-		this->capacity = capacity;
+	LRUCache(int capacity) : capacity(capacity){
 		size = 0;
-		time_max = 0;
+		seq_head.next = &seq_end;
+		seq_end.pre = &seq_head;
 	}
 
 	int get(int key){
-		if(data.count(key) == 1){
-			time_max++;
-			count[data[key].second].first = time_max;
-			return data[key].first;
-		}else{
-			return -1;
-		}
-	}
-
-	void print(){
-		for(std::vector<Time_Key>::iterator iter = count.begin();
-			iter != count.end(); iter++	
-			){
-			cout<<"	time: "<<iter->first;
-			cout<<"	key: "<<iter->second<<endl;
-		}
+		if(table.count(key) == 0)	return -1;
+		seq_erase(table[key]);
+		seq_push_back(table[key]);
+		return table[key]->value;
 	}
 
 
 	void set(int key, int value){
-		time_max++;
-		if(data.count(key) == 1){
-		// exist in the map
-			data[key].first = value;
-			count[data[key].second].first = time_max;
-		}
-		else{
-			if(size < capacity){
-				data[key].first = value;
-				data[key].second = size;
-				Time_Key count_time(time_max,key);
-				count.push_back(count_time);
-				size++;
+		if(table.count(key)){
+			table[key]->value = value;
+			seq_erase(table[key]);
+			seq_push_back(table[key]);
+		}else{ 
+			if(size >= capacity){
+				ListNode *old = seq_head.next;
+				table.erase(old->key);
+				seq_erase(old);
+				delete old;
+				size--;
 			}
-			else{
-				int replace = getLRU();  // return the key
-				int count_id = data[replace].second;
-				count[count_id].first = time_max;
-				count[count_id].second = key;
-				data.erase(replace);
-				data[key].first = value;
-				data[key].second = count_id;
-			}
+			size++;
+			table[key] = new ListNode(key, value);
+			seq_push_back(table[key]);
 		}
 	}
 

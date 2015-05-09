@@ -1,5 +1,14 @@
+/*******************************************************************************
+ * Author :          Qinghai Hu
+ * Email :           ustc.sosohu@gmail.com
+ * Last modified :   2015-05-09 16:32
+ * Filename :        main.cc
+ * Description :     This program is free software, you can redistribute it and/or
+                     modify it under the terms of the GNU General Public License
+                     as published by the Free Software Foundation.
+ * *****************************************************************************/
 #include <iostream>
-#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -8,13 +17,11 @@ using namespace std;
 class Solution {
 
 public:
-	int singleNumber(int A[], int n) {
-		if(n == 1) return A[0];
-		int sum = 0;
-		for(int i = 0; i < n; i++){
-			sum = (~(sum & A[i])) & (sum | A[i]);
-		}
-		return sum;
+	int singleNumber(vector<int>& nums) {
+		int result = 0;
+		for(int i = 0; i < nums.size(); i++)
+			result ^= nums[i];
+		return result;
 	}
 
 	int singleNumber_Tradition(int A[], int n) {
@@ -49,7 +56,8 @@ int main(int argc, char** argv)
 	for(int i = 0; i < DATASIZE ; i++)
 		cout<<d[i]<<" "<<d[DATASIZE + i]<<endl;
 	cout<<d[2*DATASIZE]<<endl;
-    int ret = sl.singleNumber(d, 2*DATASIZE + 1);
+	vector<int> data(&d[0], &d[0] + 2*DATASIZE + 1);
+    int ret = sl.singleNumber(data);
 	
 	cout<<"Result  : "<<ret<<endl;
 
