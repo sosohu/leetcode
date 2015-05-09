@@ -11,7 +11,7 @@ class Solution {
 
 public:
 
-	int ladderLength(string start, string end, unordered_set<string> &dict) {
+	int ladderLength_1st(string start, string end, unordered_set<string> &dict) {
 		int len = start.length();
 		unordered_set<string> find;
 		queue<string> data;
@@ -43,6 +43,38 @@ public:
 		}
 		return 0;
     }
+
+	int ladderLength(string start, string end, unordered_set<string> &dict) {
+		unordered_set<string> used;
+		queue<string> q;
+		q.push(start);
+		dict.insert(start);
+		dict.insert(end);
+		used.insert(start);
+		int deep = 0, last = 1;
+		while(!q.empty()){
+			start = q.front();
+			q.pop();
+			if(start.compare(end) == 0)	return deep + 1;
+			string tmp = start;
+			for(int i = 0; i < start.size(); i++){
+				start = tmp;
+				for(int j = 'a'; j <= 'z'; j++){
+					start[i] = j;
+					if(dict.count(start) && !used.count(start)){
+						used.insert(start);
+						q.push(start);
+					}
+				}
+			}
+			last--;
+			if(last == 0){
+				last = q.size();
+				deep++;
+			}
+		}
+		return 0;
+	}
 
 };
 

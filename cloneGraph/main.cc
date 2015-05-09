@@ -4,6 +4,8 @@
 #include <stack>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
+#include <queue>
 
 using namespace std;
 
@@ -68,13 +70,47 @@ public:
 		}
 	}
 
-	UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+	UndirectedGraphNode *cloneGraph_1st(UndirectedGraphNode *node) {
 		if(node == NULL) return NULL;
 		UndirectedGraphNode *ret;
 		unordered_map <UndirectedGraphNode*, UndirectedGraphNode*> find;
 		recursion(node, ret, find);
 		return ret;
     }
+
+	UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+		if(!node)	return NULL;
+		unordered_map<UndirectedGraphNode*, UndirectedGraphNode*>	table;
+		unordered_set<UndirectedGraphNode*> visited;
+		queue<UndirectedGraphNode*> q;
+		q.push(node);
+		UndirectedGraphNode *new_pos, *pos;
+		while(!q.empty()){
+			pos = q.front();
+			q.pop();
+			new_pos = new UndirectedGraphNode(pos->label);
+			table[pos] = new_pos;
+			for(int i = 0; i < pos->neighbors.size(); i++){
+				if(table.count(pos->neighbors[i]) == 0){
+					q.push(pos->neighbors[i]);
+				}
+			}
+		}
+		q.push(node);
+		visited.insert(node);
+		while(!q.empty()){
+			pos = q.front();
+			q.pop();
+			for(int i = 0; i < pos->neighbors.size(); i++){
+				table[pos]->neighbors.push_back(table[pos->neighbors[i]]);
+				if(visited.count(pos->neighbors[i]) == 0){
+					q.push(pos->neighbors[i]);
+					visited.insert(pos->neighbors[i]);
+				}
+			}
+		}
+		return table[node];
+	}
 
 };
 

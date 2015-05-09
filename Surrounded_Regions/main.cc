@@ -2,6 +2,7 @@
 #include <string>
 #include <stack>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class Solution {
 
 public:
 
-	void solve(vector<vector<char> > &board) {
+	void solve_1st(vector<vector<char> > &board) {
 		int row = board.size();	
 
 		vector<vector<bool> > find;
@@ -103,6 +104,51 @@ public:
 		}
 		return;
     }
+
+	void visit(vector<vector<char> >& board, queue<pair<int, int> > &search, 
+				int n, int m, int i, int j){
+		if(i < 0 || i > n-1 || j < 0 || j > m-1 || board[i][j] != 'O')	return;
+		search.push(make_pair(i, j));
+		board[i][j] = '-';
+	}
+
+	void bfs(vector<vector<char> > &board, int n, int m, int i, int j){
+		if(board[i][j] != 'O')	return;
+		queue<pair<int,int> > search;
+		pair<int, int> cur;
+		search.push(make_pair(i, j));
+		board[i][j] = '-';
+		while(!search.empty()){
+			cur = search.front();
+			search.pop();
+			i = cur.first;
+			j = cur.second;
+			visit(board, search, n, m, i-1, j);
+			visit(board, search, n, m, i+1, j);
+			visit(board, search, n, m, i, j-1);
+			visit(board, search, n, m, i, j+1);
+		}
+	}
+
+	void solve(vector<vector<char> > &board) {
+		int n = board.size();
+		if(n == 0) return;
+		int m = board[0].size();
+		//从四个边开始搜,那么找到的必然是活的
+		for(int i = 0; i < n; i++){
+			bfs(board, n, m, i, 0);
+			bfs(board, n, m, i, m-1);
+		}
+		for(int j = 0; j < m; j++){
+			bfs(board, n, m, 0, j);
+			bfs(board, n, m, n-1, j);
+		}
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < m; j++){
+				if(board[i][j] == 'O') board[i][j] = 'X';
+				if(board[i][j] == '-') board[i][j] = 'O';
+		}
+	}
 
 };
 
