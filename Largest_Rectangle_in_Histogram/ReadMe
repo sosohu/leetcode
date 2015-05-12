@@ -20,3 +20,5 @@ A	S[n] is the largest area of h[1], ... , h[n]
 	the right:   3, 2, 0, 0, 1, 0
 
 	S[n] = max{ h[i] * (left[i] + right[i] + 1) }  i = 1, 2, 3, ... , n
+
+Follow Up: stack is also ok

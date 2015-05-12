@@ -11,3 +11,5 @@ A	left[i] means on the left side of A[i], the largest one which bigger than A[i]
 	right[i] means on the right side of A[i], the largest one which bigger than A[i], if none, value is set 0
 
 	so, the trap of A[i] is the min{left[i], right[i]}
+
+Follow Up: Use stack is also ok.

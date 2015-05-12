@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stack>
+#include <climits>
 
 using namespace std;
 
@@ -9,7 +11,7 @@ class Solution {
 
 public:
 
-	int largestRectangleArea(vector<int> &height) {
+	int largestRectangleArea_1st(vector<int> &height) {
 		int len = height.size();
 		if(len == 0)	return 0;
 
@@ -46,18 +48,51 @@ public:
 		return data;
     }
 
+	/*元素大于等于栈顶元素时候放入栈，小于时候处理*/
+	int largestRectangleArea(vector<int> &height) {
+		if(height.size() == 0)	return 0;
+		if(height.size() == 1)	return height[0];
+		stack<pair<int, int> > s;
+		s.push(make_pair(height[0], 0));
+		int result = INT_MIN;
+		for(int i = 1; i < height.size(); i++){
+			while(height[i] < s.top().first){
+				pair<int, int> cur = s.top();
+				s.pop();
+				if(!s.empty()){
+					if(result < cur.first * (i - s.top().second - 1))
+						result = cur.first * (i - s.top().second - 1);
+				}else{
+					if(result < cur.first * i)
+						result = cur.first * i;
+					break;
+				}
+			}
+			s.push(make_pair(height[i], i));
+		}
+		/*栈中元素按照非降序排列*/
+		int index = s.top().second;
+		while(!s.empty()){
+			pair<int, int> cur = s.top();
+			s.pop();
+			if(!s.empty()){
+				if(result < cur.first * (index - s.top().second))
+					result = cur.first * (index - s.top().second);
+			}else{
+				if(result < cur.first * (index + 1))
+					result = cur.first * (index + 1);
+			}
+		}
+		return result;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	vector<int> height(6, 0);
-	height[0] = 2;
-	height[1] = 1;
-	height[2] = 5;
-	height[3] = 6;
-	height[4] = 2;
-	height[5] = 3;
+	int data[] = {9,0};
+	vector<int> height(begin(data), end(data));
 
 	int ret = sl.largestRectangleArea(height);
 	

@@ -59,7 +59,7 @@ public:
 		return ret;
     }
 
-	string simplifyPath(string path) {
+	string simplifyPata_2nd(string path) {
 		stack<string> s;
 		string ret;
 		int len = path.length();
@@ -92,6 +92,33 @@ public:
 		}
 		if(ret.length() == 0)	ret = "/";
 		return ret;
+	}
+
+	bool getNext(string& path, int& index, string &next){
+		while(index < path.size() && path[index] == '/') index++;
+		if(index >= path.size())	return false;
+		int cur = index;
+		while(index < path.size() && path[index] != '/') index++;
+		next = path.substr(cur, index - cur);
+		return true;
+	}
+
+	string simplifyPath(string path) {
+		string result, next;
+		stack<string> s;
+		int index = 0;
+		while(getNext(path, index, next)){
+			if(next.compare("..") == 0){
+				if(!s.empty()) s.pop();
+			}else if(next.compare(".") != 0){
+				s.push(next);
+			}
+		}
+		while(!s.empty()){
+			result = "/" + s.top() + result;
+			s.pop();
+		}
+		return result.empty()? "/" : result;
 	}
 
 };

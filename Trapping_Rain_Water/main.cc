@@ -1,6 +1,7 @@
 #include <iostream>
-#include <string>
 #include <vector>
+#include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ class Solution {
 
 public:
 
-	int trap(int A[], int n) {
+	int trap_1st(int A[], int n) {
 		vector<int> left(n, 0);
 		vector<int> right(n, 0);
 
@@ -40,15 +41,37 @@ public:
 		}
 		return sum;
     }
+	
+	/*每次元素小于等于栈顶元素时压栈，大于时候退栈处理*/
+	int trap(vector<int>& height) {
+		if(height.size() <= 1)	return 0;
+		stack<pair<int,int> > s;
+		s.push(make_pair(height[0], 0));
+		int sum = 0;
+		pair<int,int> cur;
+		for(int i = 1; i < height.size(); i++){
+			while(height[i] > s.top().first){
+				cur = s.top();
+				s.pop();
+				if(!s.empty())	
+					sum += (min(height[i], s.top().first) - cur.first) 
+							* (i - s.top().second - 1);
+				else	break;
+			}
+			s.push(make_pair(height[i], i));
+		}
+		return sum;
+    }
 
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	int A[] = {0,1,0,2,1,0,1,3,2,1,2,1};
+	int A[] = {4,2,0,3,2,5};
+	vector<int> data(begin(A), end(A));
 
-	int ret = sl.trap(A, 12);
+	int ret = sl.trap(data);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 
