@@ -1,0 +1,18 @@
+
+Q	Say you have an array for which the ith element is the price of a given stock on day i.
+
+	Design an algorithm to find the maximum profit. You may complete at most k transactions.
+
+	Note:
+	You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+A	O(kn), you should think the special situtaion : k > n /2, it is a best sell problem II
+	besides: 
+		we assume left[i] means the continus left ele which is less than a[i]
+		we assume dp[i][p] means the max profit in the a[0],...,a[i], we sell at most p times and a[i] is the last time sell point.
+		we assume r[i][p] means the max profit in the a[0],...,a[i], we sell at most p times.
+
+		the target is r[n-1][k]
+
+	so, dp[i][p] = max(a[i] - a[j] + r[j-1][p-1],   a[i] - a[j-1] + dp[j-1][p]);  j = left[i];
+		r[i][p] = max(r[i-1][p], dp[i][p])

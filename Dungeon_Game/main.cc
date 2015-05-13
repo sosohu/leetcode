@@ -18,7 +18,7 @@ class Solution {
 public:
 
 	int makeDp(int data){
-		return data < 0? -data : 0;
+		return data < 0? -data : 1;
 	}
 
 	int calculateMinimumHP(vector<vector<int> > &dungeon) {
@@ -26,44 +26,25 @@ public:
 		if(n == 0)	return 0;
 		int m = dungeon[0].size();
 		vector<vector<int> > dp(dungeon);
-		vector<vector<int> > cost(dungeon);
-		dp[0][0] = makeDp(dungeon[0][0]);
-		for(int j = 1; j < m; j++){
-			if(dungeon[0][j] >= 0){
-				dp[0][j] = dp[0][j-1];
-			}else{
-				dp[0][j] = max(dp[0][j-1], makeDp(cost[0][j-1] + dungeon[0][j]));
+		for(int i = n - 1; i >= 0; i--)
+			for(int j = m - 1; j >= 0; j--){
+				if( i == n - 1 && j == m - 1)
+					dp[i][j] = dungeon[i][j] < 0? -dungeon[i][j] + 1 : 1;
+				else{
+					if(i == n - 1){
+						dp[i][j] = makeDp(dungeon[i][j] - dp[i][j+1]);
+					}else if(j == m - 1){
+						dp[i][j] = makeDp(dungeon[i][j] - dp[i+1][j]);
+					}else{
+						int right = makeDp(dungeon[i][j] - dp[i][j+1]);
+						int down = makeDp(dungeon[i][j] - dp[i+1][j]);
+						dp[i][j] = min(right, down);
+					}
+				}	
 			}
-			cost[0][j] = cost[0][j-1] + dungeon[0][j];
-		}
-		for(int i = 1; i < n; i++){
-			if(dungeon[i][0] >= 0){
-				dp[i][0] = dp[i-1][0];
-			}else{
-				dp[i][0] = max(dp[i-1][0], makeDp(cost[i-1][0] + dungeon[i][0]));
-			}
-			cost[i][0] = cost[i-1][0] + dungeon[i][0];
-		}
-		for(int i = 1; i < n; i++)
-			for(int j = 1; j < m; j++){
-				if(dungeon[i][j] >= 0){
-					dp[i][j] = min(dp[i-1][j], dp[i][j-1]);
-				}else{
-					dp[i][j] = min(max(dp[i-1][j], makeDp(cost[i-1][j] + dungeon[i][j])),
-									max(dp[i][j-1], makeDp(cost[i][j-1] + dungeon[i][j])));
-				}
-				if(max(dp[i-1][j], makeDp(cost[i-1][j] + dungeon[i][j])) 
-								< max(dp[i][j-1], makeDp(cost[i][j-1] + dungeon[i][j]))){
-					cost[i][j] = cost[i-1][j] + dungeon[i][j];
-				}else{
-					cost[i][j] = cost[i][j-1] + dungeon[i][j];
-				}
-			
-			}
-		print(dungeon, "dungeon");
-		print(dp, "dp");
-		print(cost, "cost");
-		return dp[n-1][m-1] + 1;
+		//print(dungeon, "dungeon");
+		//print(dp, "dp");
+		return dp[0][0];
     }
 
 };
