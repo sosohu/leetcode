@@ -105,7 +105,7 @@ public:
 			mul.push_back(0);
 	}
 
-	string multiply(string num1, string num2) {
+	string multiply_1st(string num1, string num2) {
 		int len1 = num1.length();
 		int len2 = num2.length();
 		if(len1 * len2 == 0)
@@ -121,13 +121,56 @@ public:
 		return setNum(mul);
     }
 
+	// num1[0]为低位,num2[0]为低位, num1 = num1 + (num2 << left)
+	void bigAdd(string &num1, string &num2, int left){
+		string fill = string(left, '0');
+		num2 = fill + num2;
+		int cin = 0;
+		for(int i = 0; i < num1.size(); i++){
+			int out = cin + (num1[i] - '0') + (num2[i] - '0');
+			num1[i] = (out % 10) + '0';
+			cin = out / 10;
+		}
+	}
+
+	// num1[0]为低位
+	void bigMul(string &result, const string &num1, const char num2){
+		int cin = 0;
+		int mul = num2 - '0';
+		for(int i = 0; i < num1.size(); i++){
+			int out = cin + mul * (num1[i] - '0');
+			result[i] = (out % 10) + '0';
+			cin = out / 10;
+		}
+		if(cin)	result[num1.size()] = cin + '0';
+	}
+
+	string multiply(string num1, string num2) {
+		int n1 = num1.size(), n2 = num2.size();
+		if(n1 < n2)	return multiply(num2, num1);
+		reverse(num1.begin(), num1.end());
+		reverse(num2.begin(), num2.end());
+		int n = n1 + n2;
+		vector<string> line(n2, string(n, '0'));
+		string result(n, '0');
+		for(int i = 0; i < n2; i++){
+			bigMul(line[i], num1, num2[i]);
+			bigAdd(result, line[i], i);
+		}
+		reverse(result.begin(), result.end());
+		int nozero = 0;
+		while(nozero < result.size() && result[nozero] == '0')
+			nozero++;
+		return nozero == result.size()? "0" : result.substr(nozero, result.size() - nozero);
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
 	//string num1("123456789"), num2("987654321");		
-	string num1("0"), num2("0");		
+	string num1("9133"), num2("0");		
 	string ret = sl.multiply(num1, num2);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;

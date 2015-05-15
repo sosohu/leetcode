@@ -11,7 +11,7 @@ class Solution {
 
 public:
 
-	vector<int> findSubstring(string S, vector<string> &L) {
+	vector<int> findSubstring_1st(string S, vector<string> &L) {
 		vector<int> data;
 		if(L.size() == 0)	return data;
 		int len = S.length();
@@ -57,15 +57,42 @@ public:
 		return data;
     }
 
+	vector<int> findSubstring(string S, vector<string> &L) {
+		int n = S.size(), m = L.size();
+		vector<int> result;
+		if(m == 0 || n == 0 || n < m*L[0].size())	return result;
+
+		unordered_map<string, int> table, find;
+		for(int i = 0; i < L.size(); i++){
+			if(table.count(L[i])) table[L[i]]++;
+			else	table[L[i]] = 1;
+		}
+		int start = 0, step = L[0].size(), end = 0;
+		
+		while(start + m*step <= n){
+			string cur = S.substr(end, step);
+			if(!table.count(cur) || (find.count(cur) && find[cur] == table[cur]) ){
+				start++;
+				end = start;
+				find.clear();
+			}else{
+				if(!find.count(cur)) find[cur] = 1;
+				else find[cur]++;
+				end += step;		
+			}
+			if(end - start == m*step)
+				result.push_back(start);
+		}
+		return result;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	string S("barfoothefoobarman");
-	vector<string> L(2, "");
-	L[0] = "foo";
-	L[1] = "bar";
+	string S("lingmindraboofooowingdingbarrwingmonkeypoundcake");
+	vector<string> L{"fooo","barr","wing","ding","wing"};
 
 	vector<int> ret = sl.findSubstring(S, L);
 	
