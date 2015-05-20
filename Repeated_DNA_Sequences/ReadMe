@@ -10,4 +10,5 @@ Q	All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, 
 	Return:
 	["AAAAACCCCC", "CCCCCAAAAA"].
 
-A	Hash	
+A	Hash, we should code the A, C, G ,T. the A,C,G,T asc-ii code is 0x41, 0x43, 0x47 and 0x54.
+	so, the third and second in the last bit is 00, 01, 11 and 10, we can code them.

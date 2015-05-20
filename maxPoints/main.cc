@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <unordered_map>
+#include <cmath>
 
 using namespace std;
 
@@ -137,7 +139,7 @@ public:
 		}
 	}
 
-	int maxPoints(vector<Point> &points) {
+	int maxPoints_1st(vector<Point> &points) {
 		int n = points.size();
 		if(n < 1) return 0;
 		if(n == 1) return 1;
@@ -151,6 +153,48 @@ public:
 		
 		return maxPoints_Detail(points, count, n);
     }
+
+	//x,y最大公约数，如果x或y为0,返回y或x
+	int gcd(int x, int y){
+		x = abs(x);
+		y = abs(y);
+		while(x && y){
+			if(x < y) y = y - x;
+			else x = x - y;
+		}
+		return x != 0? x : y;
+	}
+	
+	struct hashKey{
+		std::size_t operator()(const pair<int,int> &x) const{
+			using std::hash;
+			return x.first ^ x.second;
+		}
+	};
+
+	//pair<int,int>表示斜率,(0,0)表示重点,(0,1)表示平行与y轴,(1,0)表示平行于x轴
+	int maxPoints(vector<Point> &points) {
+		int result = 0;
+		for(int i = 0; i < points.size(); i++){
+			unordered_map<pair<int,int>, int, hashKey> table;
+			int cur = 0, base = 0;
+			for(int j = 0; j < points.size(); j++){
+				int dx = points[j].x - points[i].x;
+				int dy = points[j].y - points[i].y;
+				if(dx == 0 && dy == 0){
+					base++;
+					continue;
+				}
+				pair<int, int> k(make_pair(dx/gcd(dx, dy), dy/gcd(dx,dy)));
+				if(table.count(k))	table[k]++;
+				else table[k] = 1;
+			}
+			for(auto iter = table.begin(); iter != table.end(); iter++)
+				if(cur < iter->second) cur = iter->second;
+			result = max(result, base + cur);
+		}
+		return result;
+	}
 
 };
 

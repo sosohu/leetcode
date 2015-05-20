@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	vector<int> plusOne(vector<int> &digits) {
+	vector<int> plusOne_1st(vector<int> &digits) {
 		int len = digits.size();
 		if(len == 0){
 			return digits;
@@ -31,6 +31,18 @@ public:
 		return digits;
     }
 
+	vector<int> plusOne(vector<int> &digits) {
+		int cin = 1, n = digits.size();
+		vector<int> result;
+		for(int i = n - 1; i >= 0; i--){
+			result.push_back((digits[i] + cin) % 10);
+			cin = (digits[i] + cin) / 10;
+		}
+		if(cin) result.push_back(1);
+		reverse(result.begin(), result.end());
+		return result;
+	}
+
 };
 
 int main(int argc, char** argv)
@@ -39,7 +51,7 @@ int main(int argc, char** argv)
 	vector<int> digits(3, 0);
 	digits[0] = 9;
 	digits[1] = 9;
-	digits[2] = 9;
+	digits[2] = 8;
 
 	vector<int> data = sl.plusOne(digits);
 	

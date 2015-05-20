@@ -20,7 +20,7 @@ class Solution {
 
 public:
 
-	vector<vector<int> > threeSum(vector<int> &num) {
+	vector<vector<int> > threeSum_1st(vector<int> &num) {
 		int size = num.size();
 		vector<vector<int> > data;
 		if(size < 3)	return data;
@@ -47,6 +47,40 @@ public:
 		}
 		return data;
     }
+
+	vector<vector<int> > threeSum(vector<int> &num) {
+		vector<vector<int> > result;
+		if(num.size() < 3)	return result;
+		unordered_map<int, int> table;
+		sort(num.begin(), num.end());
+		vector<pair<int, int> >  shrink;
+		int last = num[0], pos = 0;
+		table[num[0]] = 1;
+		shrink.push_back(make_pair(num[0], 1));
+		for(int i = 1; i < num.size(); i++){
+			if(last == num[i]){
+				shrink[pos].second++;
+				table[last]++;
+			}else{
+				shrink.push_back(make_pair(num[i], 1));
+				last = num[i];
+				table[last] = 1;
+				pos++;
+			}				
+		}
+		for(int i = 0; i < shrink.size(); i++)
+			for(int j = i; j < shrink.size(); j++){
+				if(j == i && shrink[i].second == 1) continue;
+				int left = 0 - shrink[i].first - shrink[j].first;
+				if(table.count(left) == 0)	continue;
+				if(left < shrink[j].first)	break;
+				if(left == shrink[j].first && j == i
+					 && shrink[j].second == 2)	break;
+				if(left == shrink[j].first && shrink[j].second == 1)	break;
+				result.push_back(vector<int>{shrink[i].first, shrink[j].first, left});
+			}
+		return result;
+	}
 
 };
 

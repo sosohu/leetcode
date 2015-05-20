@@ -1,5 +1,6 @@
 #include <iostream>
-#include <string>
+#include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -30,6 +31,14 @@ public:
 		}
     }
 
+	void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+		int pos = m + n - 1, i = m - 1, j = n - 1;
+		while(pos >= 0){
+			nums1[pos--] = (i < 0? INT_MIN : nums1[i]) < (j < 0? INT_MIN : nums2[j])? 
+							nums2[j--] : nums1[i--];
+		}
+    }
+
 };
 
 int main(int argc, char** argv)
@@ -38,11 +47,13 @@ int main(int argc, char** argv)
 	
 	int A[] = {1,2,2,5,7,9,0,0,0,0,0};
 	int B[] = {1,2,3,4,6};
+	vector<int> dataA(begin(A), end(A));
+	vector<int> dataB(begin(B), end(B));
 
-	sl.merge(A, 6, B, 5);
+	sl.merge(dataA, 6, dataB, 5);
 
 	for(int i = 0; i < 11; i++)
-		cout<<A[i]<<endl;
+		cout<<dataA[i]<<endl;
 
 	return 0;
 

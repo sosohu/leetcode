@@ -36,7 +36,7 @@ public:
 		return sum;
 	}
 
-    vector<string> findRepeatedDnaSequences(string s) {
+    vector<string> findRepeatedDnaSequences_1st(string s) {
 		vector<string> result;
 		unordered_map<int, pair<int,int> > table;
 		for(int i = 0; i < (int)(s.size()) - 9; i++){
@@ -52,12 +52,25 @@ public:
 		return result;
     }
 
+    vector<string> findRepeatedDnaSequences(string s) {
+		vector<string> result;
+		unordered_map<int, int> table;
+		for(int i = 0; i + 9 < s.size(); i++){
+			unsigned int code = 0x0;
+			for(int j = 0; j < 10; j++)
+				code |= (((s[i+j] & 0x6) >> 1) << (2*j));
+			if(table[code] == 1) result.push_back(s.substr(i,10));
+			table[code]++;
+		}
+		return result;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	vector<string> ret = sl.findRepeatedDnaSequences("");
+	vector<string> ret = sl.findRepeatedDnaSequences("AAAAAAAAAAAA");
 	for(auto ele : ret)
 		cout<<ele<<endl;
 

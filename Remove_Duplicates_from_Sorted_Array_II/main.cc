@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -8,7 +8,7 @@ class Solution {
 
 public:
 
-	int removeDuplicates(int A[], int n) {
+	int removeDuplicates_1st(int A[], int n) {
 		if(n <= 1) return n;
 		int pre = 0, pos = 1, len = 0;	
 
@@ -36,16 +36,31 @@ public:
 		return len;
     }
 
+	int removeDuplicates(vector<int>& nums) {
+		int pos = 0;
+		for(int i = 0; i < nums.size(); i++){
+			nums[pos++] = nums[i];
+			if(i < nums.size() - 1 && nums[i] == nums[i+1]){
+				while(i < nums.size() - 1 && nums[i] == nums[i+1])
+					i++;
+				nums[pos++] = nums[i];
+			}
+		}
+		nums.resize(pos);
+		return pos;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
 	int A[] = {1,1,1,2,2,3,3};
-	int ret = sl.removeDuplicates(A, 7);
+	vector<int> data(begin(A), end(A));
+	int ret = sl.removeDuplicates(data);
 	
-	for(int i = 0; i < ret; i++)
-		cout<<A[i]<<" ";
+	for(int i = 0; i < data.size(); i++)
+		cout<<data[i]<<" ";
 	cout<<endl;
 	cout<<"Result  :("<<ret<<")"<<endl;
 

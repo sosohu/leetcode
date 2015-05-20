@@ -1,0 +1,6 @@
+
+Q	Given an integer n, return the number of trailing zeroes in n!.
+
+	Note: Your solution should be in logarithmic time complexity.
+
+A	the problem is count the num of factor 5

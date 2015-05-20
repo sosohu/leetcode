@@ -17,7 +17,7 @@ class Solution {
 
 public:
 
-    int majorityElement(vector<int>& nums) {
+    int majorityElement_1st(vector<int>& nums) {
 		if(nums.size() == 0)	return -1;
 		int p1 = nums[0], p2, c1 = 1, c2 = 0;
 		for(int i = 1; i < nums.size(); i++){
@@ -37,6 +37,17 @@ public:
 		}
 		return c1 > c2? p1 : p2;
     }
+
+    int majorityElement(vector<int>& nums) {
+		int result = 0, n = nums.size();
+		for(int i = 0; i < 32; i++){
+			int bit = 0;
+			for(int j = 0; j < n; j++)
+				bit += ((nums[j] & (0x1 << i))? 1 : 0);
+			result += ((bit > n/2? 1 : 0) << i);
+		}
+		return result;
+	}
 
 };
 
