@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	vector<int> spiralOrder(vector<vector<int> > &matrix) {
+	vector<int> spiralOrder_1st(vector<vector<int> > &matrix) {
 		int n = matrix.size();
 		if(n == 0){
 			vector<int> data;
@@ -44,6 +44,28 @@ public:
 		}
 		return data;
     }
+
+	vector<int> spiralOrder(vector<vector<int> > &matrix) {
+		vector<int> result;
+		int n = matrix.size();
+		if(n == 0)	return result;
+		int m = matrix[0].size();
+		int magrin = 0;
+		while(m - 1 - magrin >= magrin && n - 1 - magrin >= magrin){
+			for(int j = magrin; j <= m - 1 - magrin; j++)
+				result.push_back(matrix[magrin][j]);
+			for(int i = magrin + 1; i < n - 1 - magrin; i++)
+				result.push_back(matrix[i][m-1-magrin]);
+			if(n - 1 - magrin != magrin)
+				for(int j = m - 1 - magrin; j >= magrin; j-- )
+					result.push_back(matrix[n-1-magrin][j]);
+			if(m - 1 - magrin != magrin)
+				for(int i = n - 1 - magrin - 1; i > magrin; i--)
+					result.push_back(matrix[i][magrin]);
+			magrin++;
+		}
+		return result;
+	}
 
 };
 

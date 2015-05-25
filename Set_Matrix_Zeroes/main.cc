@@ -9,7 +9,7 @@ class Solution {
 
 public:
 
-	void setZeroes(vector<vector<int> > &matrix) {
+	void setZeroes_1st(vector<vector<int> > &matrix) {
 		int n = matrix.size();
 		if(n == 0) return;
 		int m = matrix[0].size();
@@ -62,6 +62,37 @@ public:
 				matrix[i][0] = 0;
 		}
     }
+
+	void setZeroes(vector<vector<int> > &matrix) {
+		int n = matrix.size();
+		if(n == 0)	return;
+		int m = matrix[0].size();
+		bool lastZero = false;
+		for(int i = 0; i < n; i++){
+			bool thisZero = false;
+			for(int j = 0; j < m; j++){
+				if(matrix[i][j] == 0){
+					int up = i - 1;
+					while(up >= 0){
+						matrix[up][j] = 0;
+						up--;
+					}
+					thisZero = true;
+				}
+				if(i > 0 && matrix[i-1][j] == 0)
+					matrix[i][j] = 0;
+			}
+			if(lastZero){
+				for(int j = 0; j < m; j++)
+					matrix[i-1][j] = 0;
+			}
+			lastZero = thisZero;
+		}
+		if(lastZero){
+			for(int j = 0; j < m; j++)
+				matrix[n-1][j] = 0;
+		}
+	}
 
 };
 

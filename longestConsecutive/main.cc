@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ class Solution {
 
 public:
 
-	int longestConsecutive(vector<int> &num) {
+	int longestConsecutive_1st(vector<int> &num) {
 		unordered_map<int,bool> used;
 		const int size = num.size();
 		for(int i = 0; i < size; i++)
@@ -42,6 +43,32 @@ public:
 		}
 		return length;
     }
+
+	int longestConsecutive(vector<int> &num) {
+		unordered_set<int> table;
+		for(int i = 0; i < num.size(); i++)
+			table.insert(num[i]);
+		unordered_set<int> used;
+		int ret = 0;
+		for(int i = 0; i < num.size(); i++){
+			if(used.count(num[i]) == 0){
+				used.insert(num[i]);
+				int con = 1;
+				for(int j = 1; ; j++){
+					if(table.count(num[i] + j) == 0)	break;
+					con++;
+					used.insert(num[i] + j);	
+				}
+				for(int j = 1; ; j++){
+					if(table.count(num[i] - j) == 0)	break;
+					con++;
+					used.insert(num[i] - j);	
+				}
+				if(ret < con)	ret = con;
+			}
+		}
+		return ret;
+	}
 
 };
 

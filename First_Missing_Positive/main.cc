@@ -1,5 +1,6 @@
 #include <iostream>
-#include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -72,7 +73,7 @@ public:
 		n = last;
 	}
 
-	int firstMissingPositive(int A[], int n){
+	int firstMissingPositive_1st(int A[], int n){
 		preprocess(A, n);
 		if(n == 0)	return 1;
 		//return recursion(A, 0, n-1, 0);
@@ -111,13 +112,27 @@ public:
 		return n+1;
     }
 
+	int firstMissingPositive(vector<int>& nums) {
+		int pos = 0;
+		while(pos < nums.size()){
+			if(nums[pos] == pos + 1 || nums[pos] > nums.size() 
+				|| nums[pos] <= 0  || nums[nums[pos] - 1] == nums[pos])
+				pos++;
+			else swap(nums[pos], nums[nums[pos] - 1]);
+		}
+		for(int i = 0; i < nums.size(); i++)
+			if(nums[i] != i+1)	return i + 1;
+		return nums.size() + 1;
+	}
+
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
 	int A[] = {2,2};
-	int ret = sl.firstMissingPositive(A, 2);
+	vector<int> data(begin(A), end(A));
+	int ret = sl.firstMissingPositive(data);
 	
 	cout<<"Result  :("<<ret<<")"<<endl;
 
