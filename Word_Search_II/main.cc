@@ -24,35 +24,39 @@ public:
 		root = new TrieNode();
 	}
 
-	bool backtrack(TrieNode *pos, vector<vector<char> > &board, vector<vector<bool> > &used,
-				   string &words, int k, int i, int j, int n, int m){
-		if(k == words.size())	return true;
-		if(i < 0|| i >= n || j < 0 || j >= m || used[i][j])	return false;
-		if(board[i][j] != words[k])	return false;
-		used[i][j] = true;
-		int index = board[i][j] - 'a';
-		if(pos->sons[index] == NULL){
-			pos->sons[index] = new TrieNode(board[i][j]);
+    void insert(string &s) {
+		TrieNode *pos = root;
+		for(int i = 0; i < s.size(); i++){
+			int index = s[i] - 'a';
+			if(pos->sons[index] == NULL)
+				pos->sons[index] = new TrieNode(s[i]);
+			pos = pos->sons[index];
 		}
-		pos->sons[index]->isNode = true;
-		if(backtrack(pos->sons[index], board, used, words, k+1, i+1, j, n, m)){
-			used[i][j] = false;
-			return true;
+		pos->isNode = true;
+    }
+
+	void build(vector<string> &words){
+		for(int i = 0; i < words.size(); i++)
+			insert(words[i]);
+	}
+
+	void backtrack(vector<vector<char> > &board, vector<string> &result, 
+					TrieNode *pos, string &trace, int i, int j, int n, int m){
+		if(board[i][j] == 'X')	return;
+		if(pos->sons[board[i][j] - 'a'] == NULL)	return;
+		trace.push_back(board[i][j]);
+		if(pos->sons[board[i][j] - 'a']->isNode){
+			result.push_back(trace);
+			pos->sons[board[i][j] - 'a']->isNode = false; // avoid the duplicate result
 		}
-		if(backtrack(pos->sons[index], board, used, words, k+1,	i-1, j, n, m)){
-			used[i][j] = false;
-			return true;
-		}
-		if(backtrack(pos->sons[index], board, used, words, k+1, i, j+1, n, m)){
-			used[i][j] = false;
-			return true;
-		}
-		if(backtrack(pos->sons[index], board, used, words, k+1, i, j-1, n, m)){
-			used[i][j] = false;
-			return true;
-		}
-		used[i][j] = false;
-		return false;
+		char tmp = board[i][j];
+		board[i][j] = 'X';
+		if(i > 0)	backtrack(board, result, pos->sons[tmp - 'a'], trace, i-1, j, n, m);
+		if(i < n-1)	backtrack(board, result, pos->sons[tmp - 'a'], trace, i+1, j, n, m);
+		if(j > 0)	backtrack(board, result, pos->sons[tmp - 'a'], trace, i, j-1, n, m);
+		if(j < m-1)	backtrack(board, result, pos->sons[tmp - 'a'], trace, i, j+1, n, m);
+		board[i][j] = tmp;
+		trace.erase(trace.begin() + trace.size() - 1);
 	}
 
 	vector<string> findWords(vector<vector<char> >& board, vector<string>& words) {
@@ -60,43 +64,13 @@ public:
 		int n = board.size();
 		if(n == 0) return result;
 		int m = board[0].size();
-		vector<vector<bool> > used(n, vector<bool>(m, false));
-		/*
+		build(words);
+		string trace;
 		for(int i = 0; i < n; i++)
 			for(int j = 0; j < m; j++)
-				backtrack(root, board, used, i, j, n, m);
-		*/
-		for(int k = 0; k < words.size(); k++){
-			if(words[k].size() == 0 || search(words[k]))
-				result.push_back(words[k]);
-			else{
-				bool isWord = false;
-				for(int i = 0; i < n; i++){
-					for(int j = 0; j < m; j++)
-						if(board[i][j] == words[k][0]){
-							isWord = backtrack(root, board, used, words[k], 0, i, j, n, m);
-						if(isWord){
-							result.push_back(words[k]);
-							break;
-						}
-					}
-					if(isWord)	break;
-				}
-			}
-		}
+				backtrack(board, result, root, trace, i, j, n, m);
 		return result;
 	}
-
-    bool search(string key) {
-		TrieNode *pos = root;
-		for(int i = 0; i < key.size(); i++){
-			int index = key[i] - 'a';
-			if(pos->sons[index] == NULL)
-				return false;
-			pos = pos->sons[index];
-		}
-		return pos->isNode;
-    }
 
 private:
     TrieNode* root;

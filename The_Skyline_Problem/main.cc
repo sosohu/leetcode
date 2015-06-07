@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <climits>
+#include <queue>
 
 using namespace std;
 
@@ -10,79 +10,24 @@ class Solution {
 
 public:
 
-	void mergeFind(vector<vector<int> > buildings, vector<vector<int> > &piece,
-					int begin, int end){
-		if(begin > end)	return;
-		if(begin == end){
-			piece.push_back(buildings[begin]);
-			return;
-		}
-		int pos = (begin + end) / 2;
-		vector<vector<int> >  left, right;
-		mergeFind(buildings, left, begin, pos);
-		mergeFind(buildings, right, pos+1, end);
-		int i = 0, j = 0;
-		int l, r, h;
-		while(i < left.size() && j < right.size()){
-			if(left[i][0] < right[j][0]){
-				if(left[i][1] <= right[j][0]){
-					piece.push_back(left[i]);
-					i++;
-				}else{
-					piece.push_back(vector<int>{left[i][0], right[j][0], left[i][2]});
-					left[i][0] = right[j][0];
-				}
-			}else if(left[i][0] == right[j][0]){
-				if(left[i][2] > right[j][2]){
-					if(left[i][1] < right[j][1]){
-						piece.push_back(left[i]);
-						right[j][0] = left[i][1];
-						i++;
-					}else{
-						piece.push_back(vector<int>{left[i][0], right[j][1], left[i][2]});
-						left[i][0] = right[j][1];
-						j++;
-					}
-				}else{
-					if(left[i][1] < right[j][1]){
-						piece.push_back(vector<int>{left[i][0], left[i][1], right[j][2]});
-						right[j][0] = left[i][1];
-						i++;
-					}else{
-						piece.push_back(right[j]);
-						left[i][0] = right[j][1];
-						j++;
-					}
-				}
-			}else{
-				if(right[j][1] <= left[i][0]){
-					piece.push_back(right[j]);
-					j++;
-				}else{
-					piece.push_back(vector<int>{right[j][0], left[i][0], right[j][2]});
-					right[j][0] = left[i][0];
-				}
-			}
-		}
-		if(i < left.size())
-			piece.insert(piece.end(), left.begin() + i, left.end());
-		if(j < right.size())
-			piece.insert(piece.end(), right.begin() + j, right.end());
-	}
-
 	vector<pair<int, int> > getSkyline(vector<vector<int> >& buildings){
 		vector<pair<int, int> > result;
-		if(buildings.size() == 0)	return result;
-		vector<vector<int> > piece;
-		mergeFind(buildings, piece, 0, buildings.size() - 1);
-		for(int i = 0; i < piece.size(); i++){
-			if(i > 0 && piece[i][2] == piece[i-1][2] && piece[i][0] == piece[i-1][1])
-				continue;
-			if(i != 0 && piece[i][0] != piece[i-1][1])
-				result.push_back(make_pair(piece[i-1][1], 0));
-			result.push_back(make_pair(piece[i][0], piece[i][2]));
-			if(i == piece.size() - 1)
-				result.push_back(make_pair(piece[i][1], 0));
+		priority_queue<pair<int,int> >	q; // <height, right>
+		int pos = 0, x, h, len = buildings.size();
+		while(pos < len || !q.empty()){
+			x = q.empty()? buildings[pos][0] : q.top().second;
+			if(pos >= len || x < buildings[pos][0]){
+				while(!q.empty() && q.top().second <= x)	q.pop();
+			}else{
+				x = buildings[pos][0];
+				while(pos < len && x == buildings[pos][0]){
+					q.push(make_pair(buildings[pos][2], buildings[pos][1]));
+					pos++;
+				}
+			}
+			h = q.empty()? 0 : q.top().first;
+			if(result.empty() || result.back().second != h)
+				result.push_back(make_pair(x, h));
 		}
 		return result;
 	}
