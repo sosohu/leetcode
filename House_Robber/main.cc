@@ -10,15 +10,15 @@ public:
 
 	int rob(vector<int>& nums) {
 		int n = nums.size();
-		vector<int> dp(n, 0);
-		int result = 0;
-		for(int i = 0; i < n; i++){
-			dp[i] = nums[i];
-			for(int j = 0; j < i - 1; j++)
-				dp[i] = max(dp[j] + nums[i], dp[i]);
-			result = max(result, dp[i]);
+		if(n == 0)	return 0;
+		if(n == 1)	return nums[0];
+		int dp1 = nums[0], dp2 = max(nums[0], nums[1]);
+		for(int i = 2; i < n; i++){
+			int cur = max(nums[i] + dp1, dp2);
+			dp1 = dp2;
+			dp2 = cur;
 		}
-		return result;
+		return dp2;
     }
 
 };

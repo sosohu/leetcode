@@ -35,40 +35,38 @@ public:
 		return result == INT_MAX? 0 : result;
 	}
 
-	int Merge_aux(int s, vector<int>& nums, int begin, int end){
-		if(begin > end)	return 0;
-		if(begin == end)	return nums[begin] >= s? 1 : 0;
+	// find the last one le than the target
+	int binary_search(vector<int> &sum, int begin, int end, int target){
+		if(begin > end)		return begin - 1;
+		if(begin == end)	return target >= sum[begin]? begin : begin - 1;
 		int mid = (begin + end) / 2;
-		int left = Merge_aux(s, nums, begin, mid);
-		int right = Merge_aux(s, nums, mid+1, end);
-		int backward = mid - 1, forward = mid + 2;
-		int sum = nums[mid] + nums[mid+1];
-		int cur = 2;
-		while(sum < s && (backward >= begin || forward <= end)){
-			if(backward < begin)	sum += nums[forward++];
-			else if(forward > end)	sum += nums[backward--];
-			else{
-				if(nums[forward] > nums[backward]) sum += nums[forward++];	
-				else	sum += nums[backward--];
-			}
-			cur++;
-		}
-		if(sum < s)	return 0;
-		return min(min((left == 0?INT_MAX : left), (right == 0? INT_MAX : right)), cur);
+		if(sum[mid] <= target)	return binary_search(sum, mid+1, end, target);
+		else	return binary_search(sum, begin, mid-1, target);
 	}
 
 	int minSubArrayLen_2nd(int s, vector<int>& nums) {
-		int n = nums.size();
-		return Merge_aux(s, nums, 0, n-1);
+		if(nums.size() == 0)	return 0;
+		if(nums.size() == 1 || nums[0] >= s)	
+			return nums[0] >= s? 1 : 0;
+		int res = INT_MAX, off = 0, start = 0;
+		vector<int>	sum(nums.size(), nums[0]);
+		for(int i = 1; i < nums.size(); i++){
+			sum[i] = sum[i-1] + nums[i];
+			if(sum[i] >= s){
+				int pos = binary_search(sum, 0, i, sum[i] - s);
+				res = min(res, i - pos);
+			}
+		}
+		return res == INT_MAX? 0 : res;
 	}
 };
 
 int main(int argc, char** argv)
 {
 	Solution sl;
-	vector<int> nums{2,3,1,2,4,3};
+	vector<int> nums{10,2,3};
 	
-	cout<<sl.minSubArrayLen_2nd(7, nums)<<endl;
+	cout<<sl.minSubArrayLen_2nd(6, nums)<<endl;
 
 	return 0;
 
